@@ -62,6 +62,14 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 .sem h4 em{font-style:normal;float:right;color:var(--muted,#666);font-weight:400}
 .chip .cc{margin-left:5px;font-size:11px;opacity:.7}
 .chip .cc::after{content:'학점'}
+.tbl td,.tbl th{vertical-align:top}
+.tbl td.k{font-weight:700;white-space:nowrap;background:var(--accent-soft)}
+.tsem{margin:0 0 6px}.tsem:last-child{margin:0}
+.tsem .tk{display:block;font-size:11px;color:var(--muted);margin-bottom:2px}
+.tsem .chip{display:inline-block;margin:0 4px 4px 0}
+.chip .tn{white-space:nowrap;display:inline-block;margin-left:5px;font-size:10px;font-weight:700;color:var(--accent);border:1px solid var(--accent);border-radius:8px;padding:0 5px}
+.chip.rc{outline:2px solid var(--accent);outline-offset:-1px}
+.tbl tr.tot td{background:var(--pick);font-size:13px}
 .chip.fx{background:var(--accent-soft);font-weight:500}
 .pick{border:1px dashed var(--line);background:var(--pick);border-radius:5px;padding:6px 8px;margin-top:6px}
 .pick b{display:block;font-size:12px;color:var(--muted);font-weight:500;margin-bottom:4px}
@@ -128,7 +136,7 @@ tr.rec td{background:var(--accent-soft)}
   <p class="sub">용인 수지고 · 신봉고 · 용인홍천고 · 성복고 · 서원고 | 2026학년도 입학생 교육과정 편제표 기준 (학교알리미 공시 파일)</p>
 
   <div class="warn">
-    <p><strong>성복고는 책에 실린 편제표 사진으로 넣었습니다.</strong> 지정과목과 학점은 합계가 맞습니다. 다만 택1 행의 학기 배치는 학점 합계로 맞춘 추정입니다.</p>
+    <p><strong>수지고·용인홍천고·성복고·서원고는 2026학년도 입학생 편제표(진학지도서 이미지) 기준이고, 신봉고는 학교 공시 PDF 기준입니다.</strong> 성복고는 책에 실린 사진이라 사진 판독으로 넣었으며 학기별 학점 합계가 모두 맞습니다.</p>
     <p>표는 2026학년도에 입학한 1학년이 2·3학년에서 듣게 될 계획입니다. 이후 입학생의 편제표는 달라질 수 있습니다.</p>
     <p><span class="star">*</span> 표시는 2028학년도 수능 필수 출제 과목이 아닌 과목입니다. 필수 과목은 국어(화법과 언어, 독서와 작문, 문학), 수학(대수, 미적분Ⅰ, 확률과 통계), 영어Ⅰ·Ⅱ, 한국사, 통합사회, 통합과학입니다. 공통국어·공통수학·공통영어는 모든 학생이 1학년에 이수하므로 *를 붙이지 않았습니다. 제2외국어·한문은 선택 응시라 *를 붙였습니다.</p>
   </div>
@@ -171,6 +179,11 @@ tr.rec td{background:var(--accent-soft)}
       <button type="button" id="t2" aria-pressed="false">2학년</button>
       <button type="button" id="t3" aria-pressed="false">3학년</button>
     </div>
+    <div class="seg" role="group" aria-label="보기 방식" id="mseg">
+      <button type="button" id="mv1" aria-pressed="true">비교표</button>
+      <button type="button" id="mv2" aria-pressed="false">학교별 카드</button>
+    </div>
+    <div class="ctl" id="inc5w"><label><input type="checkbox" id="inc5"> 신봉고도 함께 보기 <span class="sc-n">(2026 이미지가 없어 학교 PDF 기준)</span></label></div>
     <div class="ctl"><label><input type="checkbox" id="hs"> 수능과 상관없는 과목(*) 숨기기 <span class="sc-n">2·3학년</span></label></div>
     <div id="view"></div>
   </section>
@@ -296,8 +309,21 @@ const star=n=>REQ.has(norm(n))?'':'<span class="star" title="수능 필수 과�
 let HIDE=false,CURG=1;
 const isReq=n=>REQ.has(norm(n));
 function chips(a,c,cr){const o=a.map((x,i)=>[x,cr?cr[i]:null]);return (HIDE?o.filter(x=>isReq(x[0])):o).map(x=>`<span class="chip ${c||''}">${esc(x[0])}${star(x[0])}${x[1]!=null?`<span class="cc">${x[1]}</span>`:''}</span>`).join('')}
+let MODE='tbl',INC5=false;
+function viewTbl(g){
+  const S=INC5?SC:SC.filter(x=>x!=='신봉고'),cats=[...CATS,'기타'];
+  const items=(s,k)=>{const y=Y[s][g][k],c=CR[s][g][k],o=[];y.fx.forEach((n,i)=>o.push({n,c:c.f[i],t:0}));y.pk.forEach((p,i)=>p[1].forEach(n=>o.push({n,c:c.p[i],t:p[0]})));return o};
+  const cell=(s,cat)=>[1,2].map(k=>{let a=items(s,k).filter(x=>catOf(x.n)===cat);if(HIDE)a=a.filter(x=>isReq(x.n));if(!a.length)return '';return `<div class="tsem"><span class="tk">${k}학기</span>`+a.map(x=>`<span class="chip ${x.t?'':'fx'} ${REC.has(norm(x.n))?'rc':''}">${esc(x.n)}${star(x.n)}<span class="cc">${x.c}</span>${x.t?`<span class="tn">택${x.t}</span>`:''}</span>`).join('')+'</div>'}).join('');
+  let h='<div class="tw"><table class="m tbl"><tr><th>교과(군)</th>'+S.map(x=>`<th class="sc">${x}</th>`).join('')+'</tr>';
+  cats.forEach(c=>{const cs=S.map(x=>cell(x,c));if(cs.every(v=>!v))return;h+=`<tr><td class="k">${c}</td>`+cs.map(v=>`<td>${v||'<span class="g no">–</span>'}</td>`).join('')+'</tr>'});
+  h+='<tr class="tot"><td class="k">학기별 학점</td>'+S.map(x=>`<td>1학기 ${semTot(x,g,'1')}학점<br>2학기 ${semTot(x,g,'2')}학점</td>`).join('')+'</tr>';
+  h+='<tr class="tot"><td class="k">고르는 과목 수</td>'+S.map(x=>`<td>${['1','2'].map(k=>Y[x][g][k].pk.map(p=>p[0]).reduce((a,b)=>a+b,0)).map((n,i)=>`${i+1}학기 ${n}과목`).join('<br>')}</td>`).join('')+'</tr>';
+  document.getElementById('view').innerHTML=h+'</table></div><p class="legend">파란 칸은 모두 이수하는 지정과목, 회색 칸은 묶음에서 고르는 선택과목입니다. 숫자는 학점, <b>택n</b>은 같은 묶음에서 n과목을 고른다는 뜻입니다. 학기마다 묶음이 여러 개라 같은 교과에도 택n이 다르게 붙을 수 있습니다. 대학을 선택하면 권장과목에 테두리가 생깁니다.</p>';
+}
 function view(g){
   CURG=g;
+  document.getElementById('mseg').style.display=document.getElementById('inc5w').style.display=g===1?'none':'';
+  if(g>1&&MODE==='tbl'){viewTbl(g);return}
   const el=document.getElementById('view');
   if(g===1){
     let h='<div class="tw"><table class="m"><tr><th>교과</th>'+SC.map(s=>`<th class="sc">${s}</th>`).join('')+'</tr>';
@@ -328,6 +354,9 @@ function view(g){
   });
   el.innerHTML=h+'</div>';
 }
+document.getElementById('mv1').onclick=()=>{MODE='tbl';document.getElementById('mv1').setAttribute('aria-pressed',true);document.getElementById('mv2').setAttribute('aria-pressed',false);view(CURG)};
+document.getElementById('mv2').onclick=()=>{MODE='card';document.getElementById('mv2').setAttribute('aria-pressed',true);document.getElementById('mv1').setAttribute('aria-pressed',false);view(CURG)};
+document.getElementById('inc5').onchange=e=>{INC5=e.target.checked;view(CURG)};
 ['t1','t2','t3'].forEach((id,i)=>document.getElementById(id).onclick=()=>{['t1','t2','t3'].forEach((x,j)=>document.getElementById(x).setAttribute('aria-pressed',i===j));view(i+1)});
 // presence
 let REC=new Set();let RECLAB='';
@@ -455,6 +484,7 @@ function setRec(c,u){
   });
   document.getElementById('recinfo').textContent=u.r.length?`${c} ${u.u}의 권장과목 ${REC.size}개를 표에 표시했습니다. 위의 대학 선택을 바꾸면 함께 바뀝니다.`:'';
   pres();
+  if(CURG>1)view(CURG);
 }
 function uniRender(){
   const c=document.getElementById('uc').value,i=+document.getElementById('uu').value;
@@ -563,7 +593,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='1.6.1',VDATE='2026-10-19';
+const VERSION='1.7.0',VDATE='2026-10-19';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
