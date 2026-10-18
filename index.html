@@ -147,6 +147,7 @@ tr.rec td{background:var(--accent-soft)}
       <button type="button" id="t2" aria-pressed="false">2학년</button>
       <button type="button" id="t3" aria-pressed="false">3학년</button>
     </div>
+    <div class="ctl"><label><input type="checkbox" id="hs"> 수능과 상관없는 과목(*) 숨기기 <span class="sc-n">2·3학년</span></label></div>
     <div id="view"></div>
   </section>
 
@@ -158,6 +159,7 @@ tr.rec td{background:var(--accent-soft)}
       <input type="search" id="q" placeholder="과목명 검색 (예: 기하, 물리)" aria-label="과목명 검색">
       <select id="cat" aria-label="교과(군)"><option value="">전체 교과(군)</option><option>국어</option><option>수학</option><option>영어</option><option>사회</option><option>과학</option><option>체육</option><option>예술</option><option>기술·가정/정보</option><option>제2외국어/한문</option><option>교양</option></select>
       <label><input type="checkbox" id="onlydiff"> 학교마다 다른 과목만 보기</label>
+      <label><input type="checkbox" id="hp"> 수능과 상관없는 과목(*) 숨기기</label>
       <label><input type="checkbox" id="onlyrec"> 선택한 대학의 권장과목만 보기</label>
     </div>
     <p class="recinfo" id="recinfo"></p>
@@ -248,8 +250,11 @@ const catOf=n=>CAT[norm(n)]||'기타';
 // 2028학년도 수능 필수 출제 과목. 이 목록에 없으면 * 표시
 const REQ=new Set(['공통국어1·2','공통수학1·2','공통영어1·2','한국사1·2','통합사회1·2','통합과학1·2','화법과 언어','독서와 작문','문학','대수','미적분Ⅰ','확률과 통계','영어Ⅰ','영어Ⅱ'].map(norm));
 const star=n=>REQ.has(norm(n))?'':'<span class="star" title="수능 필수 과목 아님">*</span>';
-function chips(a,c){return a.map(x=>`<span class="chip ${c||''}">${esc(x)}${star(x)}</span>`).join('')}
+let HIDE=false,CURG=1;
+const isReq=n=>REQ.has(norm(n));
+function chips(a,c){if(HIDE)a=a.filter(isReq);return a.map(x=>`<span class="chip ${c||''}">${esc(x)}${star(x)}</span>`).join('')}
 function view(g){
+  CURG=g;
   const el=document.getElementById('view');
   if(g===1){
     let h='<div class="tw"><table class="m"><tr><th>교과</th>'+SC.map(s=>`<th class="sc">${s}</th>`).join('')+'</tr>';
@@ -271,7 +276,7 @@ function view(g){
     ['1','2'].forEach(k=>{
       const sm=d[k];
       h+=`<div class="sem"><h4>${k}학기</h4><div class="chips">${chips(sm.fx,'fx')}</div>`;
-      sm.pk.forEach(p=>{h+=`<div class="pick"><b>${p[0]}과목 선택 · ${p[1].length}개 중</b><div class="chips">${chips(p[1])}</div></div>`});
+      sm.pk.forEach(p=>{const sh=HIDE?p[1].filter(isReq):p[1];if(!sh.length)return;h+=`<div class="pick"><b>${p[0]}과목 선택 · ${HIDE?'수능 과목 '+sh.length+'개만 표시(전체 '+p[1].length+'개 중)':p[1].length+'개 중'}</b><div class="chips">${chips(p[1])}</div></div>`});
       h+='</div>';
     });
     h+='</div>';
@@ -292,6 +297,7 @@ function pres(){
     if(od&&all&&SC.every(s=>[...r.s[s]].sort().join()===[...r.s[SC[0]]].sort().join()))return;
     if(q&&!norm(r.n).includes(q))return;
     const cf=document.getElementById('cat').value;if(cf&&catOf(r.n)!==cf)return;
+    if(HIDE&&!isReq(r.n))return;
     const isr=REC.has(norm(r.n));
     if(document.getElementById('onlyrec').checked&&!isr)return;
     n++;
@@ -303,6 +309,7 @@ function pres(){
   document.getElementById('cnt').textContent=n+'개 과목 표시 (전체 '+ROWS.length+'개)';
 }
 document.getElementById('q').oninput=pres;document.getElementById('cat').onchange=pres;document.getElementById('onlydiff').onchange=pres;document.getElementById('onlyrec').onchange=pres;
+['hs','hp'].forEach(id=>document.getElementById(id).onchange=e=>{HIDE=e.target.checked;document.getElementById('hs').checked=HIDE;document.getElementById('hp').checked=HIDE;view(CURG);pres()});
 ['p2','p3'].forEach((id,i)=>document.getElementById(id).onclick=()=>{PGR=i+2;['p2','p3'].forEach((x,j)=>document.getElementById(x).setAttribute('aria-pressed',i===j));setRows();pres()});
 
 // ---- 대학·학과별 유리한 과목 (수도권, 진학지도자료집 기준) ----
