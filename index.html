@@ -102,11 +102,15 @@ details.ref b{color:var(--fg)}
 tr.rec td{background:var(--accent-soft)}
 .rtag{display:inline-block;font-size:11px;font-weight:700;background:var(--accent);color:var(--bg);border-radius:10px;padding:0 7px;margin-left:6px;vertical-align:1px}
 .recinfo{font-size:13px;color:var(--accent);margin:0 0 10px}
+.ver{color:var(--muted);font-size:12px;margin-top:12px}
+.newver{display:none;background:var(--warn-bg);color:var(--warn-fg);border-radius:6px;padding:10px 14px;font-size:14px;margin-bottom:16px}
+.newver button{font:inherit;font-size:13px;margin-left:10px;padding:3px 12px;border:1px solid currentColor;border-radius:5px;background:none;color:inherit;cursor:pointer}
 </style>
 
 </head>
 <body>
 <div class="wrap">
+  <div class="newver" id="newver" role="status">새 버전이 있습니다. <button type="button" id="reload">새로고침</button></div>
   <h1>수지구 고교 교과과목 비교</h1>
   <p class="sub">용인 수지고 · 신봉고 · 용인홍천고 · 서원고 | 2026학년도 입학생 교육과정 편제표 기준 (학교알리미 공시 파일)</p>
 
@@ -177,6 +181,7 @@ tr.rec td{background:var(--accent-soft)}
     <li>대학·학과별 권장과목: 2026 진학지도자료집(수학 「대학별 이수 권장 과목 예시」, 영어 「2028학년도 수도권 대학별 권장과목」, 세종대 첨단학과 상담 예시)</li>
     <li>성균관대: 2028학년도 입학전형 시행계획(2026.4), 2027학년도 수시·정시 모집요강. 권장과목 지정은 없고 참고 내용만 정리</li>
   </ul>
+  <p class="ver" id="ver"></p>
 </div>
 
 <script>
@@ -425,6 +430,20 @@ function uniUnits(){
 document.getElementById('uc').innerHTML=[...new Set(UNIV.map(x=>x.c))].map(c=>`<option>${esc(c)}</option>`).join('');
 document.getElementById('uc').onchange=uniUnits;document.getElementById('uu').onchange=uniRender;
 uniUnits();
+// 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
+const VERSION='1.1.0',VDATE='2026-10-19';
+document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
+document.getElementById('reload').onclick=()=>location.reload(true);
+(function(){
+  const cmp=(a,b)=>{a=a.split('.').map(Number);b=b.split('.').map(Number);for(let i=0;i<3;i++){if((a[i]||0)!==(b[i]||0))return(a[i]||0)-(b[i]||0)}return 0};
+  try{
+    fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{
+      if(!j||!j.version)return;
+      if(cmp(j.version,VERSION)>0){document.getElementById('newver').style.display='block'}
+      document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE+(cmp(j.version,VERSION)>0?' (최신: '+j.version+')':' · 최신 버전입니다');
+    }).catch(()=>{});
+  }catch(e){}
+})();
 summary();view(1);pres();
 </script>
 
