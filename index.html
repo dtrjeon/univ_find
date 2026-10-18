@@ -69,7 +69,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 .tsem .chip{display:inline-block;margin:0 4px 4px 0}
 .chip .tn{white-space:nowrap;display:inline-block;margin-left:5px;font-size:10px;font-weight:700;color:var(--accent);border:1px solid var(--accent);border-radius:8px;padding:0 5px}
 .chip.rc{outline:2px solid var(--accent);outline-offset:-1px}
-.tbl tr.tot td{background:var(--pick);font-size:13px}
+.tbl .tt{margin-top:8px;font-size:12px;color:var(--muted);text-align:right}
 .chip.fx{background:var(--accent-soft);font-weight:500}
 .pick{border:1px dashed var(--line);background:var(--pick);border-radius:5px;padding:6px 8px;margin-top:6px}
 .pick b{display:block;font-size:12px;color:var(--muted);font-weight:500;margin-bottom:4px}
@@ -311,14 +311,16 @@ const isReq=n=>REQ.has(norm(n));
 function chips(a,c,cr){const o=a.map((x,i)=>[x,cr?cr[i]:null]);return (HIDE?o.filter(x=>isReq(x[0])):o).map(x=>`<span class="chip ${c||''}">${esc(x[0])}${star(x[0])}${x[1]!=null?`<span class="cc">${x[1]}</span>`:''}</span>`).join('')}
 let MODE='tbl',INC5=false;
 function viewTbl(g){
-  const S=INC5?SC:SC.filter(x=>x!=='신봉고'),cats=[...CATS,'기타'];
-  const items=(s,k)=>{const y=Y[s][g][k],c=CR[s][g][k],o=[];y.fx.forEach((n,i)=>o.push({n,c:c.f[i],t:0}));y.pk.forEach((p,i)=>p[1].forEach(n=>o.push({n,c:c.p[i],t:p[0]})));return o};
-  const cell=(s,cat)=>[1,2].map(k=>{let a=items(s,k).filter(x=>catOf(x.n)===cat);if(HIDE)a=a.filter(x=>isReq(x.n));if(!a.length)return '';return `<div class="tsem"><span class="tk">${k}학기</span>`+a.map(x=>`<span class="chip ${x.t?'':'fx'} ${REC.has(norm(x.n))?'rc':''}">${esc(x.n)}${star(x.n)}<span class="cc">${x.c}</span>${x.t?`<span class="tn">택${x.t}</span>`:''}</span>`).join('')+'</div>'}).join('');
-  let h='<div class="tw"><table class="m tbl"><tr><th>교과(군)</th>'+S.map(x=>`<th class="sc">${x}</th>`).join('')+'</tr>';
-  cats.forEach(c=>{const cs=S.map(x=>cell(x,c));if(cs.every(v=>!v))return;h+=`<tr><td class="k">${c}</td>`+cs.map(v=>`<td>${v||'<span class="g no">–</span>'}</td>`).join('')+'</tr>'});
-  h+='<tr class="tot"><td class="k">학기별 학점</td>'+S.map(x=>`<td>1학기 ${semTot(x,g,'1')}학점<br>2학기 ${semTot(x,g,'2')}학점</td>`).join('')+'</tr>';
-  h+='<tr class="tot"><td class="k">고르는 과목 수</td>'+S.map(x=>`<td>${['1','2'].map(k=>Y[x][g][k].pk.map(p=>p[0]).reduce((a,b)=>a+b,0)).map((n,i)=>`${i+1}학기 ${n}과목`).join('<br>')}</td>`).join('')+'</tr>';
-  document.getElementById('view').innerHTML=h+'</table></div><p class="legend">파란 칸은 모두 이수하는 지정과목, 회색 칸은 묶음에서 고르는 선택과목입니다. 숫자는 학점, <b>택n</b>은 같은 묶음에서 n과목을 고른다는 뜻입니다. 학기마다 묶음이 여러 개라 같은 교과에도 택n이 다르게 붙을 수 있습니다. 대학을 선택하면 권장과목에 테두리가 생깁니다.</p>';
+  const S=INC5?SC:SC.filter(x=>x!=='신봉고');
+  const chip=(n,c,fx)=>`<span class="chip ${fx?'fx':''} ${REC.has(norm(n))?'rc':''}">${esc(n)}${star(n)}<span class="cc">${c}</span></span>`;
+  const cell=(s,k)=>{const y=Y[s][g][k],c=CR[s][g][k];
+    let fx=y.fx.map((n,i)=>[n,c.f[i]]);if(HIDE)fx=fx.filter(x=>isReq(x[0]));
+    let h=`<div class="chips">${fx.map(x=>chip(x[0],x[1],1)).join('')}</div>`;
+    y.pk.forEach((p,i)=>{let it=p[1];if(HIDE)it=it.filter(isReq);if(!it.length)return;h+=`<div class="pick"><b>택${p[0]} · 과목당 ${c.p[i]}학점 (${p[0]*c.p[i]}학점) · ${HIDE?'수능 과목 '+it.length+'개만 표시(전체 '+p[1].length+'개 중)':p[1].length+'개 중'}</b><div class="chips">${it.map(n=>chip(n,c.p[i],0)).join('')}</div></div>`});
+    return h};
+  let h='<div class="tw"><table class="m tbl"><tr><th></th>'+S.map(x=>`<th class="sc">${x}</th>`).join('')+'</tr>';
+  ['1','2'].forEach(k=>{h+=`<tr><td class="k">${k}학기</td>`+S.map(x=>`<td>${cell(x,k)}<div class="tt">${semTot(x,g,k)}학점</div></td>`).join('')+'</tr>'});
+  document.getElementById('view').innerHTML=h+'</table></div><p class="legend">파란 칸은 모두 이수하는 지정과목이고, 점선 상자는 그 안에서 택n 과목을 고르는 선택 묶음입니다. 숫자는 학점입니다. 대학을 선택하면 권장과목에 테두리가 생깁니다.</p>';
 }
 function view(g){
   CURG=g;
@@ -593,7 +595,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='1.7.0',VDATE='2026-10-19';
+const VERSION='1.7.1',VDATE='2026-10-19';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
