@@ -105,10 +105,19 @@ tr.rec td{background:var(--accent-soft)}
 .ver{color:var(--muted);font-size:12px;margin-top:12px}
 .newver{display:none;background:var(--warn-bg);color:var(--warn-fg);border-radius:6px;padding:10px 14px;font-size:14px;margin-bottom:16px}
 .newver button{font:inherit;font-size:13px;margin-left:10px;padding:3px 12px;border:1px solid currentColor;border-radius:5px;background:none;color:inherit;cursor:pointer}
+.mq{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:10px}
+.mq input{font:inherit;font-size:15px;padding:9px 12px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--fg);flex:1 1 240px;min-width:0}
+.mres{display:grid;gap:8px;margin-bottom:6px}
+.mres button{font:inherit;text-align:left;background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:6px;padding:9px 12px;cursor:pointer;display:grid;gap:2px}
+.mres button:hover{border-color:var(--accent)}
+.mres button.all{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.mres small{color:var(--muted);font-size:12px}
+.mres button.all small{color:var(--bg);opacity:.85}
 </style>
 
 </head>
 <body>
+<datalist id="mdl"></datalist>
 <div class="wrap">
   <div class="newver" id="newver" role="status">새 버전이 있습니다. <button type="button" id="reload">새로고침</button></div>
   <h1>수지구 고교 교과과목 비교</h1>
@@ -127,6 +136,13 @@ tr.rec td{background:var(--accent-soft)}
   </section>
 
   <section>
+    <h2>전공으로 찾기</h2>
+    <p class="hint">전공(학과) 이름을 입력하면 그 전공을 모집하는 대학과 권장과목이 나옵니다. 대학을 누르면 아래 "대학·학과별 유리한 과목"과 과목별 개설 비교 표에 권장과목이 표시됩니다.</p>
+    <div class="mq"><input type="search" id="mq" list="mdl" placeholder="전공 입력 (예: 화학공학, 경영학, 컴퓨터, 간호)" aria-label="전공 검색"></div>
+    <div class="mres" id="mres"></div>
+  </section>
+
+  <section id="usec">
     <h2>대학·학과별 유리한 과목</h2>
     <p class="hint">수도권 대학을 고르면, 그 대학이 권장하는 과목을 학교별로 얼마나 들을 수 있는지 보여 줍니다. 2·3학년 편제표 기준입니다.</p>
     <div class="uf">
@@ -178,7 +194,7 @@ tr.rec td{background:var(--accent-soft)}
     <li>신봉고: 학교 교육과정 편성운영 계획서 3쪽</li>
     <li>서원고: 학교교육과정 편성·운영·평가 계획 8쪽</li>
     <li>용인홍천고: 학교교육과정 편성·운영·평가 계획(공시용) 6쪽, 저해상도 이미지</li>
-    <li>대학·학과별 권장과목: 2026 진학지도자료집(수학 「대학별 이수 권장 과목 예시」, 영어 「2028학년도 수도권 대학별 권장과목」, 세종대 첨단학과 상담 예시)</li>
+    <li>대학·학과별 권장과목과 간호·보건 선택과목: 2026 진학지도자료집(수학 「대학별 이수 권장 과목 예시」, 영어 「2028학년도 수도권 대학별 권장과목」, 세종대 첨단학과 상담 예시)</li>
     <li>성균관대: 2028학년도 입학전형 시행계획(2026.4), 2027학년도 수시·정시 모집요강. 권장과목 지정은 없고 참고 내용만 정리</li>
   </ul>
   <p class="ver" id="ver"></p>
@@ -322,6 +338,7 @@ const SM='진학지도자료집 수학: 대학별 이수 권장 과목 예시';
 const SE='진학지도자료집 영어: 2028학년도 수도권 대학별 권장과목';
 const SS='진학지도자료집: 세종대 첨단학과 상담 준비 예시';
 const SK='성균관대 2028학년도 입학전형 시행계획, 2027학년도 수시·정시 모집요강';
+const SB='진학지도자료집 215쪽 「간호·보건 계열 선택과목 안내」(서울시교육청 2022 개정 선택과목 안내서 기준, 예시이며 "등"으로 줄여 적은 목록)';
 const ENG={l:'영어 교과 과목 (영어Ⅰ·Ⅱ와 선택과목)',cat:'영어'};
 const INF={l:'정보 교과 (컴퓨터과학·알고리즘 관련)',cat:'기술·가정/정보'};
 const UNIV=[
@@ -345,7 +362,13 @@ const UNIV=[
  {c:'성균관대',u:'자연과학·공학계열 (화학공학부·신소재·기계 등)',d:'자연과학계열(생명과학·수학·물리·화학 등)과 공학계열(화학공학부·신소재공학부·기계공학부·건설환경공학부·시스템경영공학과·나노공학과). 올려주신 자료에는 모집단위별 권장 이수 과목이 없습니다.',s:SK,r:[],
   notes:['2028 시행계획과 2027 모집요강 모두 권장·핵심 과목을 지정하지 않았습니다. 그래서 학교별 개설 비교는 하지 않습니다.','학생부종합 평가 항목 중 탐구역량에 "도전적인 선택과목 이수 노력"이 들어 있습니다. 어떤 과목인지는 정해져 있지 않습니다.','2027학년도 정시는 자연과학·공학계열에서 과학탐구 선택자에게 가산점(최대 5%)을 줄 수 있다고 안내합니다. 가군은 수학 비중이 큽니다(수학 우수 영역 40·30).','2027학년도 수시 수리논술은 수학, 수학Ⅰ, 수학Ⅱ에서 3문제를 냅니다. 과학인재 면접은 수학(미적분·확률과 통계·기하 포함)과 과학(통합과학, 물리학·화학·생명과학 Ⅰ·Ⅱ)에서 제시문을 줍니다.','2028학년도부터 논술위주·학생부 전형의 수능최저는 사회·과학 두 과목 등급을 각각 적용합니다(의예과만 평균).','위 2027 내용은 현 고3 기준(2015 개정 과목명)이라, 2022 개정 과목으로 치르는 2028학년도 이후 입시와는 다를 수 있습니다.']},
  {c:'성균관대',u:'인문·사회·경영 (경영학과, 글로벌경제·경영 등)',d:'인문과학·사회과학계열, 경영학과, 글로벌리더·글로벌경제·글로벌경영학과. 권장 이수 과목은 자료에 없습니다.',s:SK,r:[],
-  notes:['2028 시행계획과 2027 모집요강 모두 권장·핵심 과목을 지정하지 않았습니다.','2027학년도 정시는 사회과학계열·경영학과·글로벌경제학과·글로벌경영학과에서 미적분 선택자에게 가산점(최대 3%)을 줄 수 있다고 안내합니다.','학생부종합의 "도전적인 선택과목 이수 노력" 평가 항목은 자연계열과 같습니다.','2027학년도 수리논술은 수학Ⅰ·Ⅱ 범위이고, 언어형 논술은 별도입니다.']}
+  notes:['2028 시행계획과 2027 모집요강 모두 권장·핵심 과목을 지정하지 않았습니다.','2027학년도 정시는 사회과학계열·경영학과·글로벌경제학과·글로벌경영학과에서 미적분 선택자에게 가산점(최대 3%)을 줄 수 있다고 안내합니다.','학생부종합의 "도전적인 선택과목 이수 노력" 평가 항목은 자연계열과 같습니다.','2027학년도 수리논술은 수학Ⅰ·Ⅱ 범위이고, 언어형 논술은 별도입니다.']},
+ {c:'전공별 안내(대학 무관)',u:'간호학과',d:'대학이 아니라 전공 계열 기준의 과목 선택 안내입니다. 모든 대학에 같은 요건이 있다는 뜻이 아닙니다. 화학·생명과학 중심 이수를 안내합니다.',s:SB,r:['대수','미적분Ⅰ','확률과 통계','화학','생명과학','미적분Ⅱ','윤리와 사상','인문학과 윤리','물질과 에너지','화학 반응의 세계','세포와 물질대사','생물의 유전','인공지능 기초','현대사회와 윤리','데이터 과학','보건','융합과학 탐구']},
+ {c:'전공별 안내(대학 무관)',u:'치위생학과',d:'대학이 아니라 전공 계열 기준의 과목 선택 안내입니다. 모든 대학에 같은 요건이 있다는 뜻이 아닙니다. ',s:SB,r:['대수','미적분Ⅰ','확률과 통계','물리학','화학','생명과학','역학과 에너지','물질과 에너지','세포와 물질대사','화학 반응의 세계','생물의 유전','인공지능 기초','데이터 과학','보건','과학의 역사와 문화','융합과학 탐구']},
+ {c:'전공별 안내(대학 무관)',u:'물리치료학과',d:'대학이 아니라 전공 계열 기준의 과목 선택 안내입니다. 모든 대학에 같은 요건이 있다는 뜻이 아닙니다. ',s:SB,r:['대수','미적분Ⅰ','확률과 통계','물리학','화학','생명과학','현대사회와 윤리','미적분Ⅱ','세포와 물질대사','생물의 유전','법과 사회','스포츠과학','인공지능 기초','보건','과학의 역사와 문화']},
+ {c:'전공별 안내(대학 무관)',u:'임상병리학과',d:'대학이 아니라 전공 계열 기준의 과목 선택 안내입니다. 모든 대학에 같은 요건이 있다는 뜻이 아닙니다. ',s:SB,r:['대수','미적분Ⅰ','물리학','확률과 통계','화학','생명과학','현대사회와 윤리','물질과 에너지','화학 반응의 세계','세포와 물질대사','생물의 유전','법과 사회','보건','과학의 역사와 문화']},
+ {c:'전공별 안내(대학 무관)',u:'작업치료학과',d:'대학이 아니라 전공 계열 기준의 과목 선택 안내입니다. 모든 대학에 같은 요건이 있다는 뜻이 아닙니다. ',s:SB,r:['대수','미적분Ⅰ','확률과 통계','물리학','화학','생명과학','현대사회와 윤리','세포와 물질대사','생물의 유전','법과 사회','스포츠과학',{l:'인간의 심리',any:['인간과 심리']},'보건','과학의 역사와 문화','융합과학 탐구']},
+ {c:'전공별 안내(대학 무관)',u:'응급구조학과',d:'대학이 아니라 전공 계열 기준의 과목 선택 안내입니다. 모든 대학에 같은 요건이 있다는 뜻이 아닙니다. ',s:SB,r:['대수','미적분Ⅰ','확률과 통계','화학','생명과학','현대사회와 윤리','세포와 물질대사','생물의 유전','법과 사회','보건','과학의 역사와 문화']}
 ];
 const IDX={};
 SC.forEach(sc=>{IDX[sc]={};[2,3].forEach(g=>{for(const k of ['1','2']){const sm=Y[sc][g][k];
@@ -412,6 +435,9 @@ function setRec(c,u){
 function uniRender(){
   const c=document.getElementById('uc').value,i=+document.getElementById('uu').value;
   const list=UNIV.filter(x=>x.c===c),u=list[i];if(!u)return;
+  renderUnit(c,u);
+}
+function renderUnit(c,u){
   setRec(c,u);
   document.getElementById('udet').innerHTML=`<b>${esc(c)} ${esc(u.u)}</b><br>${esc(u.d)}<br>권장 과목: ${u.r.map(x=>esc(lab(x))).join(', ')}<br>출처: ${esc(u.s)}`;
   if(!u.r.length){document.getElementById('udet').innerHTML=`<b>${esc(c)} ${esc(u.u)}</b><br>${esc(u.d)}<br>출처: ${esc(u.s)}`;document.getElementById('ures').innerHTML='<div class="card" style="grid-column:1/-1"><header><h3>권장과목 지정 없음</h3><span>학교별 비교 불가</span></header><ul class="fit">'+u.notes.map(t=>`<li><span class="mk">&bull;</span><span class="nm">${esc(t)}</span></li>`).join('')+'</ul></div>';return}
@@ -430,8 +456,82 @@ function uniUnits(){
 document.getElementById('uc').innerHTML=[...new Set(UNIV.map(x=>x.c))].map(c=>`<option>${esc(c)}</option>`).join('');
 document.getElementById('uc').onchange=uniUnits;document.getElementById('uu').onchange=uniRender;
 uniUnits();
+const TAGS=[
+ ['생명과학','물리학','화학','지구환경과학','신소재공학','건축사회환경공학','건축학','기계공학','산업경영공학','반도체공학','융합에너지공학','차세대통신','의학','간호','보건','가정교육'],
+ ['수학','전기전자공학','화공생명공학','수학교육','정보','스마트보안','컴퓨터'],
+ ['경제학','식품산업관리','국제통상','경찰사법','경영학'],
+ ['이과대학','바이오시스템','공과대학','첨단융합','수학교육','약학'],
+ ['영어영문','경영학','인문'],
+ ['자연과학대학','공과대학','농업생명','수학교육','물리교육','화학교육','생물교육','지구과학교육','식품영양','의류','수의','약학','의학','첨단융합'],
+ ['간호','치의학'],
+ ['문과대학','사범대학','인문'],
+ ['국어국문','영어산업','미디어커뮤니케이션','산업심리','동북아문화산업'],
+ ['행정학','법학','국제학','경영학','국제통상'],
+ ['광고홍보','미디어광고'],
+ ['인문사회','유아교육'],
+ ['경영학','영어영문','철학','행정학','국제관계','사회복지','세무','중국어문화','도시행정','도시사회','건축공학','도시공학','조경','자유전공'],
+ ['경제학','국어국문','자유전공'],
+ ['인문대학','법학','자유전공'],
+ ['양자지능정보','양자','컴퓨터','정보'],
+ ['스마트생명산업융합','생명','농업'],
+ ['화학공학','신소재공학','기계공학','건설환경공학','시스템경영공학','나노공학','생명과학','수학','물리학','화학','자연과학','공학'],
+ ['경영학','경제학','인문과학','사회과학','글로벌경제','글로벌경영','글로벌리더'],
+ ['간호'],['치위생','보건'],['물리치료','보건'],['임상병리','보건'],['작업치료','보건'],['응급구조','보건']
+];
+if(TAGS.length!==UNIV.length)console.error('TAGS 개수 불일치');
+UNIV.forEach((x,i)=>x.m=TAGS[i]||[]);
+function keysOf(q){
+  const k=new Set([q]);
+  if(/공학/.test(q)){k.add('공과대학');if(/화학|화공|화생/.test(q)){k.add('화공생명');k.add('화학생물')}}
+  else if(/물리|화학|생명|수학|지구|천문|통계/.test(q)){k.add('자연과학대학');k.add('이과대학')}
+  if(/컴퓨터|소프트웨어|인공지능|AI|데이터|코딩/i.test(q)){k.add('정보');k.add('컴퓨터')}
+  if(/경영|경제|무역|회계|금융/.test(q)){k.add('경영학');k.add('경제학')}
+  if(/(^|[^치])의예|의대|(^|[^치])의학|한의/.test(q))k.add('의학');
+  if(/약학|약대/.test(q))k.add('약학');
+  if(/치의|치과/.test(q))k.add('치의학');
+  if(/영어|국어|사범|교육/.test(q))k.add('사범대학');
+  return [...k].filter(x=>x.length>=2).map(norm);
+}
+function matchUnits(q){
+  const ks=keysOf(norm(q));if(!ks.length)return[];
+  const out=[];
+  UNIV.forEach((u,idx)=>{
+    const hit=u.m.filter(t=>{const nt=norm(t);return ks.some(k=>nt.includes(k)||(nt.length>=3&&k.includes(nt)))});
+    if(hit.length)out.push({u,idx,hit});
+  });
+  return out;
+}
+function findMajor(){
+  const q=document.getElementById('mq').value.trim(),box=document.getElementById('mres');
+  if(!q){box.innerHTML='';return}
+  const res=matchUnits(q);
+  if(!res.length){box.innerHTML='<div class="udet">이 전공과 연결된 모집단위가 자료에 없습니다. 자료집에 실린 대학과 모집단위만 들어 있습니다. 위의 목록에서 비슷한 이름으로 입력해 보세요.</div>';return}
+  const un=[];const seen=new Set();
+  res.forEach(r=>r.u.r.forEach(it=>{const k=lab(it);if(!seen.has(k)){seen.add(k);un.push(it)}}));
+  let h='';
+  if(un.length)h+=`<button type="button" class="all" data-all="1">검색된 대학 전체의 권장과목 합산 보기<small>권장과목 ${un.length}개 · 학교별 이수 가능 여부와 표시가 한 번에 나옵니다</small></button>`;
+  res.forEach(r=>{
+    h+=`<button type="button" data-i="${r.idx}"><span><b>${esc(r.u.c)}</b> ${esc(r.u.u)}</span><small>${r.u.r.length?'권장: '+esc(r.u.r.map(lab).join(', ')):'권장과목 지정 없음 (참고 내용만)'} · 일치: ${esc(r.hit.slice(0,3).join(', '))}</small></button>`;
+  });
+  box.innerHTML=h;
+  box.onclick=e=>{
+    const b=e.target.closest('button');if(!b)return;
+    if(b.dataset.all){
+      const u={c:'전공 합산',u:q+' 관련 '+res.length+'개 모집단위',d:'검색된 모집단위의 권장과목을 모두 합쳤습니다. 합산 목록에는 서로 다른 대학의 권장이 섞여 있으므로 지원 대학을 정하면 위에서 개별로 보세요.',s:'각 대학 자료(아래 출처 참조)',r:un};
+      renderUnit('전공 합산',u);
+    }else{
+      const x=UNIV[+b.dataset.i];
+      document.getElementById('uc').value=x.c;uniUnits();
+      const li=UNIV.filter(y=>y.c===x.c).indexOf(x);
+      document.getElementById('uu').value=String(li);uniRender();
+    }
+    document.getElementById('usec').scrollIntoView({behavior:'smooth',block:'start'});
+  };
+}
+document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
+document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='1.1.0',VDATE='2026-10-19';
+const VERSION='1.2.0',VDATE='2026-10-19';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
