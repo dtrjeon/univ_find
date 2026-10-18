@@ -59,6 +59,9 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 .sem h4{margin:0 0 6px;font-size:13px;color:var(--accent)}
 .chips{display:flex;flex-wrap:wrap;gap:5px}
 .chip{background:var(--chip);border-radius:4px;padding:2px 8px;font-size:13px;line-height:1.5}
+.sem h4 em{font-style:normal;float:right;color:var(--muted,#666);font-weight:400}
+.chip .cc{margin-left:5px;font-size:11px;opacity:.7}
+.chip .cc::after{content:'학점'}
 .chip.fx{background:var(--accent-soft);font-weight:500}
 .pick{border:1px dashed var(--line);background:var(--pick);border-radius:5px;padding:6px 8px;margin-top:6px}
 .pick b{display:block;font-size:12px;color:var(--muted);font-weight:500;margin-bottom:4px}
@@ -117,6 +120,7 @@ tr.rec td{background:var(--accent-soft)}
 
 </head>
 <body>
+
 <datalist id="mdl"></datalist>
 <div class="wrap">
   <div class="newver" id="newver" role="status">새 버전이 있습니다. <button type="button" id="reload">새로고침</button></div>
@@ -250,6 +254,15 @@ const Y={
      '2':{fx:['스포츠과학','생애 설계와 자립'],pk:[[8,['매체 의사소통','언어생활탐구','수학과 문화','실용통계','이산 수학','세계문화와 영어','인문학과 윤리','금융과 경제생활','기후변화와 지속가능한 세계','현대 세계의 변화','과학의 역사와 문화','기후변화와 환경생태','융합과학 탐구','음악과 미디어','드로잉','인간과 심리','데이터 과학']]]}}
  }
 };
+// 학점(배점): 지정과목 fx 순서대로 f, 선택묶음 pk 순서대로 과목당 학점 p
+const CR={
+ 수지고:{2:{'1':{f:[4,4,4,1],p:[4,3]},'2':{f:[4,4,4,1],p:[4,3]}},3:{'1':{f:[3,3,3,2],p:[3,3,3,3]},'2':{f:[2],p:[3,3,3,3]}}},
+ 신봉고:{2:{'1':{f:[4,4,4,2],p:[3,3,3]},'2':{f:[4,4,4,2],p:[3,3,3]}},3:{'1':{f:[3,3,3,2],p:[3,3,3]},'2':{f:[3,3,3,2],p:[3,3,3]}}},
+ 용인홍천고:{2:{'1':{f:[3,4,3,3,2,2],p:[3,3]},'2':{f:[3,4,3,3,2,2],p:[3,3]}},3:{'1':{f:[3,2],p:[3,3]},'2':{f:[2],p:[3,3]}}},
+ 성복고:{2:{'1':{f:[4,4,4,2],p:[3,3,3]},'2':{f:[4,4,4,2],p:[3,3,3]}},3:{'1':{f:[3,3,3,1,2],p:[3,3,3]},'2':{f:[3,3,3,1],p:[3,3,3]}}},
+ 서원고:{2:{'1':{f:[2,4,4,4],p:[3,3,3]},'2':{f:[2,4,4,4],p:[3,3,3]}},3:{'1':{f:[2,4,4,4],p:[3]},'2':{f:[2,1],p:[3]}}}
+};
+const semTot=(s,g,k)=>{const c=CR[s][g][k],y=Y[s][g][k];return c.f.reduce((a,b)=>a+b,0)+y.pk.reduce((a,p,i)=>a+p[0]*c.p[i],0)};
 const norm=s=>s.replace(/[\s·★♥♡▶()\-]/g,'').replace(/I{2}/g,'Ⅱ');
 const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
 function names(sc,g){const o=new Set();for(const sem of Object.values(Y[sc][g])){sem.fx.forEach(x=>o.add(x));sem.pk.forEach(p=>p[1].forEach(x=>o.add(x)))}return o}
@@ -282,7 +295,7 @@ const REQ=new Set(['공통국어1·2','공통수학1·2','공통영어1·2','한
 const star=n=>REQ.has(norm(n))?'':'<span class="star" title="수능 필수 과목 아님">*</span>';
 let HIDE=false,CURG=1;
 const isReq=n=>REQ.has(norm(n));
-function chips(a,c){if(HIDE)a=a.filter(isReq);return a.map(x=>`<span class="chip ${c||''}">${esc(x)}${star(x)}</span>`).join('')}
+function chips(a,c,cr){const o=a.map((x,i)=>[x,cr?cr[i]:null]);return (HIDE?o.filter(x=>isReq(x[0])):o).map(x=>`<span class="chip ${c||''}">${esc(x[0])}${star(x[0])}${x[1]!=null?`<span class="cc">${x[1]}</span>`:''}</span>`).join('')}
 function view(g){
   CURG=g;
   const el=document.getElementById('view');
@@ -306,8 +319,9 @@ function view(g){
     if(Y[s].vnote&&g===3)h+=`<div class="note">${Y[s].vnote}</div>`;
     ['1','2'].forEach(k=>{
       const sm=d[k];
-      h+=`<div class="sem"><h4>${k}학기</h4><div class="chips">${chips(sm.fx,'fx')}</div>`;
-      sm.pk.forEach(p=>{const sh=HIDE?p[1].filter(isReq):p[1];if(!sh.length)return;h+=`<div class="pick"><b>${p[0]}과목 선택 · ${HIDE?'수능 과목 '+sh.length+'개만 표시(전체 '+p[1].length+'개 중)':p[1].length+'개 중'}</b><div class="chips">${chips(p[1])}</div></div>`});
+      const c=CR[s][g][k];
+      h+=`<div class="sem"><h4>${k}학기<em>${semTot(s,g,k)}학점</em></h4><div class="chips">${chips(sm.fx,'fx',c.f)}</div>`;
+      sm.pk.forEach((p,i)=>{const sh=HIDE?p[1].filter(isReq):p[1];if(!sh.length)return;const cc=c.p[i];h+=`<div class="pick"><b>${p[0]}과목 선택 · 과목당 ${cc}학점 (${p[0]*cc}학점) · ${HIDE?'수능 과목 '+sh.length+'개만 표시(전체 '+p[1].length+'개 중)':p[1].length+'개 중'}</b><div class="chips">${chips(p[1])}</div></div>`});
       h+='</div>';
     });
     h+='</div>';
@@ -549,7 +563,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='1.4.0',VDATE='2026-10-19';
+const VERSION='1.5.0',VDATE='2026-10-19';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
