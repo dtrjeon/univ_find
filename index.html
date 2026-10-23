@@ -161,6 +161,7 @@ tr.rec td{background:var(--accent-soft)}
     <div class="uf">
       <label>대학<select id="uc"></select></label>
       <label>모집단위(학과)<select id="uu"></select></label>
+      <label>관련 학교<select id="us"><option value="">전체 학교 비교</option><option>수지고</option><option>신봉고</option><option>용인홍천고</option><option>성복고</option><option>서원고</option></select></label>
     </div>
     <div class="udet" id="udet"></div>
     <div class="cards" id="ures"></div>
@@ -506,11 +507,12 @@ function renderUnit(c,u){
   setRec(c,u);
   document.getElementById('udet').innerHTML=`<b>${esc(c)} ${esc(u.u)}</b><br>${esc(u.d)}<br>권장 과목: ${u.r.map(x=>esc(lab(x))).join(', ')}<br>출처: ${esc(u.s)}`;
   if(!u.r.length){document.getElementById('udet').innerHTML=`<b>${esc(c)} ${esc(u.u)}</b><br>${esc(u.d)}<br>출처: ${esc(u.s)}`;document.getElementById('ures').innerHTML='<div class="card" style="grid-column:1/-1"><header><h3>권장과목 지정 없음</h3><span>학교별 비교 불가</span></header><ul class="fit">'+u.notes.map(t=>`<li><span class="mk">&bull;</span><span class="nm">${esc(t)}</span></li>`).join('')+'</ul></div>';return}
-  const plans=SC.map(sc=>planOf(sc,u));
+  const sel=document.getElementById('us').value,SU=sel?[sel]:SC;
+  const plans=SU.map(sc=>planOf(sc,u));
   const ns=plans.map(okN),mx=Math.max(...ns),tot=u.r.length;
-  const cards=SC.map((sc,i)=>{let h=fitCard(sc,u,plans[i]);return ns[i]===mx&&ns.some(v=>v!==mx)?h.replace('</h3>','</h3><span class="best">이수 가장 많음</span>'):h});
-  const bs=SC.filter((sc,i)=>ns[i]===mx);
-  const v=ns.every(x=>x===mx)?`다섯 학교 모두 권장 ${tot}개 중 ${mx}개를 이수할 수 있어 개설 과목 수로는 차이가 없습니다. 선택 묶음의 경쟁(택1 대 택6)이 다른 점을 보세요.`:`권장 ${tot}개를 가장 많이 이수할 수 있는 학교는 ${bs.join(', ')}(${mx}개)입니다.`;
+  const cards=SU.map((sc,i)=>{let h=fitCard(sc,u,plans[i]);return ns[i]===mx&&ns.some(v=>v!==mx)?h.replace('</h3>','</h3><span class="best">이수 가장 많음</span>'):h});
+  const bs=SU.filter((sc,i)=>ns[i]===mx);
+  const v=sel?`${sel}에서는 권장 ${tot}개 중 ${mx}개를 이수할 수 있습니다.`:ns.every(x=>x===mx)?`다섯 학교 모두 권장 ${tot}개 중 ${mx}개를 이수할 수 있어 개설 과목 수로는 차이가 없습니다. 선택 묶음의 경쟁(택1 대 택6)이 다른 점을 보세요.`:`권장 ${tot}개를 가장 많이 이수할 수 있는 학교는 ${bs.join(', ')}(${mx}개)입니다.`;
   document.getElementById('ures').innerHTML=`<div class="udet" style="grid-column:1/-1;margin:0;color:var(--fg)">${esc(v)}</div>`+cards.join('');
 }
 function uniReset(){
@@ -527,7 +529,7 @@ function uniUnits(){
   uniRender();
 }
 document.getElementById('uc').innerHTML='<option value="">대학 선택</option>'+[...new Set(UNIV.map(x=>x.c))].map(c=>`<option>${esc(c)}</option>`).join('');
-document.getElementById('uc').onchange=uniUnits;document.getElementById('uu').onchange=uniRender;
+document.getElementById('uc').onchange=uniUnits;document.getElementById('uu').onchange=uniRender;document.getElementById('us').onchange=uniRender;
 uniUnits();
 const TAGS=[
  ['생명과학','물리학','화학','지구환경과학','신소재공학','건축사회환경공학','건축학','기계공학','산업경영공학','반도체공학','융합에너지공학','차세대통신','의학','간호','보건','가정교육'],
@@ -604,7 +606,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='1.8.1',VDATE='2026-10-23';
+const VERSION='1.9.0',VDATE='2026-10-23';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
