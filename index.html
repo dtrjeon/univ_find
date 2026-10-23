@@ -86,6 +86,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 .src li{margin:2px 0}
 mark{background:var(--warn-bg);color:var(--warn-fg);border-radius:2px}
 .star{color:var(--diff);font-weight:700;margin-left:1px}
+.sel{display:inline-block;margin-left:3px;font-size:10px;font-weight:700;color:var(--accent);border:1px solid var(--accent);border-radius:8px;padding:0 5px;vertical-align:1px;white-space:nowrap}
 .cat{white-space:nowrap;color:var(--muted);font-size:13px}
 .ctl select{font:inherit;font-size:14px;padding:7px 10px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--fg)}
 
@@ -185,6 +186,8 @@ tr.rec td{background:var(--accent-soft)}
     </div>
     <div class="ctl" id="inc5w"><label><input type="checkbox" id="inc5"> 신봉고도 함께 보기 <span class="sc-n">(2026 이미지가 없어 학교 PDF 기준)</span></label></div>
     <div class="ctl"><label><input type="checkbox" id="hs"> 수능과 상관없는 과목(*) 숨기기 <span class="sc-n">2·3학년</span></label></div>
+    <div class="ctl"><label><input type="checkbox" id="ss"> 과학 선택과목을 &lsquo;수능 선택&rsquo;으로 표시(숨기기에서 제외) <span class="sc-n">물리학·화학·생명과학·지구과학과 이어지는 과목</span></label></div>
+    <p class="hint">※ 2학년 선택과목의 물리학·화학·생명과학·지구과학이나 3학년 선택과목은 통합과학과는 별개의 선택 과목입니다. 이 과목들은 수능 필수가 아니어서 <span class="star">*</span>가 붙습니다. 다만 의약학·공학 계열은 대학이 권장과목으로 지정하는 경우가 많습니다.</p>
     <div id="view"></div>
   </section>
 
@@ -197,6 +200,7 @@ tr.rec td{background:var(--accent-soft)}
       <select id="cat" aria-label="교과(군)"><option value="">전체 교과(군)</option><option>국어</option><option>수학</option><option>영어</option><option>사회</option><option>과학</option><option>체육</option><option>예술</option><option>기술·가정/정보</option><option>제2외국어/한문</option><option>교양</option></select>
       <label><input type="checkbox" id="onlydiff"> 학교마다 다른 과목만 보기</label>
       <label><input type="checkbox" id="hp"> 수능과 상관없는 과목(*) 숨기기</label>
+      <label><input type="checkbox" id="sp"> 과학 선택과목을 &lsquo;수능 선택&rsquo;으로 표시(숨기기에서 제외)</label>
       <label><input type="checkbox" id="onlyrec"> 선택한 대학의 권장과목만 보기</label>
     </div>
     <p class="recinfo" id="recinfo"></p>
@@ -305,9 +309,13 @@ const CAT={};CATS.forEach(c=>CL[c].forEach(n=>CAT[norm(n)]=c));
 const catOf=n=>CAT[norm(n)]||'기타';
 // 2028학년도 수능 필수 출제 과목. 이 목록에 없으면 * 표시
 const REQ=new Set(['공통국어1·2','공통수학1·2','공통영어1·2','한국사1·2','통합사회1·2','통합과학1·2','화법과 언어','독서와 작문','문학','대수','미적분Ⅰ','확률과 통계','영어Ⅰ','영어Ⅱ'].map(norm));
-const star=n=>REQ.has(norm(n))?'':'<span class="star" title="수능 필수 과목 아님">*</span>';
+// 수능 선택으로 따로 표시할 수 있는 과학 선택과목(체크박스로 켜고 끔)
+const SELX=new Set(['물리학','화학','생명과학','지구과학','물리학Ⅱ','화학Ⅱ','생명과학Ⅱ','지구과학Ⅱ','역학과 에너지','물질과 에너지','세포와 물질대사','지구시스템과학','전자기와 양자','화학 반응의 세계','생물의 유전','행성우주과학'].map(norm));
+let SELON=false;
+const isSel=n=>SELON&&SELX.has(norm(n));
+const star=n=>REQ.has(norm(n))?'':isSel(n)?'<span class="sel" title="수능 선택으로 표시한 과목">선택</span>':'<span class="star" title="수능 필수 과목 아님">*</span>';
 let HIDE=false,CURG=1;
-const isReq=n=>REQ.has(norm(n));
+const isReq=n=>REQ.has(norm(n))||isSel(n);
 function chips(a,c,cr){const o=a.map((x,i)=>[x,cr?cr[i]:null]);return (HIDE?o.filter(x=>isReq(x[0])):o).map(x=>`<span class="chip ${c||''}">${esc(x[0])}${star(x[0])}${x[1]!=null?`<span class="cc">${x[1]}</span>`:''}</span>`).join('')}
 let MODE='tbl',INC5=false;
 function viewTbl(g){
@@ -386,6 +394,7 @@ function pres(){
 }
 document.getElementById('q').oninput=pres;document.getElementById('cat').onchange=pres;document.getElementById('onlydiff').onchange=pres;document.getElementById('onlyrec').onchange=pres;
 ['hs','hp'].forEach(id=>document.getElementById(id).onchange=e=>{HIDE=e.target.checked;document.getElementById('hs').checked=HIDE;document.getElementById('hp').checked=HIDE;view(CURG);pres()});
+['ss','sp'].forEach(id=>document.getElementById(id).onchange=e=>{SELON=e.target.checked;document.getElementById('ss').checked=SELON;document.getElementById('sp').checked=SELON;view(CURG);pres()});
 ['p2','p3'].forEach((id,i)=>document.getElementById(id).onclick=()=>{PGR=i+2;['p2','p3'].forEach((x,j)=>document.getElementById(x).setAttribute('aria-pressed',i===j));setRows();pres()});
 
 // ---- 대학·학과별 유리한 과목 (수도권, 진학지도자료집 기준) ----
@@ -595,7 +604,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='1.7.1',VDATE='2026-10-19';
+const VERSION='1.8.0',VDATE='2026-10-23';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
