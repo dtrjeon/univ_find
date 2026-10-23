@@ -143,6 +143,12 @@ tr.rec td{background:var(--accent-soft)}
   </div>
 
   <section>
+    <h2>비교할 고등학교</h2>
+    <p class="hint">체크한 학교만 아래 모든 표와 카드에 나옵니다. 하나는 항상 남아 있어야 합니다.</p>
+    <div class="ctl" id="scbar"><label><input type="checkbox" class="scb" value="수지고" checked> 수지고</label> <label><input type="checkbox" class="scb" value="신봉고" checked> 신봉고</label> <label><input type="checkbox" class="scb" value="용인홍천고" checked> 용인홍천고</label> <label><input type="checkbox" class="scb" value="성복고" checked> 성복고</label> <label><input type="checkbox" class="scb" value="서원고" checked> 서원고</label> <span class="sc-n">신봉고는 2026 이미지가 없어 학교 PDF 기준</span></div>
+  </section>
+
+  <section>
     <h2>한눈에 보기</h2>
     <p class="hint">선택 과목 수는 편제표에서 계산한 값입니다. 총 이수학점은 다섯 학교 모두 174학점입니다.</p>
     <div class="tw"><table id="sum"></table></div>
@@ -161,7 +167,6 @@ tr.rec td{background:var(--accent-soft)}
     <div class="uf">
       <label>대학<select id="uc"></select></label>
       <label>모집단위(학과)<select id="uu"></select></label>
-      <label>관련 학교<select id="us"><option value="">전체 학교 비교</option><option>수지고</option><option>신봉고</option><option>용인홍천고</option><option>성복고</option><option>서원고</option></select></label>
     </div>
     <div class="udet" id="udet"></div>
     <div class="cards" id="ures"></div>
@@ -185,7 +190,6 @@ tr.rec td{background:var(--accent-soft)}
       <button type="button" id="mv1" aria-pressed="true">비교표</button>
       <button type="button" id="mv2" aria-pressed="false">학교별 카드</button>
     </div>
-    <div class="ctl" id="inc5w"><label><input type="checkbox" id="inc5"> 신봉고도 함께 보기 <span class="sc-n">(2026 이미지가 없어 학교 PDF 기준)</span></label></div>
     <div class="ctl"><label><input type="checkbox" id="hs"> 수능과 상관없는 과목(*) 숨기기 <span class="sc-n">2·3학년</span></label></div>
     <div class="ctl"><label><input type="checkbox" id="ss"> 과학 선택과목을 &lsquo;수능 선택&rsquo;(**)으로 표시, 숨기기에서 제외 <span class="sc-n">물리학·화학·생명과학·지구과학과 이어지는 과목</span></label></div>
     <p class="hint">※ 2학년 선택과목의 물리학·화학·생명과학·지구과학이나 3학년 선택과목은 통합과학과는 별개의 선택 과목입니다. 이 과목들은 수능 필수가 아니어서 <span class="star">*</span>가 붙습니다. 다만 의약학·공학 계열은 대학이 권장과목으로 지정하는 경우가 많습니다. 위 체크박스를 켜면 과학 선택과목은 <span class="star">**</span>(수능 선택)로 표시됩니다.</p>
@@ -290,7 +294,7 @@ const LANG={수지고:'스페인어, 중국어',신봉고:'일본어, 중국어'
 function summary(){
   const t=document.getElementById('sum');
   let h='<tr><th>학교</th><th class="n">2학년 선택 풀</th><th class="n">2학년 고르는 수</th><th class="n">3학년 선택 풀</th><th class="n">3학년 고르는 수</th><th>제2외국어·한문</th></tr>';
-  SC.forEach(s=>{h+=`<tr><td><b>${s}</b></td><td class="n">${pool(s,2)}</td><td class="n">${picks(s,2)}</td><td class="n">${pool(s,3)}</td><td class="n">${picks(s,3)}</td><td>${LANG[s]}</td></tr>`});
+  SV().forEach(s=>{h+=`<tr><td><b>${s}</b></td><td class="n">${pool(s,2)}</td><td class="n">${picks(s,2)}</td><td class="n">${pool(s,3)}</td><td class="n">${picks(s,3)}</td><td>${LANG[s]}</td></tr>`});
   t.innerHTML=h;
 }
 // 교과(군) 대분류
@@ -318,13 +322,14 @@ const star=n=>REQ.has(norm(n))?'':isSel(n)?'<span class="star" title="수능 선
 let HIDE=false,CURG=1;const GSET=new Set([1]);
 const isReq=n=>REQ.has(norm(n))||isSel(n);
 function chips(a,c,cr){const o=a.map((x,i)=>[x,cr?cr[i]:null]);return (HIDE?o.filter(x=>isReq(x[0])):o).map(x=>`<span class="chip ${c||''}">${esc(x[0])}${star(x[0])}${x[1]!=null?`<span class="cc">${x[1]}</span>`:''}</span>`).join('')}
-let MODE='tbl',INC5=false;
+let MODE='tbl';
+const SSEL=new Set(SC);const SV=()=>SC.filter(x=>SSEL.has(x));
 // 1학년 학기별 편성: Y1(학기 합산 표기)에서 만든다
 const Y1S=(()=>{const o={};SC.forEach(s=>{o[s]={'1':[],'2':[]};Y1.rows.forEach((r,i)=>Y1.d[s][i].forEach(([nm,cr])=>{const m=/^(\d+)\+(\d+)$/.exec(cr||'');if(!m)return;const two=/1·2$/.test(nm),base=nm.replace(/1·2$/,'');o[s]['1'].push([two?base+'1':nm,+m[1]]);o[s]['2'].push([two?base+'2':nm,+m[2]])}))});
   o.수지고['1'].push(['음악(↔기술·가정)',2],['미술(↔기술·가정)',2]);o.수지고['2'].push(['기술·가정(↔음악·미술)',4]);return o})();
 const sum1=(s,k)=>Y1S[s][k].reduce((a,x)=>a+x[1],0);
 function viewTbl(G){
-  const S=INC5?SC:SC.filter(x=>x!=='신봉고');
+  const S=SV();
   const chip=(n,c,fx)=>`<span class="chip ${fx?'fx':''} ${REC.has(norm(n))?'rc':''}">${esc(n)}${star(n)}<span class="cc">${c}</span></span>`;
   const cell=(s,g,k)=>{
     if(g===1){let a=Y1S[s][k];if(HIDE)a=a.filter(x=>isReq(x[0]));return `<div class="chips">${a.map(x=>chip(x[0],x[1],1)).join('')}</div>`}
@@ -345,11 +350,11 @@ function view(){
 }
 function viewCard(g,el){
   if(g===1){
-    let h='<div class="tw"><table class="m"><tr><th>교과</th>'+SC.map(s=>`<th class="sc">${s}</th>`).join('')+'</tr>';
+    let h='<div class="tw"><table class="m"><tr><th>교과</th>'+SV().map(s=>`<th class="sc">${s}</th>`).join('')+'</tr>';
     Y1.rows.forEach((r,i)=>{
-      const txt=SC.map(s=>Y1.d[s][i].map(x=>x.join(' ')).join('|'));
+      const txt=SV().map(s=>Y1.d[s][i].map(x=>x.join(' ')).join('|'));
       const cnt={};txt.forEach(x=>cnt[x]=(cnt[x]||0)+1);const mx=Math.max(...Object.values(cnt));
-      h+=`<tr><td class="k">${r}</td>`+SC.map((s,j)=>{
+      h+=`<tr><td class="k">${r}</td>`+SV().map((s,j)=>{
         const diff=cnt[txt[j]]===1&&mx>1;
         return `<td class="cell ${diff?'diff':''}">`+Y1.d[s][i].map(x=>`<div>${esc(x[0])}${star(x[0])}</div>${x[1]?`<div class="cr">${esc(x[1])}학점</div>`:''}`).join('')+'</td>'}).join('')+'</tr>';
     });
@@ -357,7 +362,7 @@ function viewCard(g,el){
     el.innerHTML=h;return;
   }
   let h='<div class="cards">';
-  SC.forEach(s=>{
+  SV().forEach(s=>{
     const d=Y[s][g];
     h+=`<div class="card"><header><h3>${s}</h3><span>${g}학년</span></header>`;
     if(Y[s].warn)h+=`<div class="note">${Y[s].warn}</div>`;
@@ -375,8 +380,8 @@ function viewCard(g,el){
 }
 document.getElementById('mv1').onclick=()=>{MODE='tbl';document.getElementById('mv1').setAttribute('aria-pressed',true);document.getElementById('mv2').setAttribute('aria-pressed',false);view()};
 document.getElementById('mv2').onclick=()=>{MODE='card';document.getElementById('mv2').setAttribute('aria-pressed',true);document.getElementById('mv1').setAttribute('aria-pressed',false);view()};
-document.getElementById('inc5').onchange=e=>{INC5=e.target.checked;view()};
 ['t1','t2','t3'].forEach((id,i)=>document.getElementById(id).onclick=()=>{const g=i+1;if(GSET.has(g)){if(GSET.size===1)return;GSET.delete(g)}else GSET.add(g);['t1','t2','t3'].forEach((x,j)=>document.getElementById(x).setAttribute('aria-pressed',GSET.has(j+1)));view()});
+document.querySelectorAll('.scb').forEach(cb=>cb.onchange=()=>{if(cb.checked)SSEL.add(cb.value);else if(SSEL.size>1)SSEL.delete(cb.value);else cb.checked=true;summary();view();pres();uniRender()});
 // presence
 let REC=new Set();let RECLAB='';
 const PG={2:{},3:{}};let PGS=new Set([2]);let ROWS=[];
@@ -385,10 +390,11 @@ function setRows(){const m={};[...PGS].sort().forEach(g=>Object.entries(PG[g]).f
 const fmtSem=e=>{const by={};[...e].sort().forEach(x=>{const [g,k]=x.split('|');(by[g]=by[g]||[]).push(k)});return Object.keys(by).map(g=>(PGS.size>1?g+'학년 ':'')+by[g].join('·')+'학기').join('<br>')};
 function pres(){
   const q=norm(document.getElementById('q').value||''),od=document.getElementById('onlydiff').checked;
-  let h='<tr><th>교과(군)</th><th>과목</th>'+SC.map(s=>`<th class="c">${s}</th>`).join('')+'</tr>',n=0;
+  let h='<tr><th>교과(군)</th><th>과목</th>'+SV().map(s=>`<th class="c">${s}</th>`).join('')+'</tr>',n=0;
   ROWS.forEach(r=>{
-    const all=SC.every(s=>r.s[s]);
-    if(od&&all&&SC.every(s=>[...r.s[s]].sort().join()===[...r.s[SC[0]]].sort().join()))return;
+    const SS=SV(),all=SS.every(s=>r.s[s]);
+    if(od&&all&&SS.every(s=>[...r.s[s]].sort().join()===[...r.s[SS[0]]].sort().join()))return;
+    if(!SS.some(s=>r.s[s]))return;
     if(q&&!norm(r.n).includes(q))return;
     const cf=document.getElementById('cat').value;if(cf&&catOf(r.n)!==cf)return;
     if(HIDE&&!isReq(r.n))return;
@@ -397,7 +403,7 @@ function pres(){
     n++;
     let nm=esc(r.n);
     if(q){const i=norm(r.n).indexOf(q);if(r.n===norm(r.n)||!/[\s·]/.test(r.n))nm=esc(r.n.slice(0,i))+'<mark>'+esc(r.n.slice(i,i+q.length))+'</mark>'+esc(r.n.slice(i+q.length))}
-    h+=`<tr class="${isr?'rec':''}"><td class="cat">${catOf(r.n)}</td><td>${nm}${star(r.n)}${isr?'<span class="rtag">권장</span>':''}</td>`+SC.map(s=>{const e=r.s[s];return `<td class="c">${e?`<span class="g">${fmtSem(e)}</span>`:'<span class="g no">–</span>'}</td>`}).join('')+'</tr>';
+    h+=`<tr class="${isr?'rec':''}"><td class="cat">${catOf(r.n)}</td><td>${nm}${star(r.n)}${isr?'<span class="rtag">권장</span>':''}</td>`+SV().map(s=>{const e=r.s[s];return `<td class="c">${e?`<span class="g">${fmtSem(e)}</span>`:'<span class="g no">–</span>'}</td>`}).join('')+'</tr>';
   });
   document.getElementById('pres').innerHTML=h;
   document.getElementById('cnt').textContent=n+'개 과목 표시 (전체 '+ROWS.length+'개)';
@@ -516,12 +522,12 @@ function renderUnit(c,u){
   setRec(c,u);
   document.getElementById('udet').innerHTML=`<b>${esc(c)} ${esc(u.u)}</b><br>${esc(u.d)}<br>권장 과목: ${u.r.map(x=>esc(lab(x))).join(', ')}<br>출처: ${esc(u.s)}`;
   if(!u.r.length){document.getElementById('udet').innerHTML=`<b>${esc(c)} ${esc(u.u)}</b><br>${esc(u.d)}<br>출처: ${esc(u.s)}`;document.getElementById('ures').innerHTML='<div class="card" style="grid-column:1/-1"><header><h3>권장과목 지정 없음</h3><span>학교별 비교 불가</span></header><ul class="fit">'+u.notes.map(t=>`<li><span class="mk">&bull;</span><span class="nm">${esc(t)}</span></li>`).join('')+'</ul></div>';return}
-  const sel=document.getElementById('us').value,SU=sel?[sel]:SC;
+  const SU=SV(),one=SU.length===1,sel=one?SU[0]:'';
   const plans=SU.map(sc=>planOf(sc,u));
   const ns=plans.map(okN),mx=Math.max(...ns),tot=u.r.length;
   const cards=SU.map((sc,i)=>{let h=fitCard(sc,u,plans[i]);return ns[i]===mx&&ns.some(v=>v!==mx)?h.replace('</h3>','</h3><span class="best">이수 가장 많음</span>'):h});
   const bs=SU.filter((sc,i)=>ns[i]===mx);
-  const v=sel?`${sel}에서는 권장 ${tot}개 중 ${mx}개를 이수할 수 있습니다.`:ns.every(x=>x===mx)?`다섯 학교 모두 권장 ${tot}개 중 ${mx}개를 이수할 수 있어 개설 과목 수로는 차이가 없습니다. 선택 묶음의 경쟁(택1 대 택6)이 다른 점을 보세요.`:`권장 ${tot}개를 가장 많이 이수할 수 있는 학교는 ${bs.join(', ')}(${mx}개)입니다.`;
+  const v=sel?`${sel}에서는 권장 ${tot}개 중 ${mx}개를 이수할 수 있습니다.`:ns.every(x=>x===mx)?`선택한 ${SU.length}개 학교 모두 권장 ${tot}개 중 ${mx}개를 이수할 수 있어 개설 과목 수로는 차이가 없습니다. 선택 묶음의 경쟁(택1 대 택6)이 다른 점을 보세요.`:`권장 ${tot}개를 가장 많이 이수할 수 있는 학교는 ${bs.join(', ')}(${mx}개)입니다.`;
   document.getElementById('ures').innerHTML=`<div class="udet" style="grid-column:1/-1;margin:0;color:var(--fg)">${esc(v)}</div>`+cards.join('');
 }
 function uniReset(){
@@ -538,7 +544,7 @@ function uniUnits(){
   uniRender();
 }
 document.getElementById('uc').innerHTML='<option value="">대학 선택</option>'+[...new Set(UNIV.map(x=>x.c))].map(c=>`<option>${esc(c)}</option>`).join('');
-document.getElementById('uc').onchange=uniUnits;document.getElementById('uu').onchange=uniRender;document.getElementById('us').onchange=uniRender;
+document.getElementById('uc').onchange=uniUnits;document.getElementById('uu').onchange=uniRender;
 uniUnits();
 const TAGS=[
  ['생명과학','물리학','화학','지구환경과학','신소재공학','건축사회환경공학','건축학','기계공학','산업경영공학','반도체공학','융합에너지공학','차세대통신','의학','간호','보건','가정교육'],
@@ -615,7 +621,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='1.10.0',VDATE='2026-10-23';
+const VERSION='1.11.0',VDATE='2026-10-23';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
