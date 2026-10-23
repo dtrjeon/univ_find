@@ -176,7 +176,7 @@ tr.rec td{background:var(--accent-soft)}
 
   <section>
     <h2>학년별 과목</h2>
-    <div class="seg" role="group" aria-label="학년">
+    <div class="seg" role="group" aria-label="학년(여러 개 선택 가능)">
       <button type="button" id="t1" aria-pressed="true">1학년</button>
       <button type="button" id="t2" aria-pressed="false">2학년</button>
       <button type="button" id="t3" aria-pressed="false">3학년</button>
@@ -230,7 +230,7 @@ const P=(n,...items)=>({n,items});
 const Y1={
  rows:['국어','수학','영어','한국사','통합사회','통합과학·탐구실험','체육','음악·미술','기술·가정·정보·한문'],
  d:{
-  수지고:[[['공통국어1·2','4+4']],[['공통수학1·2','4+4']],[['공통영어1·2','4+4']],[['한국사1·2','3+3']],[['통합사회1·2','3+3']],[['통합과학1·2','4+4'],['과학탐구실험1·2','1+1']],[['체육1·2','2+2']],[['음악 ↔ 미술','1학기 2']],[['기술·가정','2학기 4']]],
+  수지고:[[['공통국어1·2','4+4']],[['공통수학1·2','4+4']],[['공통영어1·2','4+4']],[['한국사1·2','3+3']],[['통합사회1·2','3+3']],[['통합과학1·2','4+4'],['과학탐구실험1·2','1+1']],[['체육1·2','2+2']],[['음악(↔기술·가정)','1학기 2'],['미술(↔기술·가정)','1학기 2']],[['기술·가정(↔음악·미술)','2학기 4']]],
   신봉고:[[['공통국어1·2','4+4']],[['공통수학1·2','4+4']],[['공통영어1·2','4+4']],[['한국사1·2','3+3']],[['통합사회1·2','3+3']],[['통합과학1·2','3+3'],['과학탐구실험1·2','1+1']],[['체육1·2','2+2']],[['음악 ↔ 미술','2+2']],[['한문 ↔ 생활과학탐구','3+3']]],
   용인홍천고:[[['공통국어1·2','4+4']],[['공통수학1·2','4+4']],[['공통영어1·2','4+4']],[['한국사1·2','3+3']],[['통합사회1·2','4+4']],[['통합과학1·2','4+4'],['과학탐구실험1·2','1+1']],[['체육1·2','2+2']],[['음악 ↔ 미술','3+3']],[['1학년 편성 없음','']]],
   성복고:[[['공통국어1·2','4+4']],[['공통수학1·2','4+4']],[['공통영어1·2','4+4']],[['한국사1·2','3+3']],[['통합사회1·2','3+3']],[['통합과학1·2','3+3'],['과학탐구실험1·2','1+1']],[['체육1·2','2+2']],[['음악 ↔ 미술','2+2']],[['기술·가정 / 정보','3+3']]],
@@ -309,33 +309,41 @@ const CL={
 const CAT={};CATS.forEach(c=>CL[c].forEach(n=>CAT[norm(n)]=c));
 const catOf=n=>CAT[norm(n)]||'기타';
 // 2028학년도 수능 필수 출제 과목. 이 목록에 없으면 * 표시
-const REQ=new Set(['공통국어1·2','공통수학1·2','공통영어1·2','한국사1·2','통합사회1·2','통합과학1·2','화법과 언어','독서와 작문','문학','대수','미적분Ⅰ','확률과 통계','영어Ⅰ','영어Ⅱ'].map(norm));
+const REQ=new Set(['공통국어1','공통국어2','공통수학1','공통수학2','공통영어1','공통영어2','한국사1','한국사2','통합사회1','통합사회2','통합과학1','통합과학2','공통국어1·2','공통수학1·2','공통영어1·2','한국사1·2','통합사회1·2','통합과학1·2','화법과 언어','독서와 작문','문학','대수','미적분Ⅰ','확률과 통계','영어Ⅰ','영어Ⅱ'].map(norm));
 // 수능 선택으로 따로 표시할 수 있는 과학 선택과목(체크박스로 켜고 끔)
 const SELX=new Set(['물리학','화학','생명과학','지구과학','물리학Ⅱ','화학Ⅱ','생명과학Ⅱ','지구과학Ⅱ','역학과 에너지','물질과 에너지','세포와 물질대사','지구시스템과학','전자기와 양자','화학 반응의 세계','생물의 유전','행성우주과학'].map(norm));
 let SELON=false;
 const isSel=n=>SELON&&SELX.has(norm(n));
 const star=n=>REQ.has(norm(n))?'':isSel(n)?'<span class="star" title="수능 선택 과목">**</span>':'<span class="star" title="수능 필수 과목 아님">*</span>';
-let HIDE=false,CURG=1;
+let HIDE=false,CURG=1;const GSET=new Set([1]);
 const isReq=n=>REQ.has(norm(n))||isSel(n);
 function chips(a,c,cr){const o=a.map((x,i)=>[x,cr?cr[i]:null]);return (HIDE?o.filter(x=>isReq(x[0])):o).map(x=>`<span class="chip ${c||''}">${esc(x[0])}${star(x[0])}${x[1]!=null?`<span class="cc">${x[1]}</span>`:''}</span>`).join('')}
 let MODE='tbl',INC5=false;
-function viewTbl(g){
+// 1학년 학기별 편성: Y1(학기 합산 표기)에서 만든다
+const Y1S=(()=>{const o={};SC.forEach(s=>{o[s]={'1':[],'2':[]};Y1.rows.forEach((r,i)=>Y1.d[s][i].forEach(([nm,cr])=>{const m=/^(\d+)\+(\d+)$/.exec(cr||'');if(!m)return;const two=/1·2$/.test(nm),base=nm.replace(/1·2$/,'');o[s]['1'].push([two?base+'1':nm,+m[1]]);o[s]['2'].push([two?base+'2':nm,+m[2]])}))});
+  o.수지고['1'].push(['음악(↔기술·가정)',2],['미술(↔기술·가정)',2]);o.수지고['2'].push(['기술·가정(↔음악·미술)',4]);return o})();
+const sum1=(s,k)=>Y1S[s][k].reduce((a,x)=>a+x[1],0);
+function viewTbl(G){
   const S=INC5?SC:SC.filter(x=>x!=='신봉고');
   const chip=(n,c,fx)=>`<span class="chip ${fx?'fx':''} ${REC.has(norm(n))?'rc':''}">${esc(n)}${star(n)}<span class="cc">${c}</span></span>`;
-  const cell=(s,k)=>{const y=Y[s][g][k],c=CR[s][g][k];
+  const cell=(s,g,k)=>{
+    if(g===1){let a=Y1S[s][k];if(HIDE)a=a.filter(x=>isReq(x[0]));return `<div class="chips">${a.map(x=>chip(x[0],x[1],1)).join('')}</div>`}
+    const y=Y[s][g][k],c=CR[s][g][k];
     let fx=y.fx.map((n,i)=>[n,c.f[i]]);if(HIDE)fx=fx.filter(x=>isReq(x[0]));
     let h=`<div class="chips">${fx.map(x=>chip(x[0],x[1],1)).join('')}</div>`;
     y.pk.forEach((p,i)=>{let it=p[1];if(HIDE)it=it.filter(isReq);if(!it.length)return;h+=`<div class="pick"><b>택${p[0]} · 과목당 ${c.p[i]}학점 (${p[0]*c.p[i]}학점) · ${HIDE?'수능 과목 '+it.length+'개만 표시(전체 '+p[1].length+'개 중)':p[1].length+'개 중'}</b><div class="chips">${it.map(n=>chip(n,c.p[i],0)).join('')}</div></div>`});
     return h};
   let h='<div class="tw"><table class="m tbl"><tr><th></th>'+S.map(x=>`<th class="sc">${x}</th>`).join('')+'</tr>';
-  ['1','2'].forEach(k=>{h+=`<tr><td class="k">${k}학기</td>`+S.map(x=>`<td>${cell(x,k)}<div class="tt">${semTot(x,g,k)}학점</div></td>`).join('')+'</tr>'});
-  document.getElementById('view').innerHTML=h+'</table></div><p class="legend">파란 칸은 모두 이수하는 지정과목이고, 점선 상자는 그 안에서 택n 과목을 고르는 선택 묶음입니다. 숫자는 학점입니다. 대학을 선택하면 권장과목에 테두리가 생깁니다.</p>';
+  G.forEach(g=>['1','2'].forEach(k=>{h+=`<tr><td class="k">${g}학년 ${k}학기</td>`+S.map(x=>`<td>${cell(x,g,k)}<div class="tt">${g===1?sum1(x,k):semTot(x,g,k)}학점</div></td>`).join('')+'</tr>'}));
+  document.getElementById('view').innerHTML=h+'</table></div><p class="legend">파란 칸은 모두 이수하는 지정과목이고, 점선 상자는 그 안에서 택n 과목을 고르는 선택 묶음입니다. 숫자는 학점입니다. 수지고 1학년은 음악·미술을 1학기에 배우면 기술·가정을 2학기에 배우고, 반대로 배우는 학생도 있습니다. 대학을 선택하면 권장과목에 테두리가 생깁니다.</p>';
 }
-function view(g){
-  CURG=g;
-  document.getElementById('mseg').style.display=document.getElementById('inc5w').style.display=g===1?'none':'';
-  if(g>1&&MODE==='tbl'){viewTbl(g);return}
-  const el=document.getElementById('view');
+function view(){
+  const G=[...GSET].sort();CURG=G[0];
+  if(MODE==='tbl'){viewTbl(G);return}
+  const el=document.getElementById('view');el.innerHTML='';
+  G.forEach(g=>{const d=document.createElement('div');d.style.marginBottom='18px';viewCard(g,d);el.appendChild(d)});
+}
+function viewCard(g,el){
   if(g===1){
     let h='<div class="tw"><table class="m"><tr><th>교과</th>'+SC.map(s=>`<th class="sc">${s}</th>`).join('')+'</tr>';
     Y1.rows.forEach((r,i)=>{
@@ -345,7 +353,7 @@ function view(g){
         const diff=cnt[txt[j]]===1&&mx>1;
         return `<td class="cell ${diff?'diff':''}">`+Y1.d[s][i].map(x=>`<div>${esc(x[0])}${star(x[0])}</div>${x[1]?`<div class="cr">${esc(x[1])}학점</div>`:''}`).join('')+'</td>'}).join('')+'</tr>';
     });
-    h+='</table></div><p class="legend"><i></i>다른 학교와 편성이 다른 칸입니다. 학점은 1학기+2학기 순서입니다. 수지고는 음악·미술을 1학기에, 기술·가정을 2학기에 배웁니다.</p>';
+    h+='</table></div><p class="legend"><i></i>다른 학교와 편성이 다른 칸입니다. 학점은 1학기+2학기 순서입니다. 수지고는 음악·미술을 1학기에, 기술·가정을 2학기에 배우고(반대로 배우는 학생도 있음) 음악·미술은 각각 2학점입니다.</p>';
     el.innerHTML=h;return;
   }
   let h='<div class="cards">';
@@ -365,10 +373,10 @@ function view(g){
   });
   el.innerHTML=h+'</div>';
 }
-document.getElementById('mv1').onclick=()=>{MODE='tbl';document.getElementById('mv1').setAttribute('aria-pressed',true);document.getElementById('mv2').setAttribute('aria-pressed',false);view(CURG)};
-document.getElementById('mv2').onclick=()=>{MODE='card';document.getElementById('mv2').setAttribute('aria-pressed',true);document.getElementById('mv1').setAttribute('aria-pressed',false);view(CURG)};
-document.getElementById('inc5').onchange=e=>{INC5=e.target.checked;view(CURG)};
-['t1','t2','t3'].forEach((id,i)=>document.getElementById(id).onclick=()=>{['t1','t2','t3'].forEach((x,j)=>document.getElementById(x).setAttribute('aria-pressed',i===j));view(i+1)});
+document.getElementById('mv1').onclick=()=>{MODE='tbl';document.getElementById('mv1').setAttribute('aria-pressed',true);document.getElementById('mv2').setAttribute('aria-pressed',false);view()};
+document.getElementById('mv2').onclick=()=>{MODE='card';document.getElementById('mv2').setAttribute('aria-pressed',true);document.getElementById('mv1').setAttribute('aria-pressed',false);view()};
+document.getElementById('inc5').onchange=e=>{INC5=e.target.checked;view()};
+['t1','t2','t3'].forEach((id,i)=>document.getElementById(id).onclick=()=>{const g=i+1;if(GSET.has(g)){if(GSET.size===1)return;GSET.delete(g)}else GSET.add(g);['t1','t2','t3'].forEach((x,j)=>document.getElementById(x).setAttribute('aria-pressed',GSET.has(j+1)));view()});
 // presence
 let REC=new Set();let RECLAB='';
 const PG={2:{},3:{}};let PGS=new Set([2]);let ROWS=[];
@@ -395,8 +403,8 @@ function pres(){
   document.getElementById('cnt').textContent=n+'개 과목 표시 (전체 '+ROWS.length+'개)';
 }
 document.getElementById('q').oninput=pres;document.getElementById('cat').onchange=pres;document.getElementById('onlydiff').onchange=pres;document.getElementById('onlyrec').onchange=pres;
-['hs','hp'].forEach(id=>document.getElementById(id).onchange=e=>{HIDE=e.target.checked;document.getElementById('hs').checked=HIDE;document.getElementById('hp').checked=HIDE;view(CURG);pres()});
-['ss','sp'].forEach(id=>document.getElementById(id).onchange=e=>{SELON=e.target.checked;document.getElementById('ss').checked=SELON;document.getElementById('sp').checked=SELON;view(CURG);pres()});
+['hs','hp'].forEach(id=>document.getElementById(id).onchange=e=>{HIDE=e.target.checked;document.getElementById('hs').checked=HIDE;document.getElementById('hp').checked=HIDE;view();pres()});
+['ss','sp'].forEach(id=>document.getElementById(id).onchange=e=>{SELON=e.target.checked;document.getElementById('ss').checked=SELON;document.getElementById('sp').checked=SELON;view();pres()});
 ['p2','p3'].forEach((id,i)=>document.getElementById(id).onclick=()=>{const g=i+2;if(PGS.has(g)){if(PGS.size===1)return;PGS.delete(g)}else PGS.add(g);['p2','p3'].forEach((x,j)=>document.getElementById(x).setAttribute('aria-pressed',PGS.has(j+2)));setRows();pres()});
 
 // ---- 대학·학과별 유리한 과목 (수도권, 진학지도자료집 기준) ----
@@ -497,7 +505,7 @@ function setRec(c,u){
   });
   document.getElementById('recinfo').textContent=u.r.length?`${c} ${u.u}의 권장과목 ${REC.size}개를 표에 표시했습니다. 위의 대학 선택을 바꾸면 함께 바뀝니다.`:'';
   pres();
-  if(CURG>1)view(CURG);
+  view();
 }
 function uniRender(){
   const c=document.getElementById('uc').value,i=+document.getElementById('uu').value;
@@ -607,7 +615,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='1.9.1',VDATE='2026-10-23';
+const VERSION='1.10.0',VDATE='2026-10-23';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
@@ -620,7 +628,7 @@ document.getElementById('reload').onclick=()=>location.reload(true);
     }).catch(()=>{});
   }catch(e){}
 })();
-summary();view(1);pres();
+summary();view();pres();
 </script>
 
 </body>
