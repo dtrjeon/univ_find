@@ -138,8 +138,8 @@ tr.rec td{background:var(--accent-soft)}
 
   <section>
     <h2>비교할 고등학교</h2>
-    <p class="hint">체크한 학교만 아래 모든 표와 카드에 나옵니다. 하나는 항상 남아 있어야 합니다.</p>
-    <div class="ctl" id="scbar"><label><input type="checkbox" class="scb" value="수지고" checked> 수지고</label> <label><input type="checkbox" class="scb" value="신봉고" checked> 신봉고</label> <label><input type="checkbox" class="scb" value="용인홍천고" checked> 용인홍천고</label> <label><input type="checkbox" class="scb" value="성복고" checked> 성복고</label> <label><input type="checkbox" class="scb" value="서원고" checked> 서원고</label> <span class="sc-n">신봉고는 2026 이미지가 없어 학교 PDF 기준</span></div>
+    <p class="hint">학교와 입학년도를 체크해 비교합니다. 하나는 항상 남아 있어야 하고, 이름을 끌어서 순서를 바꿀 수 있습니다. 2027학년도는 수지고·용인홍천고·서원고(안)만 있고, 신봉고는 2026 이미지가 없어 학교 PDF 기준입니다. 학교별 요약·과목별 개설 비교·대학별 판정은 2026학년도 자료 기준입니다.</p>
+    <div class="ctl" id="scbar"></div>
   </section>
 
   <section>
@@ -180,11 +180,6 @@ tr.rec td{background:var(--accent-soft)}
       <button type="button" id="t2" aria-pressed="false">2학년</button>
       <button type="button" id="t3" aria-pressed="false">3학년</button>
     </div>
-    <div class="seg" role="group" aria-label="입학년도(둘 다 선택 가능)" id="yseg">
-      <button type="button" id="y26" aria-pressed="true">2026학년도 입학생</button>
-      <button type="button" id="y27" aria-pressed="false">2027학년도 입학생</button>
-    </div>
-    <p class="hint" style="margin:-6px 0 10px">2027학년도 입학생 편제표는 수지고·용인홍천고·서원고(안)만 있습니다. 두 해를 함께 켜면 같은 표에서 나란히 비교됩니다.</p>
     <div class="seg" role="group" aria-label="보기 방식" id="mseg">
       <button type="button" id="mv1" aria-pressed="true">비교표</button>
       <button type="button" id="mv2" aria-pressed="false">학교별 카드</button>
@@ -362,16 +357,18 @@ let HIDE=false,CURG=1;const GSET=new Set([1]);
 const isReq=n=>REQ.has(norm(n))||isSel(n);
 function chips(a,c,cr){const o=a.map((x,i)=>[x,cr?cr[i]:null]);return (HIDE?o.filter(x=>isReq(x[0])):o).map(x=>`<span class="chip ${c||''}">${esc(x[0])}${star(x[0])}${x[1]!=null?`<span class="cc">${x[1]}</span>`:''}</span>`).join('')}
 let MODE='tbl';
-const SSEL=new Set(SC);const SV=()=>SC.filter(x=>SSEL.has(x));
+const KEYS=[...SC.map(x=>x+'|2026'),...['수지고','용인홍천고','서원고'].map(x=>x+'|2027')];
+const KSEL=new Set(SC.map(x=>x+'|2026'));
+const SSEL={has:x=>[...KSEL].some(k=>k.split('|')[0]===x)};const SV=()=>SC.filter(x=>SSEL.has(x));
+const SELK=()=>KEYS.filter(k=>KSEL.has(k)).map(k=>{const [s,y]=k.split('|');return {s,yr:+y,D:YEARS[+y]}}).filter(x=>x.D&&x.D.Y[x.s]);
 // 1학년 학기별 편성: Y1(학기 합산 표기)에서 만든다
 const Y1S=(()=>{const o={};SC.forEach(s=>{o[s]={'1':[],'2':[]};Y1.rows.forEach((r,i)=>Y1.d[s][i].forEach(([nm,cr])=>{const m=/^(\d+)\+(\d+)$/.exec(cr||'');if(!m)return;const two=/1·2$/.test(nm),base=nm.replace(/1·2$/,'');o[s]['1'].push([two?base+'1':nm,+m[1]]);o[s]['2'].push([two?base+'2':nm,+m[2]])}))});
   o.수지고['1'].push(['음악(↔기술·가정)',2],['미술(↔기술·가정)',2]);o.수지고['2'].push(['기술·가정(↔음악·미술)',4]);return o})();
 const sum1=(s,k)=>Y1S[s][k].reduce((a,x)=>a+x[1],0);
 const YEARS={2026:{Y:Y,CR:CR,Y1S:Y1S},2027:{Y:Y27,CR:CR27,Y1S:{수지고:Y1S27수지,용인홍천고:Y1S.용인홍천고,서원고:Y1S.서원고}}};
-let GYR=new Set([2026]);
 const sumD=(D,s,k)=>D.Y1S[s][k].reduce((a,x)=>a+x[1],0);
 function viewTbl(G){
-  const COLS=[];[...GYR].sort().forEach(yr=>SV().forEach(x=>{if(YEARS[yr].Y[x])COLS.push({s:x,yr,D:YEARS[yr]})}));
+  const COLS=SELK();
   const chip=(n,c,fx)=>`<span class="chip ${fx?'fx':''} ${REC.has(norm(n))?'rc':''}">${esc(n)}${star(n)}<span class="cc">${c}</span></span>`;
   const cell=(col,g,k)=>{const {s,D}=col;
     if(g===1){let a=D.Y1S[s][k];if(HIDE)a=a.filter(x=>isReq(x[0]));return `<div class="chips">${a.map(x=>chip(x[0],x[1],1)).join('')}</div>`}
@@ -381,7 +378,7 @@ function viewTbl(G){
     y.pk.forEach((p,i)=>{let it=p[1];if(HIDE)it=it.filter(isReq);if(!it.length)return;h+=`<div class="pick"><b>택${p[0]} · 과목당 ${c.p[i]}학점 (${p[0]*c.p[i]}학점) · ${HIDE?'수능 과목 '+it.length+'개만 표시(전체 '+p[1].length+'개 중)':p[1].length+'개 중'}</b><div class="chips">${it.map(n=>chip(n,c.p[i],0)).join('')}</div></div>`});
     return h};
   if(!COLS.length){document.getElementById('view').innerHTML='<p class="hint">체크한 학교에는 선택한 입학년도의 편제표가 없습니다. 2027학년도 입학생은 수지고·용인홍천고·서원고(안)만 있습니다.</p>';return}
-  let h='<div class="tw"><table class="m tbl"><tr><th></th>'+COLS.map(x=>`<th class="sc">${x.s}<span class="yl">${x.yr}학년도 입학생${x.yr===2027&&TENT27[x.s]?'(안)':''}</span></th>`).join('')+'</tr>';
+  let h='<div class="tw"><table class="m tbl"><tr><th></th>'+COLS.map(x=>`<th class="sc" data-k="${x.s}|${x.yr}">${x.s}<span class="yl">${x.yr}학년도 입학생${x.yr===2027&&TENT27[x.s]?'(안)':''}</span></th>`).join('')+'</tr>';
   G.forEach(g=>['1','2'].forEach(k=>{h+=`<tr><td class="k">${g}학년 ${k}학기</td>`+COLS.map(x=>`<td>${cell(x,g,k)}<div class="tt">${g===1?sumD(x.D,x.s,k):semTotD(x.D,x.s,g,k)}학점</div></td>`).join('')+'</tr>'}));
   document.getElementById('view').innerHTML=h+'</table></div><p class="legend">파란 칸은 모두 이수하는 지정과목이고, 점선 상자는 그 안에서 택n 과목을 고르는 선택 묶음입니다. 숫자는 학점입니다. 수지고 1학년은 음악·미술을 1학기에 배우면 기술·가정을 2학기에 배우고, 반대로 배우는 학생도 있습니다. 대학을 선택하면 권장과목에 테두리가 생깁니다. 2027학년도 입학생 편제표는 수지고·용인홍천고·서원고(안)만 있습니다.</p>';
 }
@@ -393,7 +390,7 @@ function view(){
 }
 function viewCard(g,el){
   if(g===1){
-    let h='<div class="tw"><table class="m"><tr><th>교과</th>'+SV().map(s=>`<th class="sc">${s}</th>`).join('')+'</tr>';
+    let h='<div class="tw"><table class="m"><tr><th>교과</th>'+SV().map(s=>`<th class="sc" data-k="${s}|2026">${s}<span class="yl">2026학년도 입학생</span></th>`).join('')+'</tr>';
     Y1.rows.forEach((r,i)=>{
       const txt=SV().map(s=>Y1.d[s][i].map(x=>x.join(' ')).join('|'));
       const cnt={};txt.forEach(x=>cnt[x]=(cnt[x]||0)+1);const mx=Math.max(...Object.values(cnt));
@@ -405,7 +402,7 @@ function viewCard(g,el){
     el.innerHTML=h;return;
   }
   let h='<div class="cards">';
-  const CC=[];[...GYR].sort().forEach(yr=>SV().forEach(x=>{if(YEARS[yr].Y[x])CC.push({s:x,yr,D:YEARS[yr]})}));
+  const CC=SELK();
   if(!CC.length)h+='<p class="hint">체크한 학교에는 선택한 입학년도의 편제표가 없습니다.</p>';
   CC.forEach(({s,yr,D})=>{
     const d=D.Y[s][g];
@@ -423,24 +420,26 @@ function viewCard(g,el){
   });
   el.innerHTML=h+'</div>';
 }
-['y26','y27'].forEach((id,i)=>document.getElementById(id).onclick=()=>{const y=2026+i;if(GYR.has(y)){if(GYR.size===1)return;GYR.delete(y)}else GYR.add(y);['y26','y27'].forEach((x,j)=>document.getElementById(x).setAttribute('aria-pressed',GYR.has(2026+j)));view()});
 document.getElementById('mv1').onclick=()=>{MODE='tbl';document.getElementById('mv1').setAttribute('aria-pressed',true);document.getElementById('mv2').setAttribute('aria-pressed',false);view()};
 document.getElementById('mv2').onclick=()=>{MODE='card';document.getElementById('mv2').setAttribute('aria-pressed',true);document.getElementById('mv1').setAttribute('aria-pressed',false);view()};
 ['t1','t2','t3'].forEach((id,i)=>document.getElementById(id).onclick=()=>{const g=i+1;if(GSET.has(g)){if(GSET.size===1)return;GSET.delete(g)}else GSET.add(g);['t1','t2','t3'].forEach((x,j)=>document.getElementById(x).setAttribute('aria-pressed',GSET.has(j+1)));view()});
-document.querySelectorAll('.scb').forEach(cb=>cb.onchange=()=>{if(cb.checked)SSEL.add(cb.value);else if(SSEL.size>1)SSEL.delete(cb.value);else cb.checked=true;summary();view();pres();uniRender()});
+const KLAB=k=>{const [a,y]=k.split('|');return y.slice(2)+'년 '+a+(y==='2027'&&TENT27[a]?'(안)':'')};
+function buildBar(){const bar=document.getElementById('scbar');bar.innerHTML=KEYS.map(k=>`<label><input type="checkbox" class="scb" value="${k}" ${KSEL.has(k)?'checked':''}> ${KLAB(k)}</label>`).join(' ');
+  bar.querySelectorAll('.scb').forEach(cb=>cb.onchange=()=>{if(cb.checked)KSEL.add(cb.value);else if(KSEL.size>1)KSEL.delete(cb.value);else cb.checked=true;summary();view();pres();uniRender()})}
+buildBar();
 
-// 학교 순서: 표 머리글·학교 체크박스를 마우스로 끌어 옮기기
+// 순서: 표 머리글·체크박스를 마우스로 끌어 옮기기
 (()=>{let drag=null;
-const nm=el=>{const t=el.closest&&el.closest('th.sc,#scbar label');if(!t)return null;const s=t.tagName==='TH'?t.firstChild.textContent.trim():t.querySelector('input').value;return SC.includes(s)?[t,s]:null};
-document.addEventListener('mouseover',e=>{const r=nm(e.target);if(r&&!r[0].draggable){r[0].draggable=true;r[0].style.cursor='grab';r[0].title='끌어서 학교 순서 바꾸기'}});
+const nm=el=>{const t=el.closest&&el.closest('th.sc,#scbar label');if(!t)return null;const k=t.tagName==='TH'?t.dataset.k:t.querySelector('input').value;return k&&KEYS.includes(k)?[t,k]:null};
+document.addEventListener('mouseover',e=>{const r=nm(e.target);if(r&&!r[0].draggable){r[0].draggable=true;r[0].style.cursor='grab';r[0].title='끌어서 순서 바꾸기'}});
 document.addEventListener('dragstart',e=>{const r=nm(e.target);if(!r)return;drag=r[1];e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',drag)});
 document.addEventListener('dragover',e=>{if(drag&&nm(e.target))e.preventDefault()});
 document.addEventListener('dragend',()=>{drag=null});
 document.addEventListener('drop',e=>{const r=nm(e.target);if(!drag||!r)return;e.preventDefault();
-  const from=drag,to=r[1],a=SC.indexOf(from),b=SC.indexOf(to);drag=null;if(a===b)return;
-  SC.splice(a,1);SC.splice(SC.indexOf(to)+(a<b?1:0),0,from);
-  const bar=document.getElementById('scbar');SC.forEach(s=>{const l=[...bar.querySelectorAll('label')].find(x=>x.querySelector('input').value===s);bar.appendChild(l)});
-  summary();view();pres();uniRender()});
+  const from=drag,to=r[1],a=KEYS.indexOf(from),b=KEYS.indexOf(to);drag=null;if(a===b)return;
+  KEYS.splice(a,1);KEYS.splice(KEYS.indexOf(to)+(a<b?1:0),0,from);
+  const o=[];KEYS.forEach(k=>{const x=k.split('|')[0];if(!o.includes(x))o.push(x)});o.forEach((x,i)=>SC[i]=x);
+  buildBar();summary();view();pres();uniRender()});
 })();
 // presence
 let REC=new Set();let RECLAB='';
@@ -703,7 +702,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='2.3.0',VDATE='2026-10-24';
+const VERSION='2.4.0',VDATE='2026-10-24';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
