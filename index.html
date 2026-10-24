@@ -109,7 +109,7 @@ details.ref b{color:var(--fg)}
 tr.rec td{background:var(--accent-soft)}
 .rtag{display:inline-block;font-size:11px;font-weight:700;background:var(--accent);color:var(--bg);border-radius:10px;padding:0 7px;margin-left:6px;vertical-align:1px}
 .recinfo{font-size:13px;color:var(--accent);margin:0 0 10px}
-.ver{color:var(--muted);font-size:12px;margin-top:12px}
+.ver{color:var(--muted);font-size:12px;margin:0;position:absolute;top:8px;right:12px;z-index:5;text-align:right;max-width:60vw}
 .newver{display:none;background:var(--warn-bg);color:var(--warn-fg);border-radius:6px;padding:10px 14px;font-size:14px;margin-bottom:16px}
 .newver button{font:inherit;font-size:13px;margin-left:10px;padding:3px 12px;border:1px solid currentColor;border-radius:5px;background:none;color:inherit;cursor:pointer}
 .mq{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:10px}
@@ -649,7 +649,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='1.13.0',VDATE='2026-10-23';
+const VERSION='1.14.0',VDATE='2026-10-23';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
