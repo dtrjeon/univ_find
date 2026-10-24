@@ -128,7 +128,7 @@ tr.rec td{background:var(--accent-soft)}
 <div class="wrap">
   <div class="newver" id="newver" role="status">새 버전이 있습니다. <button type="button" id="reload">새로고침</button></div>
   <h1>수지구 고교 교과과목 비교</h1>
-  <p class="sub">용인 수지고 · 신봉고 · 용인홍천고 · 성복고 · 서원고 | 2026학년도 입학생 교육과정 편제표 기준, 2027학년도 입학생은 수지고·용인홍천고·서원고(안)만 추가 (학교알리미 공시 파일, 진학지도서)</p>
+  <p class="sub">용인 수지고 · 신봉고 · 용인홍천고 · 성복고 · 서원고 | 2026학년도 입학생 교육과정 편제표 기준, 2027학년도 입학생은 수지고·용인홍천고·서원고만 추가 (학교알리미 공시 파일, 진학지도서)</p>
 
   <div class="warn">
     <p><strong>수지고·용인홍천고·성복고·서원고는 2026학년도 입학생 편제표(진학지도서 이미지) 기준이고, 신봉고는 학교 공시 PDF 기준입니다.</strong> 성복고는 책에 실린 사진이라 사진 판독으로 넣었으며 학기별 학점 합계가 모두 맞습니다.</p>
@@ -138,7 +138,7 @@ tr.rec td{background:var(--accent-soft)}
 
   <section>
     <h2>비교할 고등학교</h2>
-    <p class="hint">학교와 입학년도를 체크해 비교합니다. 하나는 항상 남아 있어야 하고, 이름을 끌어서 순서를 바꿀 수 있습니다. 2027학년도는 수지고·용인홍천고·서원고(안)만 있고, 신봉고는 2026 이미지가 없어 학교 PDF 기준입니다. 학교별 요약·과목별 개설 비교·대학별 판정은 2026학년도 자료 기준입니다.</p>
+    <p class="hint">학교와 입학년도를 체크해 비교합니다. 하나는 항상 남아 있어야 하고, 이름을 끌어서 순서를 바꿀 수 있습니다. 2027학년도는 수지고·용인홍천고·서원고만 있고, 신봉고는 2026 이미지가 없어 학교 PDF 기준입니다. 학교별 요약·과목별 개설 비교·대학별 판정은 2026학년도 자료 기준입니다.</p>
     <div class="ctl" id="scbar"></div>
   </section>
 
@@ -192,7 +192,7 @@ tr.rec td{background:var(--accent-soft)}
 
   <section>
     <h2>학교별 연도별 비교</h2>
-    <p class="hint">같은 학교의 2026학년도 입학생과 2027학년도 입학생 편제표를 과목마다 비교합니다. 지금은 수지고·용인홍천고·서원고(서원고는 편제표 안)만 두 해 자료가 있습니다.</p>
+    <p class="hint">같은 학교의 2026학년도 입학생과 2027학년도 입학생 편제표를 과목마다 비교합니다. 지금은 수지고·용인홍천고·서원고만 두 해 자료가 있습니다.</p>
     <div class="uf">
       <label>학교<select id="ycs"></select></label>
       <label class="ctl" style="margin:0;align-self:end"><input type="checkbox" id="ycd" checked> 달라진 과목만 보기</label>
@@ -315,7 +315,7 @@ Y27.수지고={
 CR27.수지고={2:{'1':{f:[4,4,4,2],p:[3,3]},'2':{f:[4,4,4,2],p:[3,3]}},3:{'1':{f:[3,3,3,2],p:[3,3,3,3]},'2':{f:[2],p:[3,3,3,3]}}};
 const Y1S27수지=[{'1':[['공통국어1',4],['공통수학1',4],['공통영어1',4],['한국사1',3],['통합사회1',3],['통합과학1',4],['과학탐구실험1',1],['스포츠 문화',1],['음악↔미술',2],['기술·가정↔정보',3]],
   '2':[['공통국어2',4],['공통수학2',4],['공통영어2',4],['한국사2',3],['통합사회2',3],['통합과학2',4],['과학탐구실험2',1],['스포츠 과학',1],['음악↔미술',2],['기술·가정↔정보',3]]}][0];
-const TENT27={서원고:true};
+const TENT27={};
 const semTotD=(D,s,g,k)=>{const c=D.CR[s][g][k],y=D.Y[s][g][k];return c.f.reduce((a,b)=>a+b,0)+y.pk.reduce((a,p,i)=>a+p[0]*c.p[i],0)};
 const semTot=(s,g,k)=>{const c=CR[s][g][k],y=Y[s][g][k];return c.f.reduce((a,b)=>a+b,0)+y.pk.reduce((a,p,i)=>a+p[0]*c.p[i],0)};
 const norm=s=>s.replace(/[\s·★♥♡▶()\-]/g,'').replace(/I{2}/g,'Ⅱ');
@@ -376,10 +376,10 @@ function viewTbl(G){
     let h=`<div class="chips">${fx.map(x=>chip(x[0],x[1],1)).join('')}</div>`;
     y.pk.forEach((p,i)=>{let it=p[1];if(HIDE)it=it.filter(isReq);if(!it.length)return;h+=`<div class="pick"><b>택${p[0]} · 과목당 ${c.p[i]}학점 (${p[0]*c.p[i]}학점) · ${HIDE?'수능 과목 '+it.length+'개만 표시(전체 '+p[1].length+'개 중)':p[1].length+'개 중'}</b><div class="chips">${it.map(n=>chip(n,c.p[i],0)).join('')}</div></div>`});
     return h};
-  if(!COLS.length){document.getElementById('view').innerHTML='<p class="hint">체크한 학교에는 선택한 입학년도의 편제표가 없습니다. 2027학년도 입학생은 수지고·용인홍천고·서원고(안)만 있습니다.</p>';return}
+  if(!COLS.length){document.getElementById('view').innerHTML='<p class="hint">체크한 학교에는 선택한 입학년도의 편제표가 없습니다. 2027학년도 입학생은 수지고·용인홍천고·서원고만 있습니다.</p>';return}
   let h='<div class="tw"><table class="m tbl"><tr><th></th>'+COLS.map(x=>`<th class="sc" data-k="${x.s}|${x.yr}">${x.s}<span class="yl">${x.yr}학년도 입학생${x.yr===2027&&TENT27[x.s]?'(안)':''}</span></th>`).join('')+'</tr>';
   G.forEach(g=>['1','2'].forEach(k=>{h+=`<tr><td class="k">${g}학년 ${k}학기</td>`+COLS.map(x=>`<td>${cell(x,g,k)}<div class="tt">${g===1?sumD(x.D,x.s,k):semTotD(x.D,x.s,g,k)}학점</div></td>`).join('')+'</tr>'}));
-  document.getElementById('view').innerHTML=h+'</table></div><p class="legend">파란 칸은 모두 이수하는 지정과목이고, 점선 상자는 그 안에서 택n 과목을 고르는 선택 묶음입니다. 숫자는 학점입니다. 수지고 1학년은 음악·미술을 1학기에 배우면 기술·가정을 2학기에 배우고, 반대로 배우는 학생도 있습니다. 대학을 선택하면 권장과목에 테두리가 생깁니다. 2027학년도 입학생 편제표는 수지고·용인홍천고·서원고(안)만 있습니다.</p>';
+  document.getElementById('view').innerHTML=h+'</table></div><p class="legend">파란 칸은 모두 이수하는 지정과목이고, 점선 상자는 그 안에서 택n 과목을 고르는 선택 묶음입니다. 숫자는 학점입니다. 수지고 1학년은 음악·미술을 1학기에 배우면 기술·가정을 2학기에 배우고, 반대로 배우는 학생도 있습니다. 대학을 선택하면 권장과목에 테두리가 생깁니다. 2027학년도 입학생 편제표는 수지고·용인홍천고·서원고만 있습니다.</p>';
 }
 function view(){
   const G=[...GSET].sort();CURG=G[0];
@@ -701,7 +701,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='2.5.1',VDATE='2026-10-24';
+const VERSION='2.5.2',VDATE='2026-10-24';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
