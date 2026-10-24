@@ -131,8 +131,6 @@ tr.rec td{background:var(--accent-soft)}
   <p class="sub">용인 수지고 · 신봉고 · 용인홍천고 · 성복고 · 서원고 | 2026학년도 입학생 교육과정 편제표 기준, 2027학년도 입학생은 수지고·용인홍천고·서원고만 추가 (학교알리미 공시 파일, 진학지도서)</p>
 
   <div class="warn">
-    <p><strong>수지고·용인홍천고·성복고·서원고는 2026학년도 입학생 편제표(진학지도서 이미지) 기준이고, 신봉고는 학교 공시 PDF 기준입니다.</strong> 성복고는 책에 실린 사진이라 사진 판독으로 넣었으며 학기별 학점 합계가 모두 맞습니다.</p>
-    <p>표는 2026학년도에 입학한 1학년이 2·3학년에서 듣게 될 계획입니다. 이후 입학생의 편제표는 달라질 수 있습니다.</p>
     <p><span class="star">*</span> 표시는 2028학년도 수능 필수 출제 과목이 아닌 과목입니다. 필수 과목은 국어(화법과 언어, 독서와 작문, 문학), 수학(대수, 미적분Ⅰ, 확률과 통계), 영어Ⅰ·Ⅱ, 한국사, 통합사회, 통합과학입니다. 공통국어·공통수학·공통영어는 모든 학생이 1학년에 이수하므로 *를 붙이지 않았습니다. 제2외국어·한문은 선택 응시라 *를 붙였습니다.</p>
   </div>
 
@@ -701,7 +699,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='2.5.2',VDATE='2026-10-24';
+const VERSION='2.5.3',VDATE='2026-10-24';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
