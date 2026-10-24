@@ -1,8 +1,3 @@
-<!doctype html>
-<html lang="ko">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>수지구 교과 비교 27년</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap">
@@ -129,14 +124,11 @@ tr.rec td{background:var(--accent-soft)}
 .mres button.all small{color:var(--bg);opacity:.85}
 </style>
 
-</head>
-<body>
-
 <datalist id="mdl"></datalist>
 <div class="wrap">
   <div class="newver" id="newver" role="status">새 버전이 있습니다. <button type="button" id="reload">새로고침</button></div>
   <h1>수지구 고교 교과과목 비교</h1>
-  <p class="sub">용인 수지고 · 신봉고 · 용인홍천고 · 성복고 · 서원고 | 2026학년도 입학생 교육과정 편제표 기준, 2027학년도 입학생은 용인홍천고만 추가 (학교알리미 공시 파일, 진학지도서)</p>
+  <p class="sub">용인 수지고 · 신봉고 · 용인홍천고 · 성복고 · 서원고 | 2026학년도 입학생 교육과정 편제표 기준, 2027학년도 입학생은 용인홍천고·서원고(안)만 추가 (학교알리미 공시 파일, 진학지도서)</p>
 
   <div class="warn">
     <p><strong>수지고·용인홍천고·성복고·서원고는 2026학년도 입학생 편제표(진학지도서 이미지) 기준이고, 신봉고는 학교 공시 PDF 기준입니다.</strong> 성복고는 책에 실린 사진이라 사진 판독으로 넣었으며 학기별 학점 합계가 모두 맞습니다.</p>
@@ -192,7 +184,7 @@ tr.rec td{background:var(--accent-soft)}
       <button type="button" id="y26" aria-pressed="true">2026학년도 입학생</button>
       <button type="button" id="y27" aria-pressed="false">2027학년도 입학생</button>
     </div>
-    <p class="hint" style="margin:-6px 0 10px">2027학년도 입학생 편제표는 용인홍천고만 있습니다. 두 해를 함께 켜면 같은 표에서 나란히 비교됩니다.</p>
+    <p class="hint" style="margin:-6px 0 10px">2027학년도 입학생 편제표는 용인홍천고와 서원고(안)만 있습니다. 두 해를 함께 켜면 같은 표에서 나란히 비교됩니다.</p>
     <div class="seg" role="group" aria-label="보기 방식" id="mseg">
       <button type="button" id="mv1" aria-pressed="true">비교표</button>
       <button type="button" id="mv2" aria-pressed="false">학교별 카드</button>
@@ -205,7 +197,7 @@ tr.rec td{background:var(--accent-soft)}
 
   <section>
     <h2>학교별 연도별 비교</h2>
-    <p class="hint">같은 학교의 2026학년도 입학생과 2027학년도 입학생 편제표를 과목마다 비교합니다. 지금은 용인홍천고만 두 해 자료가 있습니다.</p>
+    <p class="hint">같은 학교의 2026학년도 입학생과 2027학년도 입학생 편제표를 과목마다 비교합니다. 지금은 용인홍천고와 서원고(서원고는 편제표 안)만 두 해 자료가 있습니다.</p>
     <div class="uf">
       <label>학교<select id="ycs"></select></label>
       <label class="ctl" style="margin:0;align-self:end"><input type="checkbox" id="ycd" checked> 달라진 과목만 보기</label>
@@ -310,6 +302,15 @@ const Y27={용인홍천고:JSON.parse(JSON.stringify(Y.용인홍천고))},CR27={
   // 3학년 1학기 택6 묶음에서 기하가 빠짐(22개 -> 21개)
   y[3]['1'].pk[1][1]=y[3]['1'].pk[1][1].filter(n=>n!=='기하');
 })();
+// 서원고 2027학년도 입학생 편제표(안, PDF): 2026에서 한문·언어생활과 한자·한문 고전 읽기가 빠짐. 학점은 같음
+Y27.서원고=JSON.parse(JSON.stringify(Y.서원고));CR27.서원고=JSON.parse(JSON.stringify(CR.서원고));
+(()=>{const y=Y27.서원고;
+  y[2]['1'].pk[2][1]=y[2]['1'].pk[2][1].filter(n=>n!=='한문');
+  y[2]['2'].pk[2][1]=y[2]['2'].pk[2][1].filter(n=>n!=='언어생활과 한자');
+  y[3]['1'].pk[0][1]=y[3]['1'].pk[0][1].filter(n=>n!=='한문 고전 읽기');
+  y.warn='2027학년도 입학생 편제표(안)입니다. 확정 전이라 바뀔 수 있습니다.';
+})();
+const TENT27={서원고:true};
 const semTotD=(D,s,g,k)=>{const c=D.CR[s][g][k],y=D.Y[s][g][k];return c.f.reduce((a,b)=>a+b,0)+y.pk.reduce((a,p,i)=>a+p[0]*c.p[i],0)};
 const semTot=(s,g,k)=>{const c=CR[s][g][k],y=Y[s][g][k];return c.f.reduce((a,b)=>a+b,0)+y.pk.reduce((a,p,i)=>a+p[0]*c.p[i],0)};
 const norm=s=>s.replace(/[\s·★♥♡▶()\-]/g,'').replace(/I{2}/g,'Ⅱ');
@@ -355,7 +356,7 @@ const SSEL=new Set(SC);const SV=()=>SC.filter(x=>SSEL.has(x));
 const Y1S=(()=>{const o={};SC.forEach(s=>{o[s]={'1':[],'2':[]};Y1.rows.forEach((r,i)=>Y1.d[s][i].forEach(([nm,cr])=>{const m=/^(\d+)\+(\d+)$/.exec(cr||'');if(!m)return;const two=/1·2$/.test(nm),base=nm.replace(/1·2$/,'');o[s]['1'].push([two?base+'1':nm,+m[1]]);o[s]['2'].push([two?base+'2':nm,+m[2]])}))});
   o.수지고['1'].push(['음악(↔기술·가정)',2],['미술(↔기술·가정)',2]);o.수지고['2'].push(['기술·가정(↔음악·미술)',4]);return o})();
 const sum1=(s,k)=>Y1S[s][k].reduce((a,x)=>a+x[1],0);
-const YEARS={2026:{Y:Y,CR:CR,Y1S:Y1S},2027:{Y:Y27,CR:CR27,Y1S:{용인홍천고:Y1S.용인홍천고}}};
+const YEARS={2026:{Y:Y,CR:CR,Y1S:Y1S},2027:{Y:Y27,CR:CR27,Y1S:{용인홍천고:Y1S.용인홍천고,서원고:Y1S.서원고}}};
 let GYR=new Set([2026]);
 const sumD=(D,s,k)=>D.Y1S[s][k].reduce((a,x)=>a+x[1],0);
 function viewTbl(G){
@@ -368,10 +369,10 @@ function viewTbl(G){
     let h=`<div class="chips">${fx.map(x=>chip(x[0],x[1],1)).join('')}</div>`;
     y.pk.forEach((p,i)=>{let it=p[1];if(HIDE)it=it.filter(isReq);if(!it.length)return;h+=`<div class="pick"><b>택${p[0]} · 과목당 ${c.p[i]}학점 (${p[0]*c.p[i]}학점) · ${HIDE?'수능 과목 '+it.length+'개만 표시(전체 '+p[1].length+'개 중)':p[1].length+'개 중'}</b><div class="chips">${it.map(n=>chip(n,c.p[i],0)).join('')}</div></div>`});
     return h};
-  if(!COLS.length){document.getElementById('view').innerHTML='<p class="hint">체크한 학교에는 선택한 입학년도의 편제표가 없습니다. 2027학년도 입학생은 용인홍천고만 있습니다.</p>';return}
-  let h='<div class="tw"><table class="m tbl"><tr><th></th>'+COLS.map(x=>`<th class="sc">${x.s}<span class="yl">${x.yr}학년도 입학생</span></th>`).join('')+'</tr>';
+  if(!COLS.length){document.getElementById('view').innerHTML='<p class="hint">체크한 학교에는 선택한 입학년도의 편제표가 없습니다. 2027학년도 입학생은 용인홍천고와 서원고(안)만 있습니다.</p>';return}
+  let h='<div class="tw"><table class="m tbl"><tr><th></th>'+COLS.map(x=>`<th class="sc">${x.s}<span class="yl">${x.yr}학년도 입학생${x.yr===2027&&TENT27[x.s]?'(안)':''}</span></th>`).join('')+'</tr>';
   G.forEach(g=>['1','2'].forEach(k=>{h+=`<tr><td class="k">${g}학년 ${k}학기</td>`+COLS.map(x=>`<td>${cell(x,g,k)}<div class="tt">${g===1?sumD(x.D,x.s,k):semTotD(x.D,x.s,g,k)}학점</div></td>`).join('')+'</tr>'}));
-  document.getElementById('view').innerHTML=h+'</table></div><p class="legend">파란 칸은 모두 이수하는 지정과목이고, 점선 상자는 그 안에서 택n 과목을 고르는 선택 묶음입니다. 숫자는 학점입니다. 수지고 1학년은 음악·미술을 1학기에 배우면 기술·가정을 2학기에 배우고, 반대로 배우는 학생도 있습니다. 대학을 선택하면 권장과목에 테두리가 생깁니다. 2027학년도 입학생 편제표는 용인홍천고만 있습니다.</p>';
+  document.getElementById('view').innerHTML=h+'</table></div><p class="legend">파란 칸은 모두 이수하는 지정과목이고, 점선 상자는 그 안에서 택n 과목을 고르는 선택 묶음입니다. 숫자는 학점입니다. 수지고 1학년은 음악·미술을 1학기에 배우면 기술·가정을 2학기에 배우고, 반대로 배우는 학생도 있습니다. 대학을 선택하면 권장과목에 테두리가 생깁니다. 2027학년도 입학생 편제표는 용인홍천고와 서원고(안)만 있습니다.</p>';
 }
 function view(){
   const G=[...GSET].sort();CURG=G[0];
@@ -397,7 +398,7 @@ function viewCard(g,el){
   if(!CC.length)h+='<p class="hint">체크한 학교에는 선택한 입학년도의 편제표가 없습니다.</p>';
   CC.forEach(({s,yr,D})=>{
     const d=D.Y[s][g];
-    h+=`<div class="card"><header><h3>${s}</h3><span>${g}학년 · ${yr}학년도 입학생</span></header>`;
+    h+=`<div class="card"><header><h3>${s}</h3><span>${g}학년 · ${yr}학년도 입학생${yr===2027&&TENT27[s]?'(안)':''}</span></header>`;
     if(D.Y[s].warn)h+=`<div class="note">${D.Y[s].warn}</div>`;
     if(D.Y[s].vnote&&g===3)h+=`<div class="note">${D.Y[s].vnote}</div>`;
     ['1','2'].forEach(k=>{
@@ -677,7 +678,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='2.0.0',VDATE='2026-10-23';
+const VERSION='2.1.0',VDATE='2026-10-24';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
@@ -699,7 +700,7 @@ const grpTxt=(D,s,g,k)=>D.Y[s][g][k].pk.map((p,i)=>`택${p[0]}(${p[1].length}개
 function ycRender(){
   const s=document.getElementById('ycs').value,el=document.getElementById('ycv'),od=document.getElementById('ycd').checked;
   const A=YEARS[2026],B=YEARS[2027];
-  if(!B.Y[s]){el.innerHTML=`<div class="warn"><p><strong>${esc(s)}는 2027학년도 입학생 편제표가 아직 없습니다.</strong> 편제표를 올려 주시면 2026학년도와 비교해 드립니다. 지금은 용인홍천고만 비교할 수 있습니다.</p></div>`;return}
+  if(!B.Y[s]){el.innerHTML=`<div class="warn"><p><strong>${esc(s)}는 2027학년도 입학생 편제표가 아직 없습니다.</strong> 편제표를 올려 주시면 2026학년도와 비교해 드립니다. 지금은 용인홍천고와 서원고만 비교할 수 있습니다.</p></div>`;return}
   const ma=locMap(A,s),mb=locMap(B,s),keys=[...new Set([...Object.keys(ma),...Object.keys(mb)])];
   const rows=keys.map(k=>{const a=ma[k],b=mb[k],ta=a?a.l.join(' / '):'',tb=b?b.l.join(' / '):'';
     const st=!a?'add':!b?'del':ta===tb?'same':'chg';return {n:(a||b).n,ta,tb,st}});
@@ -720,6 +721,3 @@ document.getElementById('ycs').innerHTML=SC.map(x=>`<option${x==='용인홍천�
 document.getElementById('ycs').onchange=ycRender;document.getElementById('ycd').onchange=ycRender;
 summary();view();pres();ycRender();
 </script>
-
-</body>
-</html>
