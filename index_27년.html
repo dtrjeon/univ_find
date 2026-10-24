@@ -303,7 +303,6 @@ Y27.서원고=JSON.parse(JSON.stringify(Y.서원고));CR27.서원고=JSON.parse(
   y[2]['1'].pk[2][1]=y[2]['1'].pk[2][1].filter(n=>n!=='한문');
   y[2]['2'].pk[2][1]=y[2]['2'].pk[2][1].filter(n=>n!=='언어생활과 한자');
   y[3]['1'].pk[0][1]=y[3]['1'].pk[0][1].filter(n=>n!=='한문 고전 읽기');
-  y.warn='2027학년도 입학생 편제표(안)입니다. 확정 전이라 바뀔 수 있습니다.';
 })();
 // 수지고 2027학년도 입학생 편성표(PDF): 2022 개정 과목명으로 전면 개편(2026은 3학년이 2015 명칭)
 Y27.수지고={
@@ -702,7 +701,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='2.5.0',VDATE='2026-10-24';
+const VERSION='2.5.1',VDATE='2026-10-24';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
