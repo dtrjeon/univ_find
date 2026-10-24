@@ -199,7 +199,7 @@ tr.rec td{background:var(--accent-soft)}
       <button type="button" id="mv1" aria-pressed="true">비교표</button>
       <button type="button" id="mv2" aria-pressed="false">학교별 카드</button>
     </div>
-    <div class="ctl"><label><input type="checkbox" id="hs"> 수능과 상관없는 과목(*) 숨기기 <span class="sc-n">2·3학년</span></label></div>
+    <div class="ctl"><label><input type="checkbox" id="hs"> 수능27 과목 외 수능과 상관없는 과목(*) 숨기기 <span class="sc-n">2·3학년 · 수능27 표시 과목은 남깁니다</span></label></div>
     <div class="ctl"><label><input type="checkbox" id="ss"> 과학 선택과목을 &lsquo;수능 선택&rsquo;(**)으로 표시, 숨기기에서 제외 <span class="sc-n">물리학·화학·생명과학·지구과학과 이어지는 과목</span></label></div>
     <p class="hint">※ 2학년 선택과목의 물리학·화학·생명과학·지구과학이나 3학년 선택과목은 통합과학과는 별개의 선택 과목입니다. 이 과목들은 수능 필수가 아니어서 <span class="star">*</span>가 붙습니다. 다만 의약학·공학 계열은 대학이 권장과목으로 지정하는 경우가 많습니다. 위 체크박스를 켜면 과학 선택과목은 <span class="star">**</span>(수능 선택)로 표시됩니다.</p>
     <div id="view"></div>
@@ -223,7 +223,7 @@ tr.rec td{background:var(--accent-soft)}
       <input type="search" id="q" placeholder="과목명 검색 (예: 기하, 물리)" aria-label="과목명 검색">
       <select id="cat" aria-label="교과(군)"><option value="">전체 교과(군)</option><option>국어</option><option>수학</option><option>영어</option><option>사회</option><option>과학</option><option>체육</option><option>예술</option><option>기술·가정/정보</option><option>제2외국어/한문</option><option>교양</option></select>
       <label><input type="checkbox" id="onlydiff"> 학교마다 다른 과목만 보기</label>
-      <label><input type="checkbox" id="hp"> 수능과 상관없는 과목(*) 숨기기</label>
+      <label><input type="checkbox" id="hp"> 수능27 과목 외 수능과 상관없는 과목(*) 숨기기</label>
       <label><input type="checkbox" id="sp"> 과학 선택과목을 &lsquo;수능 선택&rsquo;(**)으로 표시, 숨기기에서 제외</label>
       <label><input type="checkbox" id="onlyrec"> 선택한 대학의 권장과목만 보기</label>
     </div>
@@ -372,7 +372,7 @@ const x27=n=>X27.has(norm(n))?'<span class="x27" title="2027학년도 수능 출
 const star=n=>REQ.has(norm(n))?'':x27(n)+(isSel(n)?'<span class="star" title="수능 선택 과목">**</span>':'<span class="star" title="수능 필수 과목 아님">*</span>');
 const star0=n=>REQ.has(norm(n))?'':isSel(n)?'<span class="star" title="수능 선택 과목">**</span>':'<span class="star" title="수능 필수 과목 아님">*</span>';
 let HIDE=false,CURG=1;const GSET=new Set([1]);
-const isReq=n=>REQ.has(norm(n))||isSel(n);
+const isReq=n=>REQ.has(norm(n))||isSel(n)||X27.has(norm(n));
 function chips(a,c,cr){const o=a.map((x,i)=>[x,cr?cr[i]:null]);return (HIDE?o.filter(x=>isReq(x[0])):o).map(x=>`<span class="chip ${c||''}">${esc(x[0])}${star(x[0])}${x[1]!=null?`<span class="cc">${x[1]}</span>`:''}</span>`).join('')}
 let MODE='tbl';
 const KEYS=[...SC.map(x=>x+'|2026'),...['수지고','용인홍천고','서원고'].map(x=>x+'|2027')];
@@ -720,7 +720,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='2.7.2',VDATE='2026-10-24';
+const VERSION='2.7.3',VDATE='2026-10-24';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
