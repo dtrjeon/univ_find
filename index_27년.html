@@ -398,7 +398,7 @@ function viewTbl(G){
     return h};
   if(!COLS.length){document.getElementById('view').innerHTML='<p class="hint">체크한 학교에는 선택한 입학년도의 편제표가 없습니다. 2027학년도 입학생은 수지고·용인홍천고·서원고만 있습니다.</p>';return}
   let h='<div class="tw"><table class="m tbl"><tr><th></th>'+COLS.map(x=>`<th class="sc" data-k="${x.s}|${x.yr}">${x.s}<span class="yl">${x.yr}학년도 입학생${x.yr===2027&&TENT27[x.s]?'(안)':''}</span></th>`).join('')+'</tr>';
-  G.forEach(g=>['1','2'].forEach(k=>{h+=`<tr><td class="k">${g}학년 ${k}학기</td>`+COLS.map(x=>`<td>${cell(x,g,k)}<div class="tt">${g===1?sumD(x.D,x.s,k):semTotD(x.D,x.s,g,k)}학점</div></td>`).join('')+'</tr>'}));
+  G.forEach(g=>['1','2'].forEach(k=>{h+=`<tr><td class="k">${g}학년<br>${k}학기</td>`+COLS.map(x=>`<td>${cell(x,g,k)}<div class="tt">${g===1?sumD(x.D,x.s,k):semTotD(x.D,x.s,g,k)}학점</div></td>`).join('')+'</tr>'}));
   document.getElementById('view').innerHTML=h+'</table></div><p class="legend">파란 칸은 모두 이수하는 지정과목이고, 점선 상자는 그 안에서 택n 과목을 고르는 선택 묶음입니다. 숫자는 학점입니다. 수지고 1학년은 음악·미술을 1학기에 배우면 기술·가정을 2학기에 배우고, 반대로 배우는 학생도 있습니다. 대학을 선택하면 권장과목에 테두리가 생깁니다. 2027학년도 입학생 편제표는 수지고·용인홍천고·서원고만 있습니다.</p>';
 }
 function view(){
@@ -722,7 +722,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='2.14.4',VDATE='2026-10-24';
+const VERSION='2.15.0',VDATE='2026-10-24';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
