@@ -185,7 +185,7 @@ tr.rec td{background:var(--accent-soft)}
     <h3>1. 모집단위별 이수 권장 (미적분Ⅱ·기하)</h3>
     <div class="tw"><table class="m xt" id="matht"></table></div>
     <p class="hint" id="mathn"></p>
-    <p class="hint"><b>권장 수학이 표에 없는 대학</b>: 성균관대는 2028 시행계획·2027 모집요강에서 권장·핵심 과목을 지정하지 않았습니다(수리논술은 수학Ⅰ·Ⅱ 범위, 2027 정시에 미적분 선택자 가산점 안내). 연세대 인문·사회·통합 계열도 전공연계과목을 제시하지 않았습니다.</p>
+    <p class="hint"><b>권장 수학이 표에 없는 대학</b>: 건국대와 이화여대는 자료집에 모집단위별 이수 권장 과목이 없고 논술 출제범위만 있어 아래 2번 표에 넣었습니다. 성균관대는 2028 시행계획·2027 모집요강에서 권장·핵심 과목을 지정하지 않았습니다(수리논술은 수학Ⅰ·Ⅱ 범위, 2027 정시에 미적분 선택자 가산점 안내). 연세대 인문·사회·통합 계열도 전공연계과목을 제시하지 않았습니다.</p>
     <h3>2. 2028학년도 논술 출제범위에 미적분Ⅱ·기하가 들어가는 대학</h3>
     <div class="tw"><table class="m xt">
       <tr><th>대학</th><th>수리논술 출제범위</th></tr>
@@ -193,7 +193,8 @@ tr.rec td{background:var(--accent-soft)}
       <tr><th scope="row">동국대 <span class="xn">자연계열</span></th><td>경희대 의·약학계와 같은 범위(공통수학1·2, 대수, 확률과 통계, 미적분Ⅰ·Ⅱ, 기하)</td></tr>
       <tr><th scope="row">연세대 <span class="xn">자연·통합계열</span></th><td>고교 교육과정(2022 개정) 보통 교과 전체(융합 선택과목 제외). 미적분Ⅱ·기하·통합과학까지 나올 수 있어 3합 6 수능최저가 2028 대입부터 새로 생김</td></tr>
       <tr><th scope="row">한양대·동국대·경희대</th><td>‘고등학교 교육과정 전 범위’로 안내해 미적분Ⅱ·기하 포함 가능성이 있음</td></tr>
-      <tr><th scope="row">건국대</th><td>2028 대입에서 논술을 통합형 한 가지로 일원화 (범위는 모집요강 확인)</td></tr>
+      <tr><th scope="row">건국대</th><td>2026 대입 자연계 논술: 수학, 수학Ⅰ·Ⅱ, 미적분, 확률과 통계, <span class="chip">기하<span class="x28 x28s">수능 밖</span></span> 포함(건국대 자연). 통합형은 수학·수학Ⅰ·Ⅱ만. 2028 대입에서는 논술을 통합형 한 가지로 일원화해 범위 확인이 필요함</td></tr>
+      <tr><th scope="row">이화여대</th><td>2026 대입 자연계 논술: 수학, 수학Ⅰ·Ⅱ, 미적분, 확률과 통계, <span class="chip">기하<span class="x28 x28s">수능 밖</span></span> 포함. 2028 범위는 자료집에 없음</td></tr>
     </table></div>
     <p class="hint">출제범위는 각 대학의 2028학년도 전형계획 기준이며 바뀔 수 있습니다. 2026 대입 대학별 범위는 아래 ‘대학·학과별 유리한 과목’의 참고 항목에 있습니다.</p>
     <div class="note"><b>출처·유의</b>
@@ -791,7 +792,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='2.18.2',VDATE='2026-10-24';
+const VERSION='2.18.3',VDATE='2026-10-24';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
