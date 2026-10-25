@@ -185,7 +185,7 @@ tr.rec td{background:var(--accent-soft)}
     <h3>1. 모집단위별 이수 권장 (미적분Ⅱ·기하)</h3>
     <div class="tw"><table class="m xt" id="matht"></table></div>
     <p class="hint" id="mathn"></p>
-    <p class="hint"><b>권장 수학이 표에 없는 대학</b>: 건국대와 이화여대는 자료집에 모집단위별 이수 권장 과목이 없고 논술 출제범위만 있어 아래 2번 표에 넣었습니다. 성균관대는 2028 시행계획·2027 모집요강에서 권장·핵심 과목을 지정하지 않았습니다(수리논술은 수학Ⅰ·Ⅱ 범위, 2027 정시에 미적분 선택자 가산점 안내). 연세대 인문·사회·통합 계열도 전공연계과목을 제시하지 않았습니다.</p>
+    <p class="hint"><b>권장 수학이 표에 없는 대학</b>: 건국대와 이화여대는 자료집에 모집단위별 이수 권장 과목이 없고 논술 출제범위만 있어 아래 2번 표에 넣었습니다. 성균관대는 2028 시행계획·2027 모집요강에서 권장·핵심 과목을 지정하지 않아 3번 표에 수학 관련 반영 내용을 따로 정리했습니다. 연세대 인문·사회·통합 계열도 전공연계과목을 제시하지 않았습니다.</p>
     <h3>2. 2028학년도 논술 출제범위에 미적분Ⅱ·기하가 들어가는 대학</h3>
     <div class="tw"><table class="m xt">
       <tr><th>대학</th><th>수리논술 출제범위</th></tr>
@@ -196,6 +196,14 @@ tr.rec td{background:var(--accent-soft)}
       <tr><th scope="row">건국대</th><td>2026 대입 자연계 논술: 수학, 수학Ⅰ·Ⅱ, 미적분, 확률과 통계, <span class="chip">기하<span class="x28 x28s">수능 밖</span></span> 포함(건국대 자연). 통합형은 수학·수학Ⅰ·Ⅱ만. 2028 대입에서는 논술을 통합형 한 가지로 일원화해 범위 확인이 필요함</td></tr>
       <tr><th scope="row">이화여대</th><td>2026 대입 자연계 논술: 수학, 수학Ⅰ·Ⅱ, 미적분, 확률과 통계, <span class="chip">기하<span class="x28 x28s">수능 밖</span></span> 포함. 2028 범위는 자료집에 없음</td></tr>
     </table></div>
+    <h3>3. 성균관대 — 권장 과목은 없지만 수학이 반영되는 곳</h3>
+    <div class="tw"><table class="m xt">
+      <tr><th>전형</th><th>수학 관련 내용 (2027학년도 모집요강)</th></tr>
+      <tr><th scope="row">수리논술</th><td>수학, 수학Ⅰ, 수학Ⅱ에서 3문제 (100분). 미적분Ⅱ·기하는 범위에 없음</td></tr>
+      <tr><th scope="row">과학인재 면접<span class="xn">자연과학·공학계열 등</span></th><td>제시문 기반 수학/과학 교과형 면접. 수학은 수학, 수학Ⅰ·Ⅱ, <span class="chip">미적분</span> <span class="chip">확률과 통계</span> <span class="chip">기하</span>에서 출제</td></tr>
+      <tr><th scope="row">정시 수능 반영<span class="xn">가군</span></th><td>자연과학계열·의상학과·약학과 등은 수학 포함 우수한 영역 순 40·30 반영. 사회과학계열·의상학과·경영학과·글로벌경영/경제학과는 <b>미적분 선택자에게 가산점(최대 3%)</b></td></tr>
+    </table></div>
+    <p class="hint">성균관대는 2028 시행계획·2027 모집요강에서 모집단위별 권장·핵심 과목을 지정하지 않았습니다. 위 항목은 2015 개정 과목으로 치르는 2027학년도 기준이라, 미적분 선택 가산점은 선택과목이 없어지는 개편 수능(2028학년도~)에는 그대로 적용되지 않습니다. 2027년 입학생이 치르는 입시 기준은 성균관대 입학처 공지로 확인하세요.</p>
     <p class="hint">출제범위는 각 대학의 2028학년도 전형계획 기준이며 바뀔 수 있습니다. 2026 대입 대학별 범위는 아래 ‘대학·학과별 유리한 과목’의 참고 항목에 있습니다.</p>
     <div class="note"><b>출처·유의</b>
       <ul>
@@ -792,7 +800,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='2.18.3',VDATE='2026-10-24';
+const VERSION='2.18.4',VDATE='2026-10-24';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
