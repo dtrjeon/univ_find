@@ -375,7 +375,7 @@ const star=n=>REQ.has(norm(n))?x28(n):x28(n)+(isSel(n)?'<span class="star" title
 const star0=n=>REQ.has(norm(n))?'':isSel(n)?'<span class="star" title="수능 선택 과목">**</span>':'<span class="star" title="수능 필수 과목 아님">*</span>';
 let HIDE=false,CURG=1;const GSET=new Set([1]);
 const isReq=n=>REQ.has(norm(n))||isSel(n);
-function chips(a,c,cr){const o=a.map((x,i)=>[x,cr?cr[i]:null]);return (HIDE?o.filter(x=>isReq(x[0])):o).map(x=>`<span class="chip ${c||''}">${esc(x[0])}${star(x[0])}${x[1]!=null?`<span class="cc">${x[1]}</span>`:''}</span>`).join('')}
+function chips(a,c,cr){const o=a.map((x,i)=>[x,cr?cr[i]:null]);return (HIDE?o.filter(x=>isReq(x[0])):o).map(x=>`<span class="chip ${c||''}">${altName(x[0],star(x[0]))}${x[1]!=null?`<span class="cc">${x[1]}</span>`:''}</span>`).join('')}
 let MODE='tbl';
 const KEYS=[...SC.map(x=>x+'|2026'),...['수지고','용인홍천고','서원고'].map(x=>x+'|2027')];
 const KSEL=new Set(['신봉고|2026','성복고|2026','수지고|2027','용인홍천고|2027','서원고|2027']);
@@ -392,7 +392,7 @@ const altParts=n=>/\(/.test(n)?null:(p=>p.length>1?p:null)(n.split(/\s*↔\s*|\s
 const altName=(n,st)=>{const p=altParts(n);return p?p.map(esc).join('<br>')+(st||'')+'<span class="alt">1학기 또는 2학기</span>':esc(n)+(st||'')};
 function viewTbl(G){
   const COLS=SELK();
-  const chip=(n,c,fx,a1)=>`<span class="chip ${fx?'fx':''} ${REC.has(norm(n))?'rc':''}">${a1?altName(n,star(n)):esc(n)+star(n)}<span class="cc">${c}</span></span>`;
+  const chip=(n,c,fx,a1)=>`<span class="chip ${fx?'fx':''} ${REC.has(norm(n))?'rc':''}">${altName(n,star(n))}<span class="cc">${c}</span></span>`;
   const cell=(col,g,k)=>{const {s,D}=col;
     if(g===1){let a=D.Y1S[s][k];if(HIDE)a=a.filter(x=>isReq(x[0]));return `<div class="chips">${a.map(x=>chip(x[0],x[1],1,1)).join('')}</div>`}
     const y=D.Y[s][g][k],c=D.CR[s][g][k];
@@ -726,7 +726,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='2.14.0',VDATE='2026-10-24';
+const VERSION='2.14.1',VDATE='2026-10-24';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
