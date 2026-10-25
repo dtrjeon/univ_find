@@ -216,6 +216,18 @@ tr.rec td{background:var(--accent-soft)}
 
   <section id="chemsec">
     <h2>화학공학과 진학 (수도권) — 수학·과학 정리</h2>
+    <h3>A. 2027학년도 입시 기준 (2026년 수능을 보고 2027년에 입학)</h3>
+    <div class="tw"><table class="m xt">
+      <tr><th>대학</th><th>정시 수학</th><th>정시 과학탐구</th><th>그 밖의 수학 관련</th></tr>
+      <tr><th scope="row">서울대</th><td><b>미적분 또는 기하 지정</b> (이공계, 식품영양·의류·간호 제외)</td><td>사탐 불인정. 과탐Ⅱ 선택 가산점(서로 다른 Ⅰ·Ⅱ 3점, Ⅱ 두 과목 5점)</td><td></td></tr>
+      <tr><th scope="row">연세대</th><td>지정 없음 (확률과 통계도 가능)</td><td>사탐·과탐 모두 인정, 과탐 가산점 3%</td><td></td></tr>
+      <tr><th scope="row">고려대</th><td>지정 없음</td><td>사탐·과탐 모두 인정, 과탐 가산점 3%</td><td></td></tr>
+      <tr><th scope="row">성균관대</th><td>지정 없음. 가군 자연과학계열 등은 수학 포함 우수한 영역 순 40·30 반영</td><td>사탐·과탐 모두 인정, 과탐 가산점 최대 5%</td><td>수리논술 수학Ⅰ·Ⅱ 3문제, 과학인재 면접에 수학(미적분·확률과 통계·기하)·과학</td></tr>
+      <tr><th scope="row">한양대</th><td>지정 없음</td><td>사탐·과탐 모두 인정, 과탐 가산점 있음(수치는 수능 후 결정)</td><td>논술은 ‘고교 교육과정 전 범위’로 안내</td></tr>
+      <tr><th scope="row">경희대·중앙대·이화여대·서강대·서울시립대</th><td>지정 없음</td><td>사탐·과탐 모두 인정. 가산점은 경희대 과목당 4점, 중앙대 5%, 이화여대 최대 6%, 서울시립대 3%, 서강대 없음</td><td>경희대 논술(의·약학계)은 미적분Ⅱ·기하 범위, 건국대(자연)·이화여대 논술은 미적분·확률과 통계·기하 포함(2026 대입)</td></tr>
+    </table></div>
+    <p class="hint">2027학년도 입시는 현행(2015 개정) 수능이라 수학은 확률과 통계·미적분·기하 중 택1, 탐구는 사탐·과탐 선택입니다. 서울대만 이공계에서 미적분 또는 기하를 필수로 지정했고, 서울 주요 대학 대부분은 지정을 없앴습니다. 나머지 수도권 대학의 최종 요건은 2027학년도 모집요강으로 확인하세요(성균관대는 올려 주신 요강 기준).</p>
+    <h3>B. 2028학년도 이후 이수 권장 (개편 수능 세대)</h3>
     <p class="hint">수도권 대학의 화학공학 계열 권장 과목과, 위 ‘비교할 고등학교’에서 선택한 학교의 개설 여부입니다. 자료에 권장 과목이 없는 대학은 빈칸으로 두었습니다.</p>
     <div class="tw"><table class="m xt">
       <tr><th>대학 (학과)</th><th>수학 권장</th><th>과학 권장</th></tr>
@@ -228,6 +240,7 @@ tr.rec td{background:var(--accent-soft)}
     <h3>선택한 학교의 개설 여부</h3>
     <div class="tw"><table class="m xt" id="chemt"></table></div>
     <p class="hint">○ 필수로 개설 · △ 선택과목으로 개설 · − 편제표에 없음 (숫자는 학년-학기). 화학 외 ‘물질과 에너지’·‘화학 반응의 세계’가 화학공학과 가장 가깝다는 것은 대학이 지정한 것이 아니라 정리한 사람의 판단입니다. 개편 수능은 통합과학만 출제하므로 이 과목들은 수능이 아니라 이수 권장입니다. 출처는 위 ‘대학 권장 수학·과학’ 표와 같습니다.</p>
+    <p class="hint">A표 출처: 종로학원 분석 보도(2026.4, 파이낸셜뉴스·대전일보), 한국경제 ‘주요대 입시와 사탐런’(2026.4), 성균관대 2027학년도 모집요강. 언론 보도 기준이며 모집요강 원문과 대조하지 못했습니다.</p>
   </section>
 
   <section id="usec">
@@ -827,7 +840,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='2.19.0',VDATE='2026-10-24';
+const VERSION='2.20.0',VDATE='2026-10-24';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
