@@ -52,7 +52,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 .card header span{font-size:12px;color:var(--muted)}
 .sem{margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
 .sem h4{margin:0 0 6px;font-size:13px;color:var(--accent)}
-.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chips{display:flex;flex-wrap:wrap;gap:5px;align-items:flex-start}
 .chip{background:var(--chip);border-radius:4px;padding:2px 8px;font-size:13px;line-height:1.5}
 .sem h4 em{font-style:normal;float:right;color:var(--muted,#666);font-weight:400}
 .chip .cc{margin-left:5px;font-size:11px;opacity:.7}
@@ -84,6 +84,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 mark{background:var(--warn-bg);color:var(--warn-fg);border-radius:2px}
 .star{color:var(--diff);font-weight:700;margin-left:1px}
 .xt th[scope=row]{white-space:nowrap;text-align:left;vertical-align:top}.xt td{vertical-align:top;line-height:2}.xt .xn{display:block;font-size:12px;color:var(--muted);line-height:1.5;margin-top:2px;font-weight:400}.xt .xs{display:block;font-size:12px;color:var(--muted);line-height:1.5}.xt .chip{display:inline-block;margin:1px 0}
+.chip .cc{white-space:nowrap}
 .alt{display:block;font-size:11px;color:var(--muted);line-height:1.4}
 .x28{color:#e5484d;font-weight:700;font-size:11px;margin-left:3px;white-space:nowrap;border:1px solid #e5484d;border-radius:8px;padding:0 5px}
 .x28.x28s{color:var(--ok);border-color:var(--ok)}
@@ -389,12 +390,12 @@ const YEARS={2026:{Y:Y,CR:CR,Y1S:Y1S},2027:{Y:Y27,CR:CR27,Y1S:{수지고:Y1S27�
 const sumD=(D,s,k)=>D.Y1S[s][k].reduce((a,x)=>a+x[1],0);
 // 1학년 번갈아 듣는 짝(음악↔미술, 기술·가정/정보 등): 줄을 나누고 '1학기 또는 2학기'로 표시
 const altParts=n=>/\(/.test(n)?null:(p=>p.length>1?p:null)(n.split(/\s*↔\s*|\s+\/\s+/).map(x=>x.trim()).filter(Boolean));
-const altName=(n,st)=>{const p=altParts(n);return p?p.map(esc).join('<br>')+(st||'')+'<span class="alt">1학기 또는 2학기</span>':esc(n)+(st||'')};
+const altName=(n,st,lab)=>{const p=altParts(n);return p?p.map(esc).join('<br>')+(st||'')+'<span class="alt">'+(lab||'1학기 또는 2학기')+'</span>':esc(n)+(st||'')};
 function viewTbl(G){
   const COLS=SELK();
-  const chip=(n,c,fx,a1)=>`<span class="chip ${fx?'fx':''} ${REC.has(norm(n))?'rc':''}">${altName(n,star(n))}<span class="cc">${c}</span></span>`;
+  const chip=(n,c,fx,a1)=>`<span class="chip ${fx?'fx':''} ${REC.has(norm(n))?'rc':''}">${altName(n,star(n),a1===1?'':a1)}<span class="cc">${c}</span></span>`;
   const cell=(col,g,k)=>{const {s,D}=col;
-    if(g===1){let a=D.Y1S[s][k];if(HIDE)a=a.filter(x=>isReq(x[0]));return `<div class="chips">${a.map(x=>chip(x[0],x[1],1,1)).join('')}</div>`}
+    if(g===1){let a=D.Y1S[s][k];if(HIDE)a=a.filter(x=>isReq(x[0]));return `<div class="chips">${a.map(x=>chip(x[0],x[1],1,k+'학기')).join('')}</div>`}
     const y=D.Y[s][g][k],c=D.CR[s][g][k];
     let fx=y.fx.map((n,i)=>[n,c.f[i]]);if(HIDE)fx=fx.filter(x=>isReq(x[0]));
     let h=`<div class="chips">${fx.map(x=>chip(x[0],x[1],1)).join('')}</div>`;
@@ -726,7 +727,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='2.14.1',VDATE='2026-10-24';
+const VERSION='2.14.2',VDATE='2026-10-24';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
