@@ -171,6 +171,13 @@ tr.rec td{background:var(--accent-soft)}
     <div class="mres" id="mres"></div>
   </section>
 
+  <section id="scisec">
+    <h2>대학 권장 과학 <span class="x28 x28s">대학 권장 과학</span></h2>
+    <p class="hint">대학·모집단위별로 권장하는 과학 과목만 모았습니다. 개편 수능(2028학년도~)에는 과학 선택과목이 없어서 수능 범위는 아니지만, 대학이 이수를 권장하는 과목입니다. 입력된 대학 자료(12개 대학) 기준이며, 과학 권장이 없는 모집단위는 제외했습니다.</p>
+    <div class="tw"><table class="m xt" id="scit"></table></div>
+    <p class="hint" id="scin"></p>
+  </section>
+
   <section id="usec">
     <h2>대학·학과별 유리한 과목</h2>
     <p class="hint">수도권 대학을 고르면, 그 대학이 권장하는 과목을 학교별로 얼마나 들을 수 있는지 보여 줍니다. 2·3학년 편제표 기준입니다.</p>
@@ -606,6 +613,26 @@ function setRec(c,u){
   pres();
   view();
 }
+function sciRender(){
+  const YP=new Set(YPOOL.map(norm));let h='<tr><th>대학 · 모집단위</th><th>권장 과학</th></tr>',n=0,no=0;
+  UNIV.forEach(u=>{
+    const gen=[],opt=[];let ypool=false;
+    u.r.forEach(it=>{
+      if(typeof it==='string'){if(catOf(it)==='과학')gen.push(it)}
+      else if(it.any){const ns=it.any;if(ns.length&&ns.every(x=>YP.has(norm(x))))ypool=true;else if(ns.every(x=>catOf(x)==='과학'))opt.push(it.l)}
+    });
+    const ownSci=u.c==='연세대'&&u.r.length&&!gen.length&&!opt.length&&!ypool?false:false;
+    if(!gen.length&&!opt.length&&!ypool){no++;return}
+    n++;
+    let c='';
+    if(opt.length)c+=opt.map(x=>`<div><b>일반선택</b> <span class="chip">${esc(x)}<span class="x28 x28s">대학 권장 과학</span></span></div>`).join('');
+    if(gen.length)c+=`<div>${gen.map(x=>`<span class="chip">${esc(x)}<span class="x28 x28s">대학 권장 과학</span></span>`).join(' ')}</div>`;
+    if(ypool)c+=`<div><b>진로선택 3과목 이상</b> `+YPOOL.map(x=>`<span class="chip">${esc(x)}</span>`).join(' ')+'</div>';
+    h+=`<tr><th scope="row">${esc(u.c)}<span class="xn">${esc(u.u)}</span></th><td>${c}<span class="xs">${esc(u.s)}</span></td></tr>`;
+  });
+  document.getElementById('scit').innerHTML=h;
+  document.getElementById('scin').textContent=n+'개 모집단위 묶음에서 과학을 권장합니다. 과학 권장이 없거나 지정하지 않은 묶음은 '+no+'개입니다.';
+}
 function uniRender(){
   const c=document.getElementById('uc').value,i=+document.getElementById('uu').value;
   const list=UNIV.filter(x=>x.c===c),u=list[i];if(!u)return;
@@ -722,7 +749,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='2.16.0',VDATE='2026-10-24';
+const VERSION='2.17.0',VDATE='2026-10-24';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
@@ -763,5 +790,5 @@ function ycRender(){
 }
 document.getElementById('ycs').innerHTML=SC.map(x=>`<option${x==='용인홍천고'?' selected':''}>${x}</option>`).join('');
 document.getElementById('ycs').onchange=ycRender;document.getElementById('ycd').onchange=ycRender;
-summary();view();pres();ycRender();
+summary();view();pres();ycRender();sciRender();
 </script>
