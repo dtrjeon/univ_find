@@ -153,7 +153,7 @@ tr.rec td{background:var(--accent-soft)}
 
   <section>
     <h2>비교할 고등학교</h2>
-    <p class="hint">학교와 입학년도를 체크해 비교합니다. 하나는 항상 남아 있어야 하고, 이름을 끌어서 순서를 바꿀 수 있습니다. 2027학년도는 수지고·용인홍천고·서원고만 있고, 신봉고는 2026 이미지가 없어 학교 PDF 기준입니다. 학교별 요약·과목별 개설 비교·대학별 판정은 2026학년도 자료 기준입니다.</p>
+    <p class="hint">학교와 입학년도를 체크해 비교합니다. 하나는 항상 남아 있어야 하고, 이름을 끌어서 순서를 바꿀 수 있습니다. 2027학년도는 수지고·용인홍천고·서원고만 있고, 신봉고는 2026 이미지가 없어 학교 PDF 기준입니다. 한눈에 보기와 과목별 개설 비교도 같은 선택(학교·입학년도)과 순서를 따릅니다. 대학별 판정은 2026학년도 자료 기준입니다.</p>
     <div class="ctl" id="scbar"></div>
   </section>
 
@@ -336,13 +336,13 @@ const semTot=(s,g,k)=>{const c=CR[s][g][k],y=Y[s][g][k];return c.f.reduce((a,b)=
 const norm=s=>s.replace(/[\s·★♥♡▶()\-]/g,'').replace(/I{2}/g,'Ⅱ');
 const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
 function names(sc,g){const o=new Set();for(const sem of Object.values(Y[sc][g])){sem.fx.forEach(x=>o.add(x));sem.pk.forEach(p=>p[1].forEach(x=>o.add(x)))}return o}
-function picks(sc,g){return Object.values(Y[sc][g]).reduce((a,s)=>a+s.pk.reduce((b,p)=>b+p[0],0),0)}
-function pool(sc,g){const o=new Set();for(const sem of Object.values(Y[sc][g]))sem.pk.forEach(p=>p[1].forEach(x=>o.add(norm(x))));return o.size}
+function picks(sc,g,D){return Object.values((D||Y)[sc][g]).reduce((a,s)=>a+s.pk.reduce((b,p)=>b+p[0],0),0)}
+function pool(sc,g,D){const o=new Set();for(const sem of Object.values((D||Y)[sc][g]))sem.pk.forEach(p=>p[1].forEach(x=>o.add(norm(x))));return o.size}
 const LANG={수지고:'스페인어, 중국어',신봉고:'일본어, 중국어',용인홍천고:'중국어, 일본어',성복고:'중국어, 일본어',서원고:'중국어, 일본어, 한문'};
 function summary(){
   const t=document.getElementById('sum');
   let h='<tr><th>학교</th><th class="n">2학년 선택 풀</th><th class="n">2학년 고르는 수</th><th class="n">3학년 선택 풀</th><th class="n">3학년 고르는 수</th><th>제2외국어·한문</th></tr>';
-  SV().forEach(s=>{h+=`<tr><td><b>${s}</b></td><td class="n">${pool(s,2)}</td><td class="n">${picks(s,2)}</td><td class="n">${pool(s,3)}</td><td class="n">${picks(s,3)}</td><td>${LANG[s]}</td></tr>`});
+  SELK().forEach(({s,yr,D})=>{const L=yr===2027&&s==='서원고'?'중국어, 일본어':LANG[s];h+=`<tr><td><b>${s}</b> <span class="yl">${yr}학년도 입학생</span></td><td class="n">${pool(s,2,D.Y)}</td><td class="n">${picks(s,2,D.Y)}</td><td class="n">${pool(s,3,D.Y)}</td><td class="n">${picks(s,3,D.Y)}</td><td>${L}</td></tr>`});
   t.innerHTML=h;
 }
 // 교과(군) 대분류
@@ -462,14 +462,15 @@ document.addEventListener('drop',e=>{const r=nm(e.target);if(!drag||!r)return;e.
 // presence
 let REC=new Set();let RECLAB='';
 const PG={2:{},3:{}};let PGS=new Set([2]);let ROWS=[];
-SC.forEach(s=>{[2,3].forEach(g=>{for(const k of ['1','2']){const sm=Y[s][g][k];[...sm.fx,...sm.pk.flatMap(p=>p[1])].forEach(n=>{const nk=norm(n);const e=PG[g][nk]||(PG[g][nk]={n:n,s:{}});(e.s[s]=e.s[s]||new Set()).add(k)})}})});
+KEYS.forEach(key=>{const [s,yr]=key.split('|'),D=YEARS[+yr];if(!D||!D.Y[s])return;[2,3].forEach(g=>{for(const k of ['1','2']){const sm=D.Y[s][g][k];[...sm.fx,...sm.pk.flatMap(p=>p[1])].forEach(n=>{const nk=norm(n);const e=PG[g][nk]||(PG[g][nk]={n:n,s:{}});(e.s[key]=e.s[key]||new Set()).add(k)})}})});
 function setRows(){const m={};[...PGS].sort().forEach(g=>Object.entries(PG[g]).forEach(([nk,e])=>{const r=m[nk]||(m[nk]={n:e.n,s:{}});for(const sc in e.s){const t=r.s[sc]||(r.s[sc]=new Set());e.s[sc].forEach(k=>t.add(g+'|'+k))}}));ROWS=Object.values(m).sort((a,b)=>CATS.indexOf(catOf(a.n))-CATS.indexOf(catOf(b.n))||a.n.localeCompare(b.n,'ko'))}setRows();
 const fmtSem=e=>{const by={};[...e].sort().forEach(x=>{const [g,k]=x.split('|');(by[g]=by[g]||[]).push(k)});return Object.keys(by).map(g=>(PGS.size>1?g+'학년 ':'')+by[g].join('·')+'학기').join('<br>')};
 function pres(){
   const q=norm(document.getElementById('q').value||''),od=document.getElementById('onlydiff').checked;
-  let h='<tr><th>교과(군)</th><th>과목</th>'+SV().map(s=>`<th class="c">${s}</th>`).join('')+'</tr>',n=0;
+  const CK=KEYS.filter(k=>KSEL.has(k)&&YEARS[+k.split('|')[1]].Y[k.split('|')[0]]);
+  let h='<tr><th>교과(군)</th><th>과목</th>'+CK.map(k=>{const [a,y]=k.split('|');return `<th class="c sc" data-k="${k}">${a}<span class="yl">${y}학년도 입학생</span></th>`}).join('')+'</tr>',n=0;
   ROWS.forEach(r=>{
-    const SS=SV(),all=SS.every(s=>r.s[s]);
+    const SS=CK,all=SS.every(s=>r.s[s]);
     if(od&&all&&SS.every(s=>[...r.s[s]].sort().join()===[...r.s[SS[0]]].sort().join()))return;
     if(!SS.some(s=>r.s[s]))return;
     if(q&&!norm(r.n).includes(q))return;
@@ -480,7 +481,7 @@ function pres(){
     n++;
     let nm=esc(r.n);
     if(q){const i=norm(r.n).indexOf(q);if(r.n===norm(r.n)||!/[\s·]/.test(r.n))nm=esc(r.n.slice(0,i))+'<mark>'+esc(r.n.slice(i,i+q.length))+'</mark>'+esc(r.n.slice(i+q.length))}
-    h+=`<tr class="${isr?'rec':''}"><td class="cat">${catOf(r.n)}</td><td>${nm}${star(r.n)}${isr?'<span class="rtag">권장</span>':''}</td>`+SV().map(s=>{const e=r.s[s];return `<td class="c">${e?`<span class="g">${fmtSem(e)}</span>`:'<span class="g no">–</span>'}</td>`}).join('')+'</tr>';
+    h+=`<tr class="${isr?'rec':''}"><td class="cat">${catOf(r.n)}</td><td>${nm}${star(r.n)}${isr?'<span class="rtag">권장</span>':''}</td>`+CK.map(s=>{const e=r.s[s];return `<td class="c">${e?`<span class="g">${fmtSem(e)}</span>`:'<span class="g no">–</span>'}</td>`}).join('')+'</tr>';
   });
   document.getElementById('pres').innerHTML=h;
   document.getElementById('cnt').textContent=n+'개 과목 표시 (전체 '+ROWS.length+'개)';
@@ -720,7 +721,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='2.7.3',VDATE='2026-10-24';
+const VERSION='2.8.0',VDATE='2026-10-24';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
