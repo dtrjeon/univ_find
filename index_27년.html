@@ -214,6 +214,22 @@ tr.rec td{background:var(--accent-soft)}
       </ul></div>
   </section>
 
+  <section id="chemsec">
+    <h2>화학공학과 진학 (수도권) — 수학·과학 정리</h2>
+    <p class="hint">수도권 대학의 화학공학 계열 권장 과목과, 위 ‘비교할 고등학교’에서 선택한 학교의 개설 여부입니다. 자료에 권장 과목이 없는 대학은 빈칸으로 두었습니다.</p>
+    <div class="tw"><table class="m xt">
+      <tr><th>대학 (학과)</th><th>수학 권장</th><th>과학 권장</th></tr>
+      <tr><th scope="row">서울대 <span class="xn">공과대학</span></th><td>기하, 미적분Ⅱ</td><td class="mu">자료에 없음</td></tr>
+      <tr><th scope="row">연세대 <span class="xn">화공생명공학부</span></th><td>기하, 미적분Ⅱ</td><td>화학(일반선택) + 진로선택 과학 3과목 이상(서로 다른 과목)</td></tr>
+      <tr><th scope="row">고려대 <span class="xn">화공생명공학과</span></th><td>미적분Ⅱ, 기하</td><td class="mu">자료에 없음</td></tr>
+      <tr><th scope="row">동국대 <span class="xn">공과대학</span></th><td>대수, 미적분Ⅰ·Ⅱ, 확률과 통계, 기하, 인공지능 수학</td><td class="mu">자료에 없음</td></tr>
+      <tr><th scope="row">성균관대 <span class="xn">화학공학부</span></th><td>지정 없음 (논술 수학Ⅰ·Ⅱ, 과학인재 면접에 미적분·확률과 통계·기하)</td><td>지정 없음</td></tr>
+    </table></div>
+    <h3>선택한 학교의 개설 여부</h3>
+    <div class="tw"><table class="m xt" id="chemt"></table></div>
+    <p class="hint">○ 필수로 개설 · △ 선택과목으로 개설 · − 편제표에 없음 (숫자는 학년-학기). 화학 외 ‘물질과 에너지’·‘화학 반응의 세계’가 화학공학과 가장 가깝다는 것은 대학이 지정한 것이 아니라 정리한 사람의 판단입니다. 개편 수능은 통합과학만 출제하므로 이 과목들은 수능이 아니라 이수 권장입니다. 출처는 위 ‘대학 권장 수학·과학’ 표와 같습니다.</p>
+  </section>
+
   <section id="usec">
     <h2>대학·학과별 유리한 과목</h2>
     <p class="hint">수도권 대학을 고르면, 그 대학이 권장하는 과목을 학교별로 얼마나 들을 수 있는지 보여 줍니다. 2·3학년 편제표 기준입니다.</p>
@@ -487,7 +503,7 @@ document.getElementById('mv2').onclick=()=>{MODE='card';document.getElementById(
 ['t1','t2','t3'].forEach((id,i)=>document.getElementById(id).onclick=()=>{const g=i+1;if(GSET.has(g)){if(GSET.size===1)return;GSET.delete(g)}else GSET.add(g);['t1','t2','t3'].forEach((x,j)=>document.getElementById(x).setAttribute('aria-pressed',GSET.has(j+1)));view()});
 const KLAB=k=>{const [a,y]=k.split('|');return y.slice(2)+'년 '+a+(y==='2027'&&TENT27[a]?'(안)':'')};
 function buildBar(){const bar=document.getElementById('scbar');bar.innerHTML=KEYS.map(k=>`<label><input type="checkbox" class="scb" value="${k}" ${KSEL.has(k)?'checked':''}> ${KLAB(k)}</label>`).join(' ');
-  bar.querySelectorAll('.scb').forEach(cb=>cb.onchange=()=>{if(cb.checked)KSEL.add(cb.value);else if(KSEL.size>1)KSEL.delete(cb.value);else cb.checked=true;summary();view();pres();uniRender()})}
+  bar.querySelectorAll('.scb').forEach(cb=>cb.onchange=()=>{if(cb.checked)KSEL.add(cb.value);else if(KSEL.size>1)KSEL.delete(cb.value);else cb.checked=true;summary();view();pres();uniRender();chemRender()})}
 buildBar();
 
 // 순서: 표 머리글·체크박스를 마우스로 끌어 옮기기
@@ -501,7 +517,7 @@ document.addEventListener('drop',e=>{const r=nm(e.target);if(!drag||!r)return;e.
   const from=drag,to=r[1],a=KEYS.indexOf(from),b=KEYS.indexOf(to);drag=null;if(a===b)return;
   KEYS.splice(a,1);KEYS.splice(KEYS.indexOf(to)+(a<b?1:0),0,from);
   const o=[];KEYS.forEach(k=>{const x=k.split('|')[0];if(!o.includes(x))o.push(x)});o.forEach((x,i)=>SC[i]=x);
-  buildBar();summary();view();pres();uniRender()});
+  buildBar();summary();view();pres();uniRender();chemRender()});
 })();
 // presence
 let REC=new Set();let RECLAB='';
@@ -684,6 +700,17 @@ function mathRender(){
   document.getElementById('matht').innerHTML=h;
   document.getElementById('mathn').textContent=n+'개 모집단위 묶음에서 미적분Ⅱ 또는 기하를 권장합니다. 고려대·동국대·서울대·세종대·연세대(자연계열)가 해당하며, 간호·보건 전공별 안내도 들어 있습니다.';
 }
+function chemRender(){
+  const names=['미적분Ⅱ','기하','화학','물질과 에너지','화학 반응의 세계'],cols=SELK();
+  const st=(Y,nm)=>{const t=norm(nm),o=[],p=[];
+    for(const g of ['2','3'])for(const q of ['1','2']){const d=(Y[g]||{})[q];if(!d)continue;
+      if((d.fx||[]).some(x=>norm(x)===t))o.push(g+'-'+q);
+      if((d.pk||[]).some(a=>a[1].some(x=>norm(x)===t)))p.push(g+'-'+q)}
+    return (o.length?'○ '+o.join(', '):'')+(p.length?(o.length?'<br>':'')+'△ '+p.join(', '):'')||'−'};
+  let h='<tr><th>학교</th>'+names.map(n=>'<th class="c">'+esc(n)+'</th>').join('')+'</tr>';
+  cols.forEach(c=>{const Y=c.D.Y[c.s];h+='<tr><th scope="row">'+esc(KLAB(c.s+'|'+c.yr))+'</th>'+names.map(n=>'<td class="c">'+st(Y,n)+'</td>').join('')+'</tr>'});
+  document.getElementById('chemt').innerHTML=h;
+}
 function uniRender(){
   const c=document.getElementById('uc').value,i=+document.getElementById('uu').value;
   const list=UNIV.filter(x=>x.c===c),u=list[i];if(!u)return;
@@ -800,7 +827,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='2.18.4',VDATE='2026-10-24';
+const VERSION='2.19.0',VDATE='2026-10-24';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
@@ -841,5 +868,5 @@ function ycRender(){
 }
 document.getElementById('ycs').innerHTML=SC.map(x=>`<option${x==='용인홍천고'?' selected':''}>${x}</option>`).join('');
 document.getElementById('ycs').onchange=ycRender;document.getElementById('ycd').onchange=ycRender;
-summary();view();pres();ycRender();sciRender();mathRender();
+summary();view();pres();ycRender();sciRender();mathRender();chemRender();
 </script>
