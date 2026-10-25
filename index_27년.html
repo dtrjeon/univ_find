@@ -83,7 +83,8 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 .src li{margin:2px 0}
 mark{background:var(--warn-bg);color:var(--warn-fg);border-radius:2px}
 .star{color:var(--diff);font-weight:700;margin-left:1px}
-.xt th[scope=row]{white-space:nowrap;text-align:left;vertical-align:top}.xt td{vertical-align:top;line-height:2}.xt .xn{display:block;font-size:12px;color:var(--muted);line-height:1.5;margin-top:2px;font-weight:400}.xt .xs{display:block;font-size:12px;color:var(--muted);line-height:1.5}.xt .chip{display:inline-block;margin:1px 0}
+.xt th[scope=row]{white-space:nowrap;text-align:left;vertical-align:top}.xt td{vertical-align:top;line-height:2}.note{font-size:12.5px;color:var(--mute,#888);margin-top:8px}.note ul{margin:4px 0 0 18px;padding:0}
+.xt .xn{display:block;font-size:12px;color:var(--muted);line-height:1.5;margin-top:2px;font-weight:400}.xt .xs{display:block;font-size:12px;color:var(--muted);line-height:1.5}.xt .chip{display:inline-block;margin:1px 0}
 .x28{color:#e5484d;font-weight:700;font-size:11px;margin-left:3px;white-space:nowrap;border:1px solid #e5484d;border-radius:8px;padding:0 5px}
 .x28.x28s{color:var(--ok);border-color:var(--ok)}
 .sel{display:inline-block;margin-left:3px;font-size:10px;font-weight:700;color:var(--accent);border:1px solid var(--accent);border-radius:8px;padding:0 5px;vertical-align:1px;white-space:nowrap}
@@ -173,7 +174,7 @@ tr.rec td{background:var(--accent-soft)}
 
   <section id="scisec">
     <h2>대학 권장 과학 <span class="x28 x28s">대학 권장 과학</span></h2>
-    <p class="hint">대학·모집단위별로 권장하는 과학 과목만 모았습니다. 개편 수능(2028학년도~)에는 과학 선택과목이 없어서 수능 범위는 아니지만, 대학이 이수를 권장하는 과목입니다. 입력된 대학 자료(12개 대학) 기준이며, 과학 권장이 없는 모집단위는 제외했습니다.</p>
+    <p class="hint">대학·모집단위별로 권장하는 과학 과목만 모았습니다. 개편 수능(2028학년도~)에는 과학 선택과목이 없어서 수능 범위는 아니지만, 대학이 이수를 권장하는 과목입니다. 입력된 대학 자료(12개 대학) 기준이며, 과학 권장이 없는 모집단위는 제외했습니다. 출처는 각 행 아래에 적었고(진학지도자료집, 연세대 2028 가이드라인), 최종 확인은 대학 입학처 공지로 하세요.</p>
     <div class="tw"><table class="m xt" id="scit"></table></div>
     <p class="hint" id="scin"></p>
   </section>
@@ -194,7 +195,13 @@ tr.rec td{background:var(--accent-soft)}
       <tr><th scope="row">건국대</th><td>2028 대입에서 논술을 통합형 한 가지로 일원화 (범위는 모집요강 확인)</td></tr>
     </table></div>
     <p class="hint">출제범위는 각 대학의 2028학년도 전형계획 기준이며 바뀔 수 있습니다. 2026 대입 대학별 범위는 아래 ‘대학·학과별 유리한 과목’의 참고 항목에 있습니다.</p>
-    <p class="hint">출처: 2026 진학지도자료집(서울시교육청 서교연 2026-17) 선택과목 지도·논술전형·간호보건·첨단학과 부분</p>
+    <div class="note"><b>출처·유의</b>
+      <ul>
+        <li>고려대·동국대·서울대 권장과목, 논술 출제범위, 한양대·동국대·경희대 ‘전 범위’ 안내, 건국대 논술 일원화, 세종대 첨단학과, 간호·보건 선택과목: 「2026 진학지도자료집」(서울시교육청 서교연 2026-17)</li>
+        <li>연세대: 「2028학년도 전공연계과목 선택 가이드라인 안내」(2026. 4.), 성균관대: 2028 시행계획·2027 모집요강</li>
+        <li>자료집은 2026학년도 판이고 각주에 ‘권장 과목·출제 범위는 추후 변경될 수 있음’이라고 되어 있습니다. 2028학년도 모집요강 원문과는 대조하지 못했으니 지원 대학은 입학처 공지로 꼭 확인하세요.</li>
+        <li>자료집에 실린 대학만 정리해 수도권 전체를 다루지 않습니다. 권장은 필수나 가산점이 아닐 수 있습니다.</li>
+      </ul></div>
   </section>
 
   <section id="usec">
@@ -783,7 +790,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='2.18.0',VDATE='2026-10-24';
+const VERSION='2.18.1',VDATE='2026-10-24';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
