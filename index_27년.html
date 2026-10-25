@@ -178,6 +178,25 @@ tr.rec td{background:var(--accent-soft)}
     <p class="hint" id="scin"></p>
   </section>
 
+  <section id="mathsec">
+    <h2>대학 권장 수학 <span class="x28 x28s">수능 밖 수학</span></h2>
+    <p class="hint">개편 수능(2028학년도~)은 대수·미적분Ⅰ·확률과 통계만 출제해 <b>미적분Ⅱ와 기하가 빠집니다</b>. 그래도 아래 수도권 대학은 권장과목 또는 논술 출제범위로 이 두 과목을 요구하거나 시사합니다. 가산점이나 필수 조건이 아닐 수 있으니 최종 모집요강으로 확인하세요.</p>
+    <h3>1. 모집단위별 이수 권장 (미적분Ⅱ·기하)</h3>
+    <div class="tw"><table class="m xt" id="matht"></table></div>
+    <p class="hint" id="mathn"></p>
+    <h3>2. 2028학년도 논술 출제범위에 미적분Ⅱ·기하가 들어가는 대학</h3>
+    <div class="tw"><table class="m xt">
+      <tr><th>대학</th><th>수리논술 출제범위</th></tr>
+      <tr><th scope="row">경희대 <span class="xn">의·약학계</span></th><td>공통수학1·2, 대수, 확률과 통계, 미적분Ⅰ, <span class="chip">미적분Ⅱ<span class="x28 x28s">수능 밖</span></span> <span class="chip">기하<span class="x28 x28s">수능 밖</span></span></td></tr>
+      <tr><th scope="row">동국대 <span class="xn">자연계열</span></th><td>경희대 의·약학계와 같은 범위(공통수학1·2, 대수, 확률과 통계, 미적분Ⅰ·Ⅱ, 기하)</td></tr>
+      <tr><th scope="row">연세대 <span class="xn">자연·통합계열</span></th><td>고교 교육과정(2022 개정) 보통 교과 전체(융합 선택과목 제외). 미적분Ⅱ·기하·통합과학까지 나올 수 있어 3합 6 수능최저가 2028 대입부터 새로 생김</td></tr>
+      <tr><th scope="row">한양대·동국대·경희대</th><td>‘고등학교 교육과정 전 범위’로 안내해 미적분Ⅱ·기하 포함 가능성이 있음</td></tr>
+      <tr><th scope="row">건국대</th><td>2028 대입에서 논술을 통합형 한 가지로 일원화 (범위는 모집요강 확인)</td></tr>
+    </table></div>
+    <p class="hint">출제범위는 각 대학의 2028학년도 전형계획 기준이며 바뀔 수 있습니다. 2026 대입 대학별 범위는 아래 ‘대학·학과별 유리한 과목’의 참고 항목에 있습니다.</p>
+    <p class="hint">출처: 2026 진학지도자료집(서울시교육청 서교연 2026-17) 선택과목 지도·논술전형·간호보건·첨단학과 부분</p>
+  </section>
+
   <section id="usec">
     <h2>대학·학과별 유리한 과목</h2>
     <p class="hint">수도권 대학을 고르면, 그 대학이 권장하는 과목을 학교별로 얼마나 들을 수 있는지 보여 줍니다. 2·3학년 편제표 기준입니다.</p>
@@ -633,6 +652,21 @@ function sciRender(){
   document.getElementById('scit').innerHTML=h;
   document.getElementById('scin').textContent=n+'개 모집단위 묶음에서 과학을 권장합니다. 과학 권장이 없거나 지정하지 않은 묶음은 '+no+'개입니다.';
 }
+function mathRender(){
+  const M=new Set(['미적분Ⅱ','기하']);let h='<tr><th>대학 · 모집단위</th><th>권장 수학</th></tr>',n=0;
+  UNIV.forEach(u=>{
+    const g=[],o=[];
+    u.r.forEach(it=>{
+      if(typeof it==='string'){if(M.has(it))g.push(it)}
+      else if(it.any&&it.any.length&&it.any.every(x=>M.has(x)))o.push(it.l)
+    });
+    if(!g.length&&!o.length)return;n++;
+    const ch=x=>`<span class="chip">${esc(x)}<span class="x28 x28s">수능 밖</span></span>`;
+    h+=`<tr><th scope="row">${esc(u.c)}<span class="xn">${esc(u.u)}</span></th><td>${g.map(ch).join(' ')}${o.length?'<div>'+o.map(x=>'<b>택1</b> '+ch(x)).join(' ')+'</div>':''}<span class="xs">${esc(u.s)}</span></td></tr>`;
+  });
+  document.getElementById('matht').innerHTML=h;
+  document.getElementById('mathn').textContent=n+'개 모집단위 묶음에서 미적분Ⅱ 또는 기하를 권장합니다. 연세대·고려대·동국대·서울대·성균관대·세종대 등 자료집에 실린 대학만 정리했습니다.';
+}
 function uniRender(){
   const c=document.getElementById('uc').value,i=+document.getElementById('uu').value;
   const list=UNIV.filter(x=>x.c===c),u=list[i];if(!u)return;
@@ -749,7 +783,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='2.17.0',VDATE='2026-10-24';
+const VERSION='2.18.0',VDATE='2026-10-24';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
@@ -790,5 +824,5 @@ function ycRender(){
 }
 document.getElementById('ycs').innerHTML=SC.map(x=>`<option${x==='용인홍천고'?' selected':''}>${x}</option>`).join('');
 document.getElementById('ycs').onchange=ycRender;document.getElementById('ycd').onchange=ycRender;
-summary();view();pres();ycRender();sciRender();
+summary();view();pres();ycRender();sciRender();mathRender();
 </script>
