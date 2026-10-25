@@ -377,7 +377,7 @@ const isReq=n=>REQ.has(norm(n))||isSel(n);
 function chips(a,c,cr){const o=a.map((x,i)=>[x,cr?cr[i]:null]);return (HIDE?o.filter(x=>isReq(x[0])):o).map(x=>`<span class="chip ${c||''}">${esc(x[0])}${star(x[0])}${x[1]!=null?`<span class="cc">${x[1]}</span>`:''}</span>`).join('')}
 let MODE='tbl';
 const KEYS=[...SC.map(x=>x+'|2026'),...['수지고','용인홍천고','서원고'].map(x=>x+'|2027')];
-const KSEL=new Set(SC.map(x=>x+'|2026'));
+const KSEL=new Set(['신봉고|2026','성복고|2026','수지고|2027','용인홍천고|2027','서원고|2027']);
 const SSEL={has:x=>[...KSEL].some(k=>k.split('|')[0]===x)};const SV=()=>SC.filter(x=>SSEL.has(x));
 const SELK=()=>KEYS.filter(k=>KSEL.has(k)).map(k=>{const [s,y]=k.split('|');return {s,yr:+y,D:YEARS[+y]}}).filter(x=>x.D&&x.D.Y[x.s]);
 // 1학년 학기별 편성: Y1(학기 합산 표기)에서 만든다
@@ -722,7 +722,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='2.13.0',VDATE='2026-10-24';
+const VERSION='2.13.1',VDATE='2026-10-24';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
