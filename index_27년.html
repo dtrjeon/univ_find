@@ -84,7 +84,8 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 mark{background:var(--warn-bg);color:var(--warn-fg);border-radius:2px}
 .star{color:var(--diff);font-weight:700;margin-left:1px}
 .xt th[scope=row]{white-space:nowrap;text-align:left;vertical-align:top}.xt td{vertical-align:top;line-height:2}.xt .xn{display:block;font-size:12px;color:var(--muted);line-height:1.5;margin-top:2px;font-weight:400}.xt .xs{display:block;font-size:12px;color:var(--muted);line-height:1.5}.xt .chip{display:inline-block;margin:1px 0}
-.x28{color:var(--accent);font-weight:700;font-size:11px;margin-left:3px;white-space:nowrap;border:1px solid var(--accent);border-radius:8px;padding:0 5px}
+.x28{color:#e5484d;font-weight:700;font-size:11px;margin-left:3px;white-space:nowrap;border:1px solid #e5484d;border-radius:8px;padding:0 5px}
+.x28.x28s{color:var(--accent);border-color:var(--accent)}
 .x27s{color:var(--accent)!important}
 .x27{color:#e5484d;font-weight:700;font-size:11px;margin-left:3px;white-space:nowrap}
 .sel{display:inline-block;margin-left:3px;font-size:10px;font-weight:700;color:var(--accent);border:1px solid var(--accent);border-radius:8px;padding:0 5px;vertical-align:1px;white-space:nowrap}
@@ -136,7 +137,7 @@ tr.rec td{background:var(--accent-soft)}
 
   <div class="warn">
     <p><span class="star">*</span> 표시는 2028학년도 수능 필수 출제 과목이 아닌 과목입니다. 필수 과목은 국어(화법과 언어, 독서와 작문, 문학), 수학(대수, 미적분Ⅰ, 확률과 통계), 영어Ⅰ·Ⅱ, 한국사, 통합사회, 통합과학입니다. 공통국어·공통수학·공통영어는 모든 학생이 1학년에 이수하므로 *를 붙이지 않았습니다. 제2외국어·한문은 선택 응시라 *를 붙였습니다.</p>
-    <p><span class="x28">수능28</span> 표시는 2028학년도 수능(2022 개정)의 필수 출제 과목입니다. 국어 화법과 언어·독서와 작문·문학, 수학 대수·미적분Ⅰ·확률과 통계, 영어Ⅰ·Ⅱ, 한국사, 통합사회, 통합과학이며, 수학은 선택과목이 없어 미적분Ⅱ와 기하는 수능 범위가 아닙니다.</p>
+    <p><span class="x28">수능28(필수)</span> 표시는 2028학년도 수능(2022 개정)의 필수 출제 과목이고, <span class="x28 x28s">수능28(선택)</span> 표시는 &lsquo;과학 선택과목을 수능 선택(**)으로 표시&rsquo;를 켰을 때 나오는 수능 선택 과목입니다. 필수 과목은 국어 화법과 언어·독서와 작문·문학, 수학 대수·미적분Ⅰ·확률과 통계, 영어Ⅰ·Ⅱ, 한국사, 통합사회, 통합과학이며, 수학은 선택과목이 없어 미적분Ⅱ와 기하는 수능 범위가 아닙니다.</p>
     <p><span class="x27">수능27(필수)</span>·<span class="x27 x27s">수능27(선택)</span> 표시는 한국교육과정평가원 2027학년도 수능 시행세부계획 공고(2026.11.19 시행, 2015 개정 기준)의 출제 과목과 이름이 같은 과목입니다. 사회탐구 9과목(생활과 윤리, 윤리와 사상, 한국지리, 세계지리, 동아시아사, 세계사, 경제, 정치와 법, 사회·문화), 과학탐구 8과목(물리학·화학·생명과학·지구과학 Ⅰ·Ⅱ), 국어 화법과 작문·언어와 매체, 수학 미적분·기하, 제2외국어/한문 9과목이 해당합니다. 2028학년도 수능과는 과목 체제가 달라 이름만 같고 내용이 다를 수 있습니다.</p>
   </div>
 
@@ -375,8 +376,8 @@ const X27R=new Set(['독서','문학','수학Ⅰ','수학Ⅱ','영어Ⅰ','영�
 const x27=n=>X27R.has(norm(n))?'<span class="x27" title="2027학년도 수능 필수 영역·공통 과목(2015 개정 과목명)">수능27(필수)</span>':X27.has(norm(n))?'<span class="x27 x27s" title="2027학년도 수능 선택 과목(2015 개정 과목명)">수능27(선택)</span>':'';
 // 2028학년도 수능 필수 출제 과목(2022 개정): 국어 화법과 언어·독서와 작문·문학, 수학 대수·미적분Ⅰ·확률과 통계, 영어Ⅰ·Ⅱ, 한국사, 통합사회, 통합과학
 const X28=new Set(['화법과 언어','독서와 작문','문학','대수','미적분Ⅰ','확률과 통계','영어Ⅰ','영어Ⅱ','한국사1','한국사2','한국사1·2','통합사회1','통합사회2','통합사회1·2','통합과학1','통합과학2','통합과학1·2'].map(norm));
-const x28=n=>X28.has(norm(n))?'<span class="x28" title="2028학년도 수능 필수 과목">수능28</span>':'';
-const star=n=>REQ.has(norm(n))?x27(n)+x28(n):x27(n)+(isSel(n)?'<span class="star" title="수능 선택 과목">**</span>':'<span class="star" title="수능 필수 과목 아님">*</span>');
+const x28=n=>X28.has(norm(n))?'<span class="x28" title="2028학년도 수능 필수 과목">수능28(필수)</span>':isSel(n)?'<span class="x28 x28s" title="수능 선택 과목(과학 선택과목과 이어지는 과목)">수능28(선택)</span>':'';
+const star=n=>REQ.has(norm(n))?x27(n)+x28(n):x27(n)+x28(n)+(isSel(n)?'<span class="star" title="수능 선택 과목">**</span>':'<span class="star" title="수능 필수 과목 아님">*</span>');
 const star0=n=>REQ.has(norm(n))?'':isSel(n)?'<span class="star" title="수능 선택 과목">**</span>':'<span class="star" title="수능 필수 과목 아님">*</span>';
 let HIDE=false,CURG=1;const GSET=new Set([1]);
 const isReq=n=>REQ.has(norm(n))||isSel(n)||X27.has(norm(n));
@@ -728,7 +729,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='2.10.1',VDATE='2026-10-24';
+const VERSION='2.11.0',VDATE='2026-10-24';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
