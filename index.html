@@ -133,7 +133,7 @@ tr.rec td{background:var(--accent-soft)}
 #adet table td,#adet table th{vertical-align:top}.nn{color:var(--mute,#888);font-size:12.5px}
 .ast{color:var(--diff,#c2410c);margin-left:2px}
 .gy{display:inline-block;padding:2px 8px;border-radius:4px;border:1px solid var(--ok);color:var(--ok);font-size:12.5px;font-weight:700}
-#t20{table-layout:fixed;width:1498px;max-width:none}#t20 th[scope=row]{white-space:normal;word-break:keep-all}#t20 td,#t20 th{word-break:keep-all;overflow-wrap:anywhere}
+#t20{table-layout:fixed;width:100%;min-width:900px}#t20 th[scope=row]{white-space:normal;word-break:keep-all}#t20 td,#t20 th{word-break:keep-all;overflow-wrap:anywhere}
 .t20b{font:inherit;font-size:13px;padding:3px 10px;border:1px solid var(--line,#ccc);border-radius:6px;background:var(--chip);color:inherit;cursor:pointer}
 </style>
 
@@ -883,7 +883,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='2.28.3',VDATE='2026-10-26';
+const VERSION='2.28.4',VDATE='2026-10-26';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
@@ -1068,7 +1068,7 @@ const NS={
 function nsCell(u){const n=NS[u];if(!n)return '<span class="nn">확인 필요</span>';return esc(n.t)+(n.f||[]).map(x=>`<div><a href="${x[1]}" target="_blank" rel="noopener">📎 ${esc(x[0])}</a></div>`).join('')}
 function t20Render(){
   const el=document.getElementById('t20');
-  el.innerHTML='<colgroup><col style="width:48px"><col style="width:130px"><col style="width:320px"><col style="width:90px"><col style="width:320px"><col style="width:90px"><col style="width:90px"><col style="width:90px"><col style="width:320px"></colgroup><tr><th class="c">순위</th><th>대학 · 학과</th><th>수시</th><th class="c">수시 모집인원</th><th>정시</th><th class="c">정시 모집인원</th><th class="c">모집 방식</th><th class="c">상세</th><th>논술</th></tr>'+T20.map(r=>{
+  el.innerHTML='<colgroup><col style="width:3%"><col style="width:9%"><col style="width:21%"><col style="width:6%"><col style="width:21%"><col style="width:6%"><col style="width:6%"><col style="width:6%"><col style="width:22%"></colgroup><tr><th class="c">순위</th><th>대학 · 학과</th><th>수시</th><th class="c">수시 모집인원</th><th>정시</th><th class="c">정시 모집인원</th><th class="c">모집 방식</th><th class="c">상세</th><th>논술</th></tr>'+T20.map(r=>{
     const has=!!r[5];
     return `<tr><td class="c">${r[0]}</td><th scope="row">${esc(r[1])}${NS[r[1]]&&NS[r[1]].f?'<b class="ast" title="논술 PDF 첨부">*</b>':''}<span class="xn">${esc(r[2])}</span></th><td>${esc(r[3])}</td><td class="c">${esc(r[6])}</td><td>${esc(r[4])}</td><td class="c">${esc(r[7])}</td><td class="c">${r[8]==='계열'?'<span class="gy">계열 모집 → 2학년 학과 진입</span>':esc(r[8]==='확인 필요'?'확인 필요':r[8]+' 모집')}</td><td class="c">${has?`<button type="button" class="t20b" data-i="${r[0]}">보기</button>`:'<span class="nn">요강 필요</span>'}</td><td>${nsCell(r[1])}</td></tr>`}).join('');
   el.querySelectorAll('.t20b').forEach(b=>b.onclick=()=>{
