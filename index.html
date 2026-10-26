@@ -213,8 +213,8 @@ tr.rec td{background:var(--accent-soft)}
     <div class="tw"><table class="m xt r13">
       <tr><th>대학</th><th>수리논술 출제범위</th></tr>
       <tr><th scope="row">경희대 <span class="xn">의·약학계</span></th><td>공통수학1·2, 대수, 확률과 통계, 미적분Ⅰ, <span class="chip">미적분Ⅱ<span class="x28 x28s">논술 범위</span></span> <span class="chip">기하<span class="x28 x28s">논술 범위</span></span></td></tr>
-      <tr><th scope="row">동국대 <span class="xn">자연계열</span></th><td>경희대 의·약학계와 같은 범위(공통수학1·2, 대수, 확률과 통계, 미적분Ⅰ·Ⅱ, 기하)</td></tr>
-      <tr><th scope="row">연세대 <span class="xn">자연·통합계열</span></th><td>고교 교육과정(2022 개정) 보통 교과 전체(융합 선택과목 제외). 미적분Ⅱ·기하·통합과학까지 나올 수 있어 3합 6 수능최저가 2028 대입부터 새로 생김</td></tr>
+      <tr><th scope="row">동국대 <span class="xn">자연계열</span></th><td>경희대 의·약학계와 같은 범위(공통수학1·2, 대수, 확률과 통계, 미적분Ⅰ·Ⅱ, 기하)<div><span class="chip">미적분Ⅱ<span class="x28 x28s">이수 권장</span><span class="x28 x28s">논술 범위</span></span> <span class="chip">기하<span class="x28 x28s">이수 권장</span><span class="x28 x28s">논술 범위</span></span></div></td></tr>
+      <tr><th scope="row">연세대 <span class="xn">자연·통합계열</span></th><td>고교 교육과정(2022 개정) 보통 교과 전체(융합 선택과목 제외). 미적분Ⅱ·기하·통합과학까지 나올 수 있어 3합 6 수능최저가 2028 대입부터 새로 생김<div><span class="chip">미적분Ⅱ<span class="x28 x28s">이수 권장</span><span class="x28 x28s">논술 범위</span></span> <span class="chip">기하<span class="x28 x28s">이수 권장</span><span class="x28 x28s">논술 범위</span></span></div></td></tr>
       <tr><th scope="row">한양대·동국대·경희대</th><td>‘고등학교 교육과정 전 범위’로 안내해 미적분Ⅱ·기하 포함 가능성이 있음</td></tr>
       <tr><th scope="row">건국대</th><td>2026 대입 자연계 논술: 수학, 수학Ⅰ·Ⅱ, 미적분, 확률과 통계, <span class="chip">기하<span class="x28 x28s">논술 범위</span></span> 포함(건국대 자연). 통합형은 수학·수학Ⅰ·Ⅱ만. 2028 대입에서는 논술을 통합형 한 가지로 일원화해 범위 확인이 필요함</td></tr>
       <tr><th scope="row">이화여대</th><td>2026 대입 자연계 논술: 수학, 수학Ⅰ·Ⅱ, 미적분, 확률과 통계, <span class="chip">기하<span class="x28 x28s">논술 범위</span></span> 포함. 2028 범위는 자료집에 없음</td></tr>
@@ -785,7 +785,8 @@ function mathRender(){
       else if(it.any&&it.any.length&&it.any.every(x=>M.has(x)))o.push(it.l)
     });
     if(!g.length&&!o.length)return;n++;
-    const ch=x=>`<span class="chip">${esc(x)}<span class="x28 x28s">이수 권장</span></span>`;
+    const nsr=u.c==='연세대'||(u.c==='동국대'&&/자연/.test(u.u));
+    const ch=x=>`<span class="chip">${esc(x)}<span class="x28 x28s">이수 권장</span>${nsr?'<span class="x28 x28s">논술 범위</span>':''}</span>`;
     h+=`<tr><th scope="row">${esc(u.c)}<span class="xn">${esc(u.u)}</span></th><td>${g.map(ch).join(' ')}${o.length?'<div>'+o.map(x=>'<b>택1</b> '+ch(x)).join(' ')+'</div>':''}<span class="xs">${esc(u.s)}</span></td></tr>`;
   });
   document.getElementById('matht').innerHTML=h;
@@ -919,7 +920,7 @@ document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
 if('serviceWorker' in navigator&&location.protocol.startsWith('http')){try{navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(e){}}
-const VERSION='2.45.2',VDATE='2026-10-27';
+const VERSION='2.45.3',VDATE='2026-10-27';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
