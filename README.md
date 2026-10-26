@@ -55,3 +55,5 @@ GitHub Pages: https://dtrjeon.github.io/univ_find/ (`index.html` 하나로 통�
 ## 갱신 방법
 
 원본 `curr5.html`, `curr5_27년.html`을 수정한 뒤 `index*.html`로 복사하고 해당 `version*.json`의 버전을 올려 push 합니다.
+
+- PWA: manifest.json, sw.js(오프라인 캐시), icon-192/512.png 포함. 홈 화면에 추가해 앱처럼 사용 가능

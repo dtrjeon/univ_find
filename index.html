@@ -1,5 +1,12 @@
+<meta charset="utf-8">
 <title>수지구 교과 비교 27년</title>
 <meta name="claude:viewport-fit-sides" content="cover">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1d5d8a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="교과비교">
+<link rel="apple-touch-icon" href="icon-192.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap">
 <style>
 /* Layout: one column. Summary first, grade tabs (1/2/3학년) in the middle, subject-by-subject presence table last. */
@@ -902,7 +909,8 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='2.43.0',VDATE='2026-10-27';
+if('serviceWorker' in navigator&&location.protocol.startsWith('http')){try{navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(e){}}
+const VERSION='2.44.0',VDATE='2026-10-27';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
