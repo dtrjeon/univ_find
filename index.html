@@ -126,6 +126,11 @@ tr.rec td{background:var(--accent-soft)}
 .mres button.all{background:var(--accent);color:var(--bg);border-color:var(--accent)}
 .mres small{color:var(--muted);font-size:12px}
 .mres button.all small{color:var(--bg);opacity:.85}
+.tabs{display:flex;gap:6px;margin:14px 0 4px;border-bottom:1px solid var(--line,#ccc);flex-wrap:wrap}
+.tabs button,.atabs button{font:inherit;padding:8px 14px;border:1px solid var(--line,#ccc);border-bottom:0;border-radius:8px 8px 0 0;background:var(--chip);color:inherit;cursor:pointer}
+.tabs button[aria-selected=true],.atabs button[aria-selected=true]{background:var(--bg);font-weight:700;box-shadow:inset 0 -2px 0 var(--ok)}
+.atabs{display:flex;gap:6px;margin:12px 0 8px}.atabs button{border-bottom:1px solid var(--line,#ccc);border-radius:8px}
+#adet table td,#adet table th{vertical-align:top}.nn{color:var(--mute,#888);font-size:12.5px}
 </style>
 
 <datalist id="mdl"></datalist>
@@ -134,6 +139,11 @@ tr.rec td{background:var(--accent-soft)}
   <h1>수지구 고교 교과과목 비교</h1>
   <p class="sub">용인 수지고 · 신봉고 · 용인홍천고 · 성복고 · 서원고 | 2026학년도 입학생 교육과정 편제표 기준, 2027학년도 입학생은 수지고·용인홍천고·서원고만 추가 (학교알리미 공시 파일, 진학지도서)</p>
 
+  <nav class="tabs" role="tablist" aria-label="화면 전환">
+    <button type="button" role="tab" id="tb1" aria-selected="true" data-t="A">과목 비교</button>
+    <button type="button" role="tab" id="tb2" aria-selected="false" data-t="B">대학별 수시·정시 (학과)</button>
+  </nav>
+  <div id="tabA">
   <div class="warn">
     <p><span class="star">*</span> 표시는 2028학년도 수능 필수 출제 과목이 아닌 과목입니다. 필수 과목은 국어(화법과 언어, 독서와 작문, 문학), 수학(대수, 미적분Ⅰ, 확률과 통계), 영어Ⅰ·Ⅱ, 한국사, 통합사회, 통합과학입니다. 공통국어·공통수학·공통영어는 모든 학생이 1학년에 이수하므로 *를 붙이지 않았습니다. 제2외국어·한문은 선택 응시라 *를 붙였습니다.</p>
     <p><span class="x28">개편수능(필수)</span> 표시는 2028학년도부터 바뀐 개편 수능(2022 개정)의 필수 출제 과목입니다. 국어 화법과 언어·독서와 작문·문학, 수학 대수·미적분Ⅰ·확률과 통계, 영어Ⅰ·Ⅱ, 한국사, 통합사회, 통합과학이며, 선택과목은 제2외국어/한문(<span class="x28 x28s">개편수능(선택)</span>)뿐입니다. 미적분Ⅱ·기하와 물리학·화학·생명과학·지구과학은 수능 범위가 아니고, 대학이 권장하는 경우가 많아 <span class="x28 x28s">대학 권장 과학</span>(**)으로 따로 표시합니다.</p>
@@ -201,7 +211,7 @@ tr.rec td{background:var(--accent-soft)}
       <tr><th>전형</th><th>수학 관련 내용 (2027학년도 모집요강)</th></tr>
       <tr><th scope="row">수리논술</th><td>수학, 수학Ⅰ, 수학Ⅱ에서 3문제 (100분). 미적분Ⅱ·기하는 범위에 없음</td></tr>
       <tr><th scope="row">과학인재 면접<span class="xn">자연과학·공학계열 등</span></th><td>제시문 기반 수학/과학 교과형 면접. 수학은 수학, 수학Ⅰ·Ⅱ, <span class="chip">미적분</span> <span class="chip">확률과 통계</span> <span class="chip">기하</span>에서 출제</td></tr>
-      <tr><th scope="row">정시 수능 반영<span class="xn">가군</span></th><td>자연과학계열·의상학과·약학과 등은 수학 포함 우수한 영역 순 40·30 반영. 사회과학계열·의상학과·경영학과·글로벌경영/경제학과는 <b>미적분 선택자에게 가산점(최대 3%)</b></td></tr>
+      <tr><th scope="row">정시 수능 반영<span class="xn">공학계열 나군 / 자연과학계열 가군</span></th><td>공학계열(나군)은 국어·수학 중 우수한 영역 순 45·30, 자연과학계열(가군)은 수학·탐구 중 우수한 영역 순 40·30 반영. 사회과학계열·의상학과·경영학과·글로벌경영/경제학과는 <b>미적분 선택자에게 가산점(최대 3%)</b></td></tr>
     </table></div>
     <p class="hint">성균관대는 2028 시행계획·2027 모집요강에서 모집단위별 권장·핵심 과목을 지정하지 않았습니다. 위 항목은 2015 개정 과목으로 치르는 2027학년도 기준이라, 미적분 선택 가산점은 선택과목이 없어지는 개편 수능(2028학년도~)에는 그대로 적용되지 않습니다. 2027년 입학생이 치르는 입시 기준은 성균관대 입학처 공지로 확인하세요.</p>
     <p class="hint">출제범위는 각 대학의 2028학년도 전형계획 기준이며 바뀔 수 있습니다. 2026 대입 대학별 범위는 아래 ‘대학·학과별 유리한 과목’의 참고 항목에 있습니다.</p>
@@ -222,7 +232,7 @@ tr.rec td{background:var(--accent-soft)}
       <tr><th scope="row">서울대</th><td><b>미적분 또는 기하 지정</b> (이공계, 식품영양·의류·간호 제외)</td><td>사탐 불인정. 과탐Ⅱ 선택 가산점(서로 다른 Ⅰ·Ⅱ 3점, Ⅱ 두 과목 5점)</td><td></td></tr>
       <tr><th scope="row">연세대</th><td>지정 없음 (확률과 통계도 가능)</td><td>사탐·과탐 모두 인정, 과탐 가산점 3%</td><td></td></tr>
       <tr><th scope="row">고려대</th><td>지정 없음</td><td>사탐·과탐 모두 인정, 과탐 가산점 3%</td><td></td></tr>
-      <tr><th scope="row">성균관대</th><td>지정 없음. 가군 자연과학계열 등은 수학 포함 우수한 영역 순 40·30 반영</td><td>사탐·과탐 모두 인정, 과탐 가산점 최대 5%</td><td>수리논술 수학Ⅰ·Ⅱ 3문제, 과학인재 면접에 수학(미적분·확률과 통계·기하)·과학</td></tr>
+      <tr><th scope="row">성균관대</th><td>지정 없음. 공학계열(나군)은 국어·수학 중 우수한 영역 순 45·30 반영</td><td>사탐·과탐 모두 인정, 과탐 가산점 최대 5%</td><td>수리논술 수학Ⅰ·Ⅱ 3문제, 과학인재 면접에 수학(미적분·확률과 통계·기하)·과학</td></tr>
       <tr><th scope="row">한양대</th><td>지정 없음</td><td>사탐·과탐 모두 인정, 과탐 가산점 있음(수치는 수능 후 결정)</td><td>논술은 ‘고교 교육과정 전 범위’로 안내</td></tr>
       <tr><th scope="row">경희대·중앙대·이화여대·서강대·서울시립대</th><td>지정 없음</td><td>사탐·과탐 모두 인정. 가산점은 경희대 과목당 4점, 중앙대 5%, 이화여대 최대 6%, 서울시립대 3%, 서강대 없음</td><td>경희대 논술(의·약학계)은 미적분Ⅱ·기하 범위, 건국대(자연)·이화여대 논술은 미적분·확률과 통계·기하 포함(2026 대입)</td></tr>
     </table></div>
@@ -316,6 +326,20 @@ tr.rec td{background:var(--accent-soft)}
     <li>대학·학과별 권장과목과 간호·보건 선택과목: 2026 진학지도자료집(수학 「대학별 이수 권장 과목 예시」, 영어 「2028학년도 수도권 대학별 권장과목」, 세종대 첨단학과 상담 예시)</li>
     <li>성균관대: 2028학년도 입학전형 시행계획(2026.4), 2027학년도 수시·정시 모집요강. 권장과목 지정은 없고 참고 내용만 정리</li>
   </ul>
+  </div>
+  <div id="tabB" hidden>
+    <section>
+      <h2>대학별 수시·정시 (학과)</h2>
+      <p class="hint">올려 주신 모집요강에 있는 대학만 정리했습니다. 지금은 성균관대(2027학년도 수시·정시 모집요강)만 들어 있고, 다른 대학은 요강을 올려 주시면 같은 형식으로 추가합니다. 모집단위와 인원은 대학 사정에 따라 바뀔 수 있으니 입학처 공지로 확인하세요.</p>
+      <div class="uf">
+        <label>대학<select id="ac"></select></label>
+        <label>모집단위(학과)<select id="au"></select></label>
+      </div>
+      <div class="atabs" role="tablist"><button type="button" id="am1" aria-selected="true" data-m="su">수시</button><button type="button" id="am2" aria-selected="false" data-m="jg">정시</button></div>
+      <div id="adet" class="tw"></div>
+      <p class="hint" id="anote"></p>
+    </section>
+  </div>
   <p class="ver" id="ver"></p>
 </div>
 
@@ -840,7 +864,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='2.20.1',VDATE='2026-10-26';
+const VERSION='2.21.0',VDATE='2026-10-26';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
@@ -882,4 +906,63 @@ function ycRender(){
 document.getElementById('ycs').innerHTML=SC.map(x=>`<option${x==='용인홍천고'?' selected':''}>${x}</option>`).join('');
 document.getElementById('ycs').onchange=ycRender;document.getElementById('ycd').onchange=ycRender;
 summary();view();pres();ycRender();sciRender();mathRender();chemRender();
+
+// 대학별 수시·정시 탭
+const ADM={'성균관대':{
+ src:'성균관대 2027학년도 수시모집요강(2026.5), 2027학년도 정시모집요강',
+ units:{
+  '공학계열 (화학공학부·신소재·기계·건설환경·시스템경영·나노)':{
+   note:'계열로 입학해 2학년 진급 때 본인 희망과 1학년 성적으로 학부/학과에 진입합니다. 화학공학부는 공학계열에 설치되어 있습니다(전공예약 아님). 공학계열 인원은 학과별 구분 없이 계열 전체입니다.',
+   su:[['학생부종합(융합인재)',64,'학생부 100%','국·수·영·탐(2과목 평균) 4개 영역 중 3개 등급합 6 이내'],
+       ['학생부종합(탐구인재)',40,'학생부 100% (서류 평가)','없음'],
+       ['학생부종합(과학인재)',25,'1단계 학생부 → 2단계 학생부 70 + 면접 30. 제시문 기반 수학/과학 교과형 면접(수학: 수학, 수학Ⅰ·Ⅱ, 미적분, 확률과 통계, 기하)','없음'],
+       ['학생부종합(기회균형)',7,'학생부 100%, 지원자격 심사','없음 (요강 수능최저 표에 해당 없음)'],
+       ['학생부교과(추천인재)',54,'학생부 100%, 학교장 추천(추천 인원 제한 없음)','국·수·영·탐(2과목 평균) 4개 영역 중 3개 등급합 7 이내'],
+       ['논술위주(언어형)',10,'논술 100 (국어·사회·한국사, 100분). 공학계열 지원 시 수능최저에 수학영역 의무 반영','4개 영역 중 3개 등급합 6 이내'],
+       ['논술위주(수리형)',40,'논술 100 (수학, 수학Ⅰ, 수학Ⅱ 3문제, 100분)','4개 영역 중 3개 등급합 6 이내']],
+   su_tot:240,
+   jg:{gun:'나군',n:272,note:'정시 일반전형 인원이며 농어촌·이웃사랑 등 정원외 선발은 별도입니다.',
+     ratio:'국어·수학 중 우수한 영역 순 45·30 + 탐구 15 + 영어 10 (한국사는 등급별 감점)',
+     detail:['수능 성적은 영역별 백분위를 반영(영어는 등급을 자체 변환)','탐구는 2과목 반영','수학은 확률과 통계·미적분·기하 중 어느 것을 봐도 되고 지정 과목이 없음','과학탐구 선택자에게 가산점(최대 5%)을 줄 수 있음','필수응시: 국어, 수학, 영어, 사회탐구/과학탐구 2과목, 한국사','한국사 감점: 1~4등급 0, 5등급 -1, 6등급 -2, 7등급 -5, 8등급 -10, 9등급 -20']}},
+  '자연과학계열 (생명과학·수학·물리·화학 등)':{
+   note:'생명과학·수학·물리·화학과는 전공예약제로 합격하면 2학년에 해당 학과로 진입하고, 식품생명공학·바이오메카트로닉스·융합생명공학은 계열 안에서 진입합니다.',
+   su:[['학생부종합(융합인재)',35,'학생부 100%','국·수·영·탐(2과목 평균) 4개 영역 중 3개 등급합 6 이내'],
+       ['학생부종합(탐구인재)',25,'학생부 100%','없음'],
+       ['학생부종합(과학인재)',20,'1단계 학생부 → 2단계 학생부 70 + 면접 30 (수학/과학 교과형 면접)','없음'],
+       ['학생부종합(기회균형)',7,'학생부 100%, 지원자격 심사','없음 (요강 수능최저 표에 해당 없음)'],
+       ['학생부교과(추천인재)',20,'학생부 100%, 학교장 추천','4개 영역 중 3개 등급합 7 이내'],
+       ['논술위주(언어형)',5,'논술 100. 수능최저에 수학영역 의무 반영','4개 영역 중 3개 등급합 6 이내'],
+       ['논술위주(수리형)',25,'논술 100 (수학, 수학Ⅰ, 수학Ⅱ 3문제)','4개 영역 중 3개 등급합 6 이내']],
+   su_tot:137,
+   jg:{gun:'가군',n:120,note:'정시 일반전형 인원입니다.',
+     ratio:'국어 15 + 수학·탐구 중 우수한 영역 순 40·30 + 영어 15 (한국사는 등급별 감점)',
+     detail:['수능 성적은 영역별 표준점수를 반영(영어는 등급을 자체 변환)','탐구는 2과목 반영','과학탐구 선택자에게 가산점(최대 5%)을 줄 수 있음','필수응시: 국어, 수학, 영어, 사회탐구/과학탐구 2과목, 한국사']}}
+ }}};
+function admRender(){
+  const c=document.getElementById('ac').value,uSel=document.getElementById('au'),A=ADM[c];
+  if(!uSel.dataset.c||uSel.dataset.c!==c){uSel.innerHTML=Object.keys(A.units).map(k=>`<option>${esc(k)}</option>`).join('');uSel.dataset.c=c}
+  const U=A.units[uSel.value],mode=document.getElementById('am1').getAttribute('aria-selected')==='true'?'su':'jg';
+  let h='';
+  if(mode==='su'){
+    h='<table class="m xt"><tr><th>전형</th><th class="c">모집인원</th><th>선발 방법</th><th>수능최저학력기준</th></tr>'+
+      U.su.map(r=>`<tr><th scope="row">${esc(r[0])}</th><td class="c">${r[1]}</td><td>${esc(r[2])}</td><td>${esc(r[3])}</td></tr>`).join('')+
+      `<tr><th scope="row">합계</th><td class="c"><b>${U.su_tot}</b></td><td colspan="2" class="nn">수시 정원내 모집인원</td></tr></table>`;
+    document.getElementById('anote').textContent=U.note+' 수능최저는 4개 영역 중 3개 등급 합이며, 필수응시는 국어·수학(확률과 통계/미적분/기하 중 택1)·영어·탐구 2과목·한국사입니다.';
+  }else{
+    const J=U.jg;
+    h=`<table class="m xt"><tr><th>모집군</th><td>${J.gun} 일반전형 <b>${J.n}</b>명</td></tr><tr><th>수능 반영 비율</th><td>${esc(J.ratio)}</td></tr><tr><th>세부 사항</th><td><ul style="margin:0 0 0 18px;padding:0">${J.detail.map(d=>`<li>${esc(d)}</li>`).join('')}</ul></td></tr></table>`;
+    document.getElementById('anote').textContent=J.note+' '+U.note;
+  }
+  document.getElementById('adet').innerHTML=h;
+}
+(function(){
+  const cs=document.getElementById('ac');cs.innerHTML=Object.keys(ADM).map(k=>`<option>${esc(k)}</option>`).join('');
+  cs.onchange=admRender;document.getElementById('au').onchange=admRender;
+  document.querySelectorAll('.atabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.atabs button').forEach(x=>x.setAttribute('aria-selected',x===b));admRender()});
+  document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{
+    document.querySelectorAll('.tabs button').forEach(x=>x.setAttribute('aria-selected',x===b));
+    document.getElementById('tabA').hidden=b.dataset.t!=='A';document.getElementById('tabB').hidden=b.dataset.t!=='B';
+    if(b.dataset.t==='B')admRender();try{location.hash=b.dataset.t==='B'?'#adm':''}catch(e){}});
+  if(location.hash==='#adm')document.getElementById('tb2').click();
+})();
 </script>
