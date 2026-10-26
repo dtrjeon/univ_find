@@ -677,7 +677,8 @@ const UNIV=[
  {c:'전공별 안내(대학 무관)',u:'응급구조학과',d:'대학이 아니라 전공 계열 기준의 과목 선택 안내입니다. 모든 대학에 같은 요건이 있다는 뜻이 아닙니다. ',s:SB,r:['대수','미적분Ⅰ','확률과 통계','화학','생명과학','현대사회와 윤리','세포와 물질대사','생물의 유전','법과 사회','보건','과학의 역사와 문화']}
 ];
 const IDX={};
-SC.forEach(sc=>{IDX[sc]={};[2,3].forEach(g=>{for(const k of ['1','2']){const sm=Y[sc][g][k];
+const YSRC=sc=>sc==='성복고'?Y27[sc]:Y[sc];
+SC.forEach(sc=>{IDX[sc]={};[2,3].forEach(g=>{for(const k of ['1','2']){const sm=YSRC(sc)[g][k];
   sm.fx.forEach(n=>{(IDX[sc][norm(n)]=IDX[sc][norm(n)]||{n,o:[]}).o.push({g,k,t:'fx'})});
   sm.pk.forEach((p,gi)=>p[1].forEach(n=>{(IDX[sc][norm(n)]=IDX[sc][norm(n)]||{n,o:[]}).o.push({g,k,t:'pk',pn:p[0],size:p[1].length,key:g+'-'+k+'-'+gi})}));
 }})});
@@ -710,7 +711,7 @@ function planOf(sc,unit){
 const okN=pl=>pl.filter(r=>r.st==='fx'||r.st==='pk').length;
 function fitCard(sc,unit,pl){
   const n=okN(pl);
-  let h=`<div class="card" data-have="${n}"><header><h3>${sc}</h3><span class="sc-n"><b>${n}</b> / ${pl.length}개 이수 가능</span></header>`;
+  let h=`<div class="card" data-have="${n}"><header><h3>${sc}${sc==='성복고'?' <small>(2027 입학생)</small>':''}</h3><span class="sc-n"><b>${n}</b> / ${pl.length}개 이수 가능</span></header>`;
   const sel=pl.filter(r=>r.st==='pk');
   if(sel.length){
     const by={};sel.forEach(r=>{const k=r.pick.o.g+'학년 '+r.pick.o.k+'학기';(by[k]=by[k]||[]).push(r)});
@@ -901,7 +902,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='2.42.0',VDATE='2026-10-27';
+const VERSION='2.43.0',VDATE='2026-10-27';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
