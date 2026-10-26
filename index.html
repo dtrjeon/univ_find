@@ -901,7 +901,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='2.41.1',VDATE='2026-10-27';
+const VERSION='2.41.2',VDATE='2026-10-27';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
@@ -1282,7 +1282,7 @@ function admRender(){
   let h='';
   if(mode==='su'){
     const EL=U.su.some(r=>r[4]);
-    h='<table class="m xt"><tr><th>전형</th><th class="c">모집인원</th>'+(EL?'<th>지원자격</th>':'')+'<th>선발 방법</th><th>수능최저학력기준</th></tr>'+
+    h='<table class="m xt"'+(EL?' style="table-layout:fixed;min-width:900px"':'')+'>'+(EL?'<colgroup><col style="width:12%"><col style="width:7%"><col style="width:38%"><col style="width:19%"><col style="width:24%"></colgroup>':'')+'<tr><th>전형</th><th class="c">모집인원</th>'+(EL?'<th>지원자격</th>':'')+'<th>선발 방법</th><th>수능최저학력기준</th></tr>'+
       U.su.map(r=>`<tr><th scope="row">${esc(r[0])}</th><td class="c">${r[1]}</td>${EL?`<td>${esc(r[4]||'')}</td>`:''}<td>${esc(r[2])}</td><td>${esc(r[3])}</td></tr>`).join('')+
       `<tr><th scope="row">합계</th><td class="c"><b>${U.su_tot}</b></td><td colspan="${EL?3:2}" class="nn">수시 정원내 모집인원</td></tr></table>`;
     document.getElementById('anote').textContent=U.note+(U.note2||'');
