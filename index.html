@@ -197,7 +197,7 @@ tr.rec td{background:var(--accent-soft)}
   </section>
 
   <section id="scisec">
-    <details class="sec" open><summary><h2>대학 권장 과학 <span class="x28 x28s">대학 권장 과학</span></h2></summary>
+    <details class="sec"><summary><h2>대학 권장 과학 <span class="x28 x28s">대학 권장 과학</span></h2></summary>
     <p class="hint">대학·모집단위별로 권장하는 과학 과목만 모았습니다. 개편 수능(2028학년도~)에는 과학 선택과목이 없어서 수능 범위는 아니지만, 대학이 이수를 권장하는 과목입니다. 입력된 대학 자료(12개 대학) 기준이며, 과학 권장이 없는 모집단위는 제외했습니다. 출처는 각 행 아래에 적었고(진학지도자료집, 연세대 2028 가이드라인), 최종 확인은 대학 입학처 공지로 하세요.</p>
     <div class="tw"><table class="m xt r13" id="scit"></table></div>
     <p class="hint" id="scin"></p>
@@ -205,7 +205,7 @@ tr.rec td{background:var(--accent-soft)}
   </section>
 
   <section id="mathsec">
-    <details class="sec" open><summary><h2>대학 권장 수학 <span class="x28 x28s">이수 권장</span></h2></summary>
+    <details class="sec"><summary><h2>대학 권장 수학 <span class="x28 x28s">이수 권장</span></h2></summary>
     <p class="hint">개편 수능(2028학년도~)은 대수·미적분Ⅰ·확률과 통계만 출제해 <b>미적분Ⅱ와 기하가 빠집니다</b>. 그래도 아래 수도권 대학은 권장과목 또는 논술 출제범위로 이 두 과목을 요구하거나 시사합니다. 가산점이나 필수 조건이 아닐 수 있으니 최종 모집요강으로 확인하세요.</p>
     <h3>1. 모집단위별 이수 권장 (미적분Ⅱ·기하)</h3>
     <div class="tw"><table class="m xt r13" id="matht"></table></div>
@@ -923,7 +923,7 @@ document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
 if('serviceWorker' in navigator&&location.protocol.startsWith('http')){try{navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(e){}}
-const VERSION='2.45.5',VDATE='2026-10-27';
+const VERSION='2.45.6',VDATE='2026-10-27';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
