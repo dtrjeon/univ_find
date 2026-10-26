@@ -134,7 +134,7 @@ tr.rec td{background:var(--accent-soft)}
 #t20 b.mr{color:#d32f2f !important;font-weight:800}:root[data-theme="dark"] #t20 b.mr{color:#ff6b6b !important}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #t20 b.mr{color:#ff6b6b !important}}
 .ast{color:var(--diff,#c2410c);margin-left:2px}
 .gy{display:inline-block;padding:2px 8px;border-radius:4px;border:1px solid var(--ok);color:var(--ok);font-size:12.5px;font-weight:700}
-#t20{table-layout:fixed;width:100%;min-width:900px}#t20 th[scope=row]{white-space:normal;word-break:keep-all}#t20 th{white-space:normal}#t20 td,#t20 th{word-break:keep-all;overflow-wrap:anywhere}
+#t20{table-layout:fixed;width:100%;min-width:960px}#t20 .gk{padding-left:2px;padding-right:2px}#t20 .gdot{color:#000;font-size:1.05em}[data-theme=dark] #t20 .gdot{color:#fff}@media (prefers-color-scheme:dark){:root:not([data-theme=light]) #t20 .gdot{color:#fff}}#t20 th[scope=row]{white-space:normal;word-break:keep-all}#t20 th{white-space:normal}#t20 td,#t20 th{word-break:keep-all;overflow-wrap:anywhere}
 .t20b{font:inherit;font-size:13px;padding:3px 10px;border:1px solid var(--line,#ccc);border-radius:6px;background:var(--chip);color:inherit;cursor:pointer}
 </style>
 
@@ -890,7 +890,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='2.35.0',VDATE='2026-10-26';
+const VERSION='2.36.0',VDATE='2026-10-26';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
@@ -1268,9 +1268,11 @@ function nsCell(u){const n=NS[u];if(!n)return '<span class="nn">확인 필요</s
 function mh(t){return esc(t).replace(/(수리논술|수학Ⅰ·Ⅱ|수학Ⅰ|수학Ⅱ|수학|미적분Ⅱ|미적분|확률과 통계|기하)/g,'<b class="mr">$1</b>')}
 function t20Render(){
   const el=document.getElementById('t20');
-  el.innerHTML='<colgroup><col style="width:4%"><col style="width:12%"><col style="width:27%"><col style="width:8%"><col style="width:27%"><col style="width:8%"><col style="width:8%"><col style="width:6%"></colgroup><tr><th class="c">순위</th><th>대학 · 학과</th><th>수시</th><th class="c">수시 모집인원</th><th>정시</th><th class="c">정시 모집인원</th><th class="c">모집 방식</th><th class="c">상세</th></tr>'+T20.map(r=>{
+  el.innerHTML='<colgroup><col style="width:4%"><col style="width:11%"><col style="width:24%"><col style="width:7%"><col style="width:24%"><col style="width:7%"><col style="width:3%"><col style="width:3%"><col style="width:3%"><col style="width:8%"><col style="width:6%"></colgroup><tr><th class="c">순위</th><th>대학 · 학과</th><th>수시</th><th class="c">수시 모집인원</th><th>정시</th><th class="c">정시 모집인원</th><th class="c gk">가군</th><th class="c gk">나군</th><th class="c gk">다군</th><th class="c">모집 방식</th><th class="c">상세</th></tr>'+T20.map(r=>{
     const has=!!r[5];
-    return `<tr><td class="c">${r[0]}</td><th scope="row">${esc(r[1])}${NS[r[1]]&&NS[r[1]].f?'<b class="ast" title="논술 PDF 첨부">*</b>':''}<span class="xn">${esc(r[2])}</span></th><td>${mh(r[3])}</td><td class="c">${esc(r[6])}</td><td>${mh(r[4])}</td><td class="c">${esc(r[7])}</td><td class="c">${r[8]==='계열'?'<span class="gy">계열 모집 → 2학년 학과 진입</span>':esc(r[8]==='확인 필요'?'확인 필요':r[8]+' 모집')}</td><td class="c">${has?`<button type="button" class="t20b" data-i="${r[0]}">보기</button>`:'<span class="nn">요강 필요</span>'}</td></tr>`}).join('');
+    let gn='';try{gn=has?ADM[r[5][0]].units[r[5][1]].jg.gun:''}catch(e){}
+    const gc=['가군','나군','다군'].map(g=>`<td class="c gk">${gn===g?'<span class="gdot" title="'+g+' 모집" aria-label="'+g+'">●</span>':(has?'':'<span class="nn">-</span>')}</td>`).join('');
+    return `<tr><td class="c">${r[0]}</td><th scope="row">${esc(r[1])}${NS[r[1]]&&NS[r[1]].f?'<b class="ast" title="논술 PDF 첨부">*</b>':''}<span class="xn">${esc(r[2])}</span></th><td>${mh(r[3])}</td><td class="c">${esc(r[6])}</td><td>${mh(r[4])}</td><td class="c">${esc(r[7])}</td>${gc}<td class="c">${r[8]==='계열'?'<span class="gy">계열 모집 → 2학년 학과 진입</span>':esc(r[8]==='확인 필요'?'확인 필요':r[8]+' 모집')}</td><td class="c">${has?`<button type="button" class="t20b" data-i="${r[0]}">보기</button>`:'<span class="nn">요강 필요</span>'}</td></tr>`}).join('');
   el.querySelectorAll('.t20b').forEach(b=>b.onclick=()=>{
     const r=T20.find(x=>x[0]===+b.dataset.i),cs=document.getElementById('ac'),us=document.getElementById('au');
     cs.value=r[5][0];us.dataset.c='';admRender();us.value=r[5][1];admRender();
