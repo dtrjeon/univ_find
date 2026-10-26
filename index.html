@@ -153,7 +153,7 @@ tr.rec td{background:var(--accent-soft)}
   <p class="sub">용인 수지고 · 신봉고 · 용인홍천고 · 성복고 · 서원고 | 2026학년도 입학생 교육과정 편제표 기준, 2027학년도 입학생은 수지고·용인홍천고·성복고·서원고만 추가 (학교알리미 공시 파일, 진학지도서)</p>
 
   <nav class="tabs" role="tablist" aria-label="화면 전환">
-    <button type="button" role="tab" id="tb1" aria-selected="true" data-t="A">과목 비교</button>
+    <button type="button" role="tab" id="tb1" aria-selected="true" data-t="A">고등교과과정</button>
     <button type="button" role="tab" id="tb2" aria-selected="false" data-t="B">대학별 수시·정시 (학과)</button>
   </nav>
   <div id="tabA">
@@ -920,7 +920,7 @@ document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
 if('serviceWorker' in navigator&&location.protocol.startsWith('http')){try{navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(e){}}
-const VERSION='2.45.3',VDATE='2026-10-27';
+const VERSION='2.45.4',VDATE='2026-10-27';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
