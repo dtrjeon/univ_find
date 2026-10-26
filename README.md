@@ -7,11 +7,10 @@
 
 | 파일 | 내용 | 버전 파일 |
 |---|---|---|
-| `index.html` | 2026학년도 입학생 5개 학교 | `version.json` |
-| `index_27년.html` | 2026 + 2027학년도 입학생(수지고·용인홍천고·서원고) 비교 | `version_27년.json` |
+| `index.html` | 2026 + 2027학년도 입학생(수지고·용인홍천고·서원고) 비교 (페이지 하나만 운영) | `version.json` |
 
-GitHub Pages: https://dtrjeon.github.io/univ_find/ (27년 페이지는 `index_27년.html`).
-둘 다 서버 없이 동작하는 단일 파일이며, 페이지 로드 시 버전 파일을 읽어 새 버전이 있으면 안내합니다. 버전은 오른쪽 위에 표시됩니다.
+GitHub Pages: https://dtrjeon.github.io/univ_find/ (`index.html` 하나로 통일).
+서버 없이 동작하는 단일 파일이며, 페이지 로드 시 버전 파일을 읽어 새 버전이 있으면 안내합니다. 버전은 오른쪽 위에 표시됩니다.
 
 ## 화면 구성 (27년 페이지)
 

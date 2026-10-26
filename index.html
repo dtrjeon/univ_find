@@ -1,4 +1,4 @@
-<title>수지구 고교 교과과목 비교</title>
+<title>수지구 교과 비교 27년</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap">
 <style>
@@ -59,6 +59,8 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 .chip .cc::after{content:'학점'}
 .tbl td,.tbl th{vertical-align:top}
 .tbl td.k{font-weight:700;white-space:nowrap;background:var(--accent-soft)}
+.yc tr.chg td,.m tr.chg td{background:var(--accent-soft)}
+.yl{display:block;font-size:11px;font-weight:400;color:var(--muted)}
 .tsem{margin:0 0 6px}.tsem:last-child{margin:0}
 .tsem .tk{display:block;font-size:11px;color:var(--muted);margin-bottom:2px}
 .tsem .chip{display:inline-block;margin:0 4px 4px 0}
@@ -81,6 +83,10 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 .src li{margin:2px 0}
 mark{background:var(--warn-bg);color:var(--warn-fg);border-radius:2px}
 .star{color:var(--diff);font-weight:700;margin-left:1px}
+.xt th[scope=row]{white-space:nowrap;text-align:left;vertical-align:top}.xt td{vertical-align:top;line-height:2}.note{font-size:12.5px;color:var(--mute,#888);margin-top:8px}.note ul{margin:4px 0 0 18px;padding:0}
+.xt .xn{display:block;font-size:12px;color:var(--muted);line-height:1.5;margin-top:2px;font-weight:400}.xt .xs{display:block;font-size:12px;color:var(--muted);line-height:1.5}.xt .chip{display:inline-block;margin:1px 0}
+.x28{color:#e5484d;font-weight:700;font-size:11px;margin-left:3px;white-space:nowrap;border:1px solid #e5484d;border-radius:8px;padding:0 5px}
+.x28.x28s{color:var(--ok);border-color:var(--ok)}
 .sel{display:inline-block;margin-left:3px;font-size:10px;font-weight:700;color:var(--accent);border:1px solid var(--accent);border-radius:8px;padding:0 5px;vertical-align:1px;white-space:nowrap}
 .cat{white-space:nowrap;color:var(--muted);font-size:13px}
 .ctl select{font:inherit;font-size:14px;padding:7px 10px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--fg)}
@@ -126,16 +132,31 @@ tr.rec td{background:var(--accent-soft)}
 <div class="wrap">
   <div class="newver" id="newver" role="status">새 버전이 있습니다. <button type="button" id="reload">새로고침</button></div>
   <h1>수지구 고교 교과과목 비교</h1>
-  <p class="sub">용인 수지고 · 신봉고 · 용인홍천고 · 성복고 · 서원고 | 2026학년도 입학생 교육과정 편제표 기준 (학교알리미 공시 파일)</p>
+  <p class="sub">용인 수지고 · 신봉고 · 용인홍천고 · 성복고 · 서원고 | 2026학년도 입학생 교육과정 편제표 기준, 2027학년도 입학생은 수지고·용인홍천고·서원고만 추가 (학교알리미 공시 파일, 진학지도서)</p>
 
   <div class="warn">
     <p><span class="star">*</span> 표시는 2028학년도 수능 필수 출제 과목이 아닌 과목입니다. 필수 과목은 국어(화법과 언어, 독서와 작문, 문학), 수학(대수, 미적분Ⅰ, 확률과 통계), 영어Ⅰ·Ⅱ, 한국사, 통합사회, 통합과학입니다. 공통국어·공통수학·공통영어는 모든 학생이 1학년에 이수하므로 *를 붙이지 않았습니다. 제2외국어·한문은 선택 응시라 *를 붙였습니다.</p>
+    <p><span class="x28">개편수능(필수)</span> 표시는 2028학년도부터 바뀐 개편 수능(2022 개정)의 필수 출제 과목입니다. 국어 화법과 언어·독서와 작문·문학, 수학 대수·미적분Ⅰ·확률과 통계, 영어Ⅰ·Ⅱ, 한국사, 통합사회, 통합과학이며, 선택과목은 제2외국어/한문(<span class="x28 x28s">개편수능(선택)</span>)뿐입니다. 미적분Ⅱ·기하와 물리학·화학·생명과학·지구과학은 수능 범위가 아니고, 대학이 권장하는 경우가 많아 <span class="x28 x28s">대학 권장 과학</span>(**)으로 따로 표시합니다.</p>
   </div>
+
+  <section id="x28sec">
+    <h2>수능 영역별 출제 과목 <span class="x28">개편수능</span></h2>
+    <p class="hint">2028학년도 수능 개편안(교육부) 기준입니다. 국어·수학·사회·과학(직업) 영역은 선택과목 없이 모든 수험생이 같은 과목을 봅니다. 영어·한국사·제2외국어/한문은 절대평가이고, 제2외국어/한문만 골라서 봅니다. 2028 수능은 2025학년도 입학생부터 치릅니다.</p>
+    <div class="tw"><table class="m xt"><tr><th>영역</th><th>개편안(2028 수능~)</th></tr>
+<tr><th scope="row">국어</th><td><b>공통</b> <span class="chip">화법과 언어<span class="x28">개편수능(필수)</span></span> <span class="chip">독서와 작문<span class="x28">개편수능(필수)</span></span> <span class="chip">문학<span class="x28">개편수능(필수)</span></span> <span class="xs">현행(~2027 수능): 공통(독서·문학) + 선택 1(화법과 작문 / 언어와 매체)</span></td></tr>
+<tr><th scope="row">수학</th><td><b>공통</b> <span class="chip">대수<span class="x28">개편수능(필수)</span></span> <span class="chip">미적분Ⅰ<span class="x28">개편수능(필수)</span></span> <span class="chip">확률과 통계<span class="x28">개편수능(필수)</span></span> <span class="xs">현행(~2027 수능): 공통(수학Ⅰ·Ⅱ) + 선택 1(확률과 통계 / 미적분 / 기하)</span></td></tr>
+<tr><th scope="row">영어</th><td><b>공통</b> <span class="chip">영어Ⅰ<span class="x28">개편수능(필수)</span></span> <span class="chip">영어Ⅱ<span class="x28">개편수능(필수)</span></span> <span class="xs">현행(~2027 수능): 공통(영어Ⅰ·Ⅱ) · 절대평가</span></td></tr>
+<tr><th scope="row">한국사</th><td><b>공통</b> <span class="chip">한국사<span class="x28">개편수능(필수)</span></span> <span class="xs">현행(~2027 수능): 공통 · 절대평가</span></td></tr>
+<tr><th scope="row">탐구<br>(사회·과학)</th><td><b>사회</b> <span class="chip">통합사회<span class="x28">개편수능(필수)</span></span> <br><b>과학</b> <span class="chip">통합과학<span class="x28">개편수능(필수)</span></span> <span class="xs">현행(~2027 수능): 17과목 중 최대 2과목 선택</span></td></tr>
+<tr><th scope="row">직업탐구</th><td><b>공통</b> <span class="chip">성공적인 직업생활<span class="x28">개편수능(필수)</span></span> <span class="xs">현행(~2027 수능): 1과목 선택(5과목 중 택1) / 2과목 선택(성공적인 직업생활 + 택1)</span></td></tr>
+<tr><th scope="row">제2외국어<br>/한문</th><td><b>9과목 중 택1</b> <span class="chip">독일어Ⅰ<span class="x28 x28s">개편수능(선택)</span></span> <span class="chip">프랑스어Ⅰ<span class="x28 x28s">개편수능(선택)</span></span> <span class="chip">스페인어Ⅰ<span class="x28 x28s">개편수능(선택)</span></span> <span class="chip">중국어Ⅰ<span class="x28 x28s">개편수능(선택)</span></span> <span class="chip">일본어Ⅰ<span class="x28 x28s">개편수능(선택)</span></span> <span class="chip">러시아어Ⅰ<span class="x28 x28s">개편수능(선택)</span></span> <span class="chip">아랍어Ⅰ<span class="x28 x28s">개편수능(선택)</span></span> <span class="chip">베트남어Ⅰ<span class="x28 x28s">개편수능(선택)</span></span> <span class="chip">한문Ⅰ<span class="x28 x28s">개편수능(선택)</span></span> <span class="xs">현행(~2027 수능): 9과목 중 택1(같음) · 절대평가</span></td></tr>
+    </table></div>
+  </section>
 
   <section>
     <h2>비교할 고등학교</h2>
-    <p class="hint">체크한 학교만 아래 모든 표와 카드에 나옵니다. 하나는 항상 남아 있어야 합니다.</p>
-    <div class="ctl" id="scbar"><label><input type="checkbox" class="scb" value="수지고" checked> 수지고</label> <label><input type="checkbox" class="scb" value="신봉고" checked> 신봉고</label> <label><input type="checkbox" class="scb" value="용인홍천고" checked> 용인홍천고</label> <label><input type="checkbox" class="scb" value="성복고" checked> 성복고</label> <label><input type="checkbox" class="scb" value="서원고" checked> 서원고</label> <span class="sc-n">신봉고는 2026 이미지가 없어 학교 PDF 기준</span></div>
+    <p class="hint">학교와 입학년도를 체크해 비교합니다. 하나는 항상 남아 있어야 하고, 이름을 끌어서 순서를 바꿀 수 있습니다. 2027학년도는 수지고·용인홍천고·서원고만 있고, 신봉고는 2026 이미지가 없어 학교 PDF 기준입니다. 한눈에 보기와 과목별 개설 비교도 같은 선택(학교·입학년도)과 순서를 따릅니다. 대학별 판정은 2026학년도 자료 기준입니다.</p>
+    <div class="ctl" id="scbar"></div>
   </section>
 
   <section>
@@ -149,6 +170,77 @@ tr.rec td{background:var(--accent-soft)}
     <p class="hint">전공(학과) 이름을 입력하면 그 전공을 모집하는 대학과 권장과목이 나옵니다. 대학을 누르면 아래 "대학·학과별 유리한 과목"과 과목별 개설 비교 표에 권장과목이 표시됩니다.</p>
     <div class="mq"><input type="search" id="mq" list="mdl" placeholder="전공 입력 (예: 화학공학, 경영학, 컴퓨터, 간호)" aria-label="전공 검색"></div>
     <div class="mres" id="mres"></div>
+  </section>
+
+  <section id="scisec">
+    <h2>대학 권장 과학 <span class="x28 x28s">대학 권장 과학</span></h2>
+    <p class="hint">대학·모집단위별로 권장하는 과학 과목만 모았습니다. 개편 수능(2028학년도~)에는 과학 선택과목이 없어서 수능 범위는 아니지만, 대학이 이수를 권장하는 과목입니다. 입력된 대학 자료(12개 대학) 기준이며, 과학 권장이 없는 모집단위는 제외했습니다. 출처는 각 행 아래에 적었고(진학지도자료집, 연세대 2028 가이드라인), 최종 확인은 대학 입학처 공지로 하세요.</p>
+    <div class="tw"><table class="m xt" id="scit"></table></div>
+    <p class="hint" id="scin"></p>
+  </section>
+
+  <section id="mathsec">
+    <h2>대학 권장 수학 <span class="x28 x28s">수능 밖 수학</span></h2>
+    <p class="hint">개편 수능(2028학년도~)은 대수·미적분Ⅰ·확률과 통계만 출제해 <b>미적분Ⅱ와 기하가 빠집니다</b>. 그래도 아래 수도권 대학은 권장과목 또는 논술 출제범위로 이 두 과목을 요구하거나 시사합니다. 가산점이나 필수 조건이 아닐 수 있으니 최종 모집요강으로 확인하세요.</p>
+    <h3>1. 모집단위별 이수 권장 (미적분Ⅱ·기하)</h3>
+    <div class="tw"><table class="m xt" id="matht"></table></div>
+    <p class="hint" id="mathn"></p>
+    <p class="hint"><b>권장 수학이 표에 없는 대학</b>: 건국대와 이화여대는 자료집에 모집단위별 이수 권장 과목이 없고 논술 출제범위만 있어 아래 2번 표에 넣었습니다. 성균관대는 2028 시행계획·2027 모집요강에서 권장·핵심 과목을 지정하지 않아 3번 표에 수학 관련 반영 내용을 따로 정리했습니다. 연세대 인문·사회·통합 계열도 전공연계과목을 제시하지 않았습니다.</p>
+    <h3>2. 2028학년도 논술 출제범위에 미적분Ⅱ·기하가 들어가는 대학</h3>
+    <div class="tw"><table class="m xt">
+      <tr><th>대학</th><th>수리논술 출제범위</th></tr>
+      <tr><th scope="row">경희대 <span class="xn">의·약학계</span></th><td>공통수학1·2, 대수, 확률과 통계, 미적분Ⅰ, <span class="chip">미적분Ⅱ<span class="x28 x28s">수능 밖</span></span> <span class="chip">기하<span class="x28 x28s">수능 밖</span></span></td></tr>
+      <tr><th scope="row">동국대 <span class="xn">자연계열</span></th><td>경희대 의·약학계와 같은 범위(공통수학1·2, 대수, 확률과 통계, 미적분Ⅰ·Ⅱ, 기하)</td></tr>
+      <tr><th scope="row">연세대 <span class="xn">자연·통합계열</span></th><td>고교 교육과정(2022 개정) 보통 교과 전체(융합 선택과목 제외). 미적분Ⅱ·기하·통합과학까지 나올 수 있어 3합 6 수능최저가 2028 대입부터 새로 생김</td></tr>
+      <tr><th scope="row">한양대·동국대·경희대</th><td>‘고등학교 교육과정 전 범위’로 안내해 미적분Ⅱ·기하 포함 가능성이 있음</td></tr>
+      <tr><th scope="row">건국대</th><td>2026 대입 자연계 논술: 수학, 수학Ⅰ·Ⅱ, 미적분, 확률과 통계, <span class="chip">기하<span class="x28 x28s">수능 밖</span></span> 포함(건국대 자연). 통합형은 수학·수학Ⅰ·Ⅱ만. 2028 대입에서는 논술을 통합형 한 가지로 일원화해 범위 확인이 필요함</td></tr>
+      <tr><th scope="row">이화여대</th><td>2026 대입 자연계 논술: 수학, 수학Ⅰ·Ⅱ, 미적분, 확률과 통계, <span class="chip">기하<span class="x28 x28s">수능 밖</span></span> 포함. 2028 범위는 자료집에 없음</td></tr>
+    </table></div>
+    <h3>3. 성균관대 — 권장 과목은 없지만 수학이 반영되는 곳</h3>
+    <div class="tw"><table class="m xt">
+      <tr><th>전형</th><th>수학 관련 내용 (2027학년도 모집요강)</th></tr>
+      <tr><th scope="row">수리논술</th><td>수학, 수학Ⅰ, 수학Ⅱ에서 3문제 (100분). 미적분Ⅱ·기하는 범위에 없음</td></tr>
+      <tr><th scope="row">과학인재 면접<span class="xn">자연과학·공학계열 등</span></th><td>제시문 기반 수학/과학 교과형 면접. 수학은 수학, 수학Ⅰ·Ⅱ, <span class="chip">미적분</span> <span class="chip">확률과 통계</span> <span class="chip">기하</span>에서 출제</td></tr>
+      <tr><th scope="row">정시 수능 반영<span class="xn">가군</span></th><td>자연과학계열·의상학과·약학과 등은 수학 포함 우수한 영역 순 40·30 반영. 사회과학계열·의상학과·경영학과·글로벌경영/경제학과는 <b>미적분 선택자에게 가산점(최대 3%)</b></td></tr>
+    </table></div>
+    <p class="hint">성균관대는 2028 시행계획·2027 모집요강에서 모집단위별 권장·핵심 과목을 지정하지 않았습니다. 위 항목은 2015 개정 과목으로 치르는 2027학년도 기준이라, 미적분 선택 가산점은 선택과목이 없어지는 개편 수능(2028학년도~)에는 그대로 적용되지 않습니다. 2027년 입학생이 치르는 입시 기준은 성균관대 입학처 공지로 확인하세요.</p>
+    <p class="hint">출제범위는 각 대학의 2028학년도 전형계획 기준이며 바뀔 수 있습니다. 2026 대입 대학별 범위는 아래 ‘대학·학과별 유리한 과목’의 참고 항목에 있습니다.</p>
+    <div class="note"><b>출처·유의</b>
+      <ul>
+        <li>고려대·동국대·서울대 권장과목, 논술 출제범위, 한양대·동국대·경희대 ‘전 범위’ 안내, 건국대 논술 일원화, 세종대 첨단학과, 간호·보건 선택과목: 「2026 진학지도자료집」(서울시교육청 서교연 2026-17)</li>
+        <li>연세대: 「2028학년도 전공연계과목 선택 가이드라인 안내」(2026. 4.), 성균관대(권장 없음 확인): 2028 시행계획·2027 모집요강</li>
+        <li>자료집은 2026학년도 판이고 각주에 ‘권장 과목·출제 범위는 추후 변경될 수 있음’이라고 되어 있습니다. 2028학년도 모집요강 원문과는 대조하지 못했으니 지원 대학은 입학처 공지로 꼭 확인하세요.</li>
+        <li>자료집에 실린 대학만 정리해 수도권 전체를 다루지 않습니다. 권장은 필수나 가산점이 아닐 수 있습니다.</li>
+      </ul></div>
+  </section>
+
+  <section id="chemsec">
+    <h2>화학공학과 진학 (수도권) — 수학·과학 정리</h2>
+    <h3>A. 2027학년도 입시 기준 (2026년 수능을 보고 2027년에 입학)</h3>
+    <div class="tw"><table class="m xt">
+      <tr><th>대학</th><th>정시 수학</th><th>정시 과학탐구</th><th>그 밖의 수학 관련</th></tr>
+      <tr><th scope="row">서울대</th><td><b>미적분 또는 기하 지정</b> (이공계, 식품영양·의류·간호 제외)</td><td>사탐 불인정. 과탐Ⅱ 선택 가산점(서로 다른 Ⅰ·Ⅱ 3점, Ⅱ 두 과목 5점)</td><td></td></tr>
+      <tr><th scope="row">연세대</th><td>지정 없음 (확률과 통계도 가능)</td><td>사탐·과탐 모두 인정, 과탐 가산점 3%</td><td></td></tr>
+      <tr><th scope="row">고려대</th><td>지정 없음</td><td>사탐·과탐 모두 인정, 과탐 가산점 3%</td><td></td></tr>
+      <tr><th scope="row">성균관대</th><td>지정 없음. 가군 자연과학계열 등은 수학 포함 우수한 영역 순 40·30 반영</td><td>사탐·과탐 모두 인정, 과탐 가산점 최대 5%</td><td>수리논술 수학Ⅰ·Ⅱ 3문제, 과학인재 면접에 수학(미적분·확률과 통계·기하)·과학</td></tr>
+      <tr><th scope="row">한양대</th><td>지정 없음</td><td>사탐·과탐 모두 인정, 과탐 가산점 있음(수치는 수능 후 결정)</td><td>논술은 ‘고교 교육과정 전 범위’로 안내</td></tr>
+      <tr><th scope="row">경희대·중앙대·이화여대·서강대·서울시립대</th><td>지정 없음</td><td>사탐·과탐 모두 인정. 가산점은 경희대 과목당 4점, 중앙대 5%, 이화여대 최대 6%, 서울시립대 3%, 서강대 없음</td><td>경희대 논술(의·약학계)은 미적분Ⅱ·기하 범위, 건국대(자연)·이화여대 논술은 미적분·확률과 통계·기하 포함(2026 대입)</td></tr>
+    </table></div>
+    <p class="hint">2027학년도 입시는 현행(2015 개정) 수능이라 수학은 확률과 통계·미적분·기하 중 택1, 탐구는 사탐·과탐 선택입니다. 서울대만 이공계에서 미적분 또는 기하를 필수로 지정했고, 서울 주요 대학 대부분은 지정을 없앴습니다. 나머지 수도권 대학의 최종 요건은 2027학년도 모집요강으로 확인하세요(성균관대는 올려 주신 요강 기준).</p>
+    <h3>B. 2028학년도 이후 이수 권장 (개편 수능 세대)</h3>
+    <p class="hint">수도권 대학의 화학공학 계열 권장 과목과, 위 ‘비교할 고등학교’에서 선택한 학교의 개설 여부입니다. 자료에 권장 과목이 없는 대학은 빈칸으로 두었습니다.</p>
+    <div class="tw"><table class="m xt">
+      <tr><th>대학 (학과)</th><th>수학 권장</th><th>과학 권장</th></tr>
+      <tr><th scope="row">서울대 <span class="xn">공과대학</span></th><td>기하, 미적분Ⅱ</td><td class="mu">자료에 없음</td></tr>
+      <tr><th scope="row">연세대 <span class="xn">화공생명공학부</span></th><td>기하, 미적분Ⅱ</td><td>화학(일반선택) + 진로선택 과학 3과목 이상(서로 다른 과목)</td></tr>
+      <tr><th scope="row">고려대 <span class="xn">화공생명공학과</span></th><td>미적분Ⅱ, 기하</td><td class="mu">자료에 없음</td></tr>
+      <tr><th scope="row">동국대 <span class="xn">공과대학</span></th><td>대수, 미적분Ⅰ·Ⅱ, 확률과 통계, 기하, 인공지능 수학</td><td class="mu">자료에 없음</td></tr>
+      <tr><th scope="row">성균관대 <span class="xn">화학공학부</span></th><td>지정 없음 (논술 수학Ⅰ·Ⅱ, 과학인재 면접에 미적분·확률과 통계·기하)</td><td>지정 없음</td></tr>
+    </table></div>
+    <h3>선택한 학교의 개설 여부</h3>
+    <div class="tw"><table class="m xt" id="chemt"></table></div>
+    <p class="hint">○ 필수로 개설 · △ 선택과목으로 개설 · − 편제표에 없음 (숫자는 학년-학기). 화학 외 ‘물질과 에너지’·‘화학 반응의 세계’가 화학공학과 가장 가깝다는 것은 대학이 지정한 것이 아니라 정리한 사람의 판단입니다. 개편 수능은 통합과학만 출제하므로 이 과목들은 수능이 아니라 이수 권장입니다. 출처는 위 ‘대학 권장 수학·과학’ 표와 같습니다.</p>
+    <p class="hint">A표 출처: 종로학원 분석 보도(2026.4, 파이낸셜뉴스·대전일보), 한국경제 ‘주요대 입시와 사탐런’(2026.4), 성균관대 2027학년도 모집요강. 언론 보도 기준이며 모집요강 원문과 대조하지 못했습니다.</p>
   </section>
 
   <section id="usec">
@@ -181,9 +273,19 @@ tr.rec td{background:var(--accent-soft)}
       <button type="button" id="mv2" aria-pressed="false">학교별 카드</button>
     </div>
     <div class="ctl"><label><input type="checkbox" id="hs"> 수능과 상관없는 과목(*) 숨기기 <span class="sc-n">2·3학년</span></label></div>
-    <div class="ctl"><label><input type="checkbox" id="ss"> 과학 선택과목을 &lsquo;수능 선택&rsquo;(**)으로 표시, 숨기기에서 제외 <span class="sc-n">물리학·화학·생명과학·지구과학과 이어지는 과목</span></label></div>
-    <p class="hint">※ 2학년 선택과목의 물리학·화학·생명과학·지구과학이나 3학년 선택과목은 통합과학과는 별개의 선택 과목입니다. 이 과목들은 수능 필수가 아니어서 <span class="star">*</span>가 붙습니다. 다만 의약학·공학 계열은 대학이 권장과목으로 지정하는 경우가 많습니다. 위 체크박스를 켜면 과학 선택과목은 <span class="star">**</span>(수능 선택)로 표시됩니다.</p>
+    <div class="ctl"><label><input type="checkbox" id="ss"> 과학 선택과목을 &lsquo;대학 권장 과학&rsquo;(**)으로 표시, 숨기기에서 제외 <span class="sc-n">물리학·화학·생명과학·지구과학과 이어지는 과목</span></label></div>
+    <p class="hint">※ 2학년 선택과목의 물리학·화학·생명과학·지구과학이나 3학년 선택과목은 통합과학과는 별개의 선택 과목입니다. 이 과목들은 수능 필수가 아니어서 <span class="star">*</span>가 붙습니다. 다만 의약학·공학 계열은 대학이 권장과목으로 지정하는 경우가 많습니다. 위 체크박스를 켜면 과학 선택과목은 <span class="star">**</span>(대학 권장 과학)으로 표시됩니다.</p>
     <div id="view"></div>
+  </section>
+
+  <section>
+    <h2>학교별 연도별 비교</h2>
+    <p class="hint">같은 학교의 2026학년도 입학생과 2027학년도 입학생 편제표를 과목마다 비교합니다. 지금은 수지고·용인홍천고·서원고만 두 해 자료가 있습니다.</p>
+    <div class="uf">
+      <label>학교<select id="ycs"></select></label>
+      <label class="ctl" style="margin:0;align-self:end"><input type="checkbox" id="ycd" checked> 달라진 과목만 보기</label>
+    </div>
+    <div id="ycv"></div>
   </section>
 
   <section>
@@ -195,7 +297,7 @@ tr.rec td{background:var(--accent-soft)}
       <select id="cat" aria-label="교과(군)"><option value="">전체 교과(군)</option><option>국어</option><option>수학</option><option>영어</option><option>사회</option><option>과학</option><option>체육</option><option>예술</option><option>기술·가정/정보</option><option>제2외국어/한문</option><option>교양</option></select>
       <label><input type="checkbox" id="onlydiff"> 학교마다 다른 과목만 보기</label>
       <label><input type="checkbox" id="hp"> 수능과 상관없는 과목(*) 숨기기</label>
-      <label><input type="checkbox" id="sp"> 과학 선택과목을 &lsquo;수능 선택&rsquo;(**)으로 표시, 숨기기에서 제외</label>
+      <label><input type="checkbox" id="sp"> 과학 선택과목을 &lsquo;대학 권장 과학&rsquo;(**)으로 표시, 숨기기에서 제외</label>
       <label><input type="checkbox" id="onlyrec"> 선택한 대학의 권장과목만 보기</label>
     </div>
     <p class="recinfo" id="recinfo"></p>
@@ -274,17 +376,46 @@ const CR={
  성복고:{2:{'1':{f:[4,4,4,2],p:[3,3,3]},'2':{f:[4,4,4,2],p:[3,3,3]}},3:{'1':{f:[3,3,3,1,2],p:[3,3,3]},'2':{f:[3,3,3,1],p:[3,3,3]}}},
  서원고:{2:{'1':{f:[2,4,4,4],p:[3,3,3]},'2':{f:[2,4,4,4],p:[3,3,3]}},3:{'1':{f:[2,4,4,4],p:[3]},'2':{f:[2,1],p:[3]}}}
 };
+// 2027학년도 입학생 편제표(용인홍천고, 사진): 2026과 다른 곳만 고쳐 만든다
+const Y27={용인홍천고:JSON.parse(JSON.stringify(Y.용인홍천고))},CR27={용인홍천고:JSON.parse(JSON.stringify(CR.용인홍천고))};
+(()=>{const y=Y27.용인홍천고,c=CR27.용인홍천고;
+  // 2학년 2학기: 수학과제 탐구는 지정에서 빠지고 기하와 함께 택1이 됨
+  y[2]['2'].fx=y[2]['2'].fx.filter(n=>n!=='수학과제 탐구');c[2]['2'].f=[3,4,3,2,2];
+  y[2]['2'].pk.splice(1,0,[1,['수학과제 탐구','기하']]);c[2]['2'].p=[3,3,3];
+  // 3학년 1학기 택6 묶음에서 기하가 빠짐(22개 -> 21개)
+  y[3]['1'].pk[1][1]=y[3]['1'].pk[1][1].filter(n=>n!=='기하');
+})();
+// 서원고 2027학년도 입학생 편제표(안, PDF): 2026에서 한문·언어생활과 한자·한문 고전 읽기가 빠짐. 학점은 같음
+Y27.서원고=JSON.parse(JSON.stringify(Y.서원고));CR27.서원고=JSON.parse(JSON.stringify(CR.서원고));
+(()=>{const y=Y27.서원고;
+  y[2]['1'].pk[2][1]=y[2]['1'].pk[2][1].filter(n=>n!=='한문');
+  y[2]['2'].pk[2][1]=y[2]['2'].pk[2][1].filter(n=>n!=='언어생활과 한자');
+  y[3]['1'].pk[0][1]=y[3]['1'].pk[0][1].filter(n=>n!=='한문 고전 읽기');
+})();
+// 수지고 2027학년도 입학생 편성표(PDF): 2022 개정 과목명으로 전면 개편(2026은 3학년이 2015 명칭)
+Y27.수지고={
+  vnote:'2027학년도 입학생 편성표 기준입니다. 정보와 기술·가정, 음악과 미술은 한 학기씩 번갈아 듣는 짝입니다. 학교 밖 프로젝트(피지컬AI와 사고방법론, 2학점, 경희대·동천 문화의 집 연계)는 위 29학점에 포함되지 않습니다.',
+  2:{'1':{fx:['문학','대수','영어Ⅰ','체육1'],pk:[[4,['세계시민과 지리','세계사','현대사회와 윤리','사회와 문화','물리학','화학','생명과학','지구과학']],[1,['스페인어','중국어','데이터 과학','생활과학 탐구']]]},
+     '2':{fx:['화법과 언어','미적분Ⅰ','영어Ⅱ','체육2'],pk:[[4,['윤리와 사상','한국지리 탐구','정치','경제','동아시아 역사 기행','세포와 물질대사','지구시스템과학','역학과 에너지','물질과 에너지','기하']],[1,['스페인어 회화','중국어 회화','인공지능 기초','로봇과 공학세계']]]}},
+  3:{'1':{fx:['독서와 작문','확률과 통계','영어 독해와 작문','스포츠 생활1'],pk:[[1,['언어생활탐구','미적분Ⅱ','경제 수학','심화 영어 독해와 작문']],[3,['여행지리','역사로 탐구하는 현대 세계','윤리문제 탐구','사회문제 탐구','전자기와 양자','화학 반응의 세계','생물의 유전','고급 지구과학','융합과학 탐구']],[1,['음악연주와 창작','미술 창작']],[1,['스페인어권 문화','중국 문화','프로그래밍','지식재산 일반','주제탐구 프로젝트Ⅰ']]]},
+     '2':{fx:['스포츠 생활2'],pk:[[4,['매체 의사소통','문학과 영상','실용 통계','전문 수학','심화 영어','세계문화와 영어']],[3,['금융과 경제생활','인문학과 윤리','기후변화와 지속가능한 세계','국제 관계의 이해','기후변화와 환경생태','과학의 역사와 문화','융합과학 탐구']],[1,['음악 감상과 비평','미술과 매체']],[1,['심화 스페인어','심화 중국어','소프트웨어와 생활','아동발달과 부모']]]}}
+};
+CR27.수지고={2:{'1':{f:[4,4,4,2],p:[3,3]},'2':{f:[4,4,4,2],p:[3,3]}},3:{'1':{f:[3,3,3,2],p:[3,3,3,3]},'2':{f:[2],p:[3,3,3,3]}}};
+const Y1S27수지=[{'1':[['공통국어1',4],['공통수학1',4],['공통영어1',4],['한국사1',3],['통합사회1',3],['통합과학1',4],['과학탐구실험1',1],['스포츠 문화',1],['음악↔미술',2],['기술·가정↔정보',3]],
+  '2':[['공통국어2',4],['공통수학2',4],['공통영어2',4],['한국사2',3],['통합사회2',3],['통합과학2',4],['과학탐구실험2',1],['스포츠 과학',1],['음악↔미술',2],['기술·가정↔정보',3]]}][0];
+const TENT27={};
+const semTotD=(D,s,g,k)=>{const c=D.CR[s][g][k],y=D.Y[s][g][k];return c.f.reduce((a,b)=>a+b,0)+y.pk.reduce((a,p,i)=>a+p[0]*c.p[i],0)};
 const semTot=(s,g,k)=>{const c=CR[s][g][k],y=Y[s][g][k];return c.f.reduce((a,b)=>a+b,0)+y.pk.reduce((a,p,i)=>a+p[0]*c.p[i],0)};
 const norm=s=>s.replace(/[\s·★♥♡▶()\-]/g,'').replace(/I{2}/g,'Ⅱ');
 const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
 function names(sc,g){const o=new Set();for(const sem of Object.values(Y[sc][g])){sem.fx.forEach(x=>o.add(x));sem.pk.forEach(p=>p[1].forEach(x=>o.add(x)))}return o}
-function picks(sc,g){return Object.values(Y[sc][g]).reduce((a,s)=>a+s.pk.reduce((b,p)=>b+p[0],0),0)}
-function pool(sc,g){const o=new Set();for(const sem of Object.values(Y[sc][g]))sem.pk.forEach(p=>p[1].forEach(x=>o.add(norm(x))));return o.size}
+function picks(sc,g,D){return Object.values((D||Y)[sc][g]).reduce((a,s)=>a+s.pk.reduce((b,p)=>b+p[0],0),0)}
+function pool(sc,g,D){const o=new Set();for(const sem of Object.values((D||Y)[sc][g]))sem.pk.forEach(p=>p[1].forEach(x=>o.add(norm(x))));return o.size}
 const LANG={수지고:'스페인어, 중국어',신봉고:'일본어, 중국어',용인홍천고:'중국어, 일본어',성복고:'중국어, 일본어',서원고:'중국어, 일본어, 한문'};
 function summary(){
   const t=document.getElementById('sum');
   let h='<tr><th>학교</th><th class="n">2학년 선택 풀</th><th class="n">2학년 고르는 수</th><th class="n">3학년 선택 풀</th><th class="n">3학년 고르는 수</th><th>제2외국어·한문</th></tr>';
-  SV().forEach(s=>{h+=`<tr><td><b>${s}</b></td><td class="n">${pool(s,2)}</td><td class="n">${picks(s,2)}</td><td class="n">${pool(s,3)}</td><td class="n">${picks(s,3)}</td><td>${LANG[s]}</td></tr>`});
+  SELK().forEach(({s,yr,D})=>{const L=yr===2027&&s==='서원고'?'중국어, 일본어':LANG[s];h+=`<tr><td><b>${s}</b> <span class="yl">${yr}학년도 입학생</span></td><td class="n">${pool(s,2,D.Y)}</td><td class="n">${picks(s,2,D.Y)}</td><td class="n">${pool(s,3,D.Y)}</td><td class="n">${picks(s,3,D.Y)}</td><td>${L}</td></tr>`});
   t.innerHTML=h;
 }
 // 교과(군) 대분류
@@ -308,29 +439,39 @@ const REQ=new Set(['공통국어1','공통국어2','공통수학1','공통수학
 const SELX=new Set(['물리학','화학','생명과학','지구과학','물리학Ⅱ','화학Ⅱ','생명과학Ⅱ','지구과학Ⅱ','역학과 에너지','물질과 에너지','세포와 물질대사','지구시스템과학','전자기와 양자','화학 반응의 세계','생물의 유전','행성우주과학'].map(norm));
 let SELON=false;
 const isSel=n=>SELON&&SELX.has(norm(n));
-const star=n=>REQ.has(norm(n))?'':isSel(n)?'<span class="star" title="수능 선택 과목">**</span>':'<span class="star" title="수능 필수 과목 아님">*</span>';
+// 2028학년도 수능 필수 출제 과목(2022 개정): 국어 화법과 언어·독서와 작문·문학, 수학 대수·미적분Ⅰ·확률과 통계, 영어Ⅰ·Ⅱ, 한국사, 통합사회, 통합과학
+const X28=new Set(['화법과 언어','독서와 작문','문학','대수','미적분Ⅰ','확률과 통계','영어Ⅰ','영어Ⅱ','한국사1','한국사2','한국사1·2','통합사회1','통합사회2','통합사회1·2','통합과학1','통합과학2','통합과학1·2'].map(norm));
+const x28=n=>X28.has(norm(n))?'<span class="x28" title="개편 수능(2028학년도~) 필수 과목">개편수능(필수)</span>':isSel(n)?'<span class="x28 x28s" title="대학 권장 과학 선택과목(개편 수능 과목 아님)">대학 권장 과학</span>':'';
+const star=n=>REQ.has(norm(n))?x28(n):x28(n)+(isSel(n)?'<span class="star" title="대학 권장 과학 선택과목">**</span>':'<span class="star" title="수능 필수 과목 아님">*</span>');
+const star0=n=>REQ.has(norm(n))?'':isSel(n)?'<span class="star" title="대학 권장 과학 선택과목">**</span>':'<span class="star" title="수능 필수 과목 아님">*</span>';
 let HIDE=false,CURG=1;const GSET=new Set([1]);
 const isReq=n=>REQ.has(norm(n))||isSel(n);
 function chips(a,c,cr){const o=a.map((x,i)=>[x,cr?cr[i]:null]);return (HIDE?o.filter(x=>isReq(x[0])):o).map(x=>`<span class="chip ${c||''}">${esc(x[0])}${star(x[0])}${x[1]!=null?`<span class="cc">${x[1]}</span>`:''}</span>`).join('')}
 let MODE='tbl';
-const SSEL=new Set(SC);const SV=()=>SC.filter(x=>SSEL.has(x));
+const KEYS=[...SC.map(x=>x+'|2026'),...['수지고','용인홍천고','서원고'].map(x=>x+'|2027')];
+const KSEL=new Set(['신봉고|2026','성복고|2026','수지고|2027','용인홍천고|2027','서원고|2027']);
+const SSEL={has:x=>[...KSEL].some(k=>k.split('|')[0]===x)};const SV=()=>SC.filter(x=>SSEL.has(x));
+const SELK=()=>KEYS.filter(k=>KSEL.has(k)).map(k=>{const [s,y]=k.split('|');return {s,yr:+y,D:YEARS[+y]}}).filter(x=>x.D&&x.D.Y[x.s]);
 // 1학년 학기별 편성: Y1(학기 합산 표기)에서 만든다
 const Y1S=(()=>{const o={};SC.forEach(s=>{o[s]={'1':[],'2':[]};Y1.rows.forEach((r,i)=>Y1.d[s][i].forEach(([nm,cr])=>{const m=/^(\d+)\+(\d+)$/.exec(cr||'');if(!m)return;const two=/1·2$/.test(nm),base=nm.replace(/1·2$/,'');o[s]['1'].push([two?base+'1':nm,+m[1]]);o[s]['2'].push([two?base+'2':nm,+m[2]])}))});
   o.수지고['1'].push(['음악(↔기술·가정)',2],['미술(↔기술·가정)',2]);o.수지고['2'].push(['기술·가정(↔음악·미술)',4]);return o})();
 const sum1=(s,k)=>Y1S[s][k].reduce((a,x)=>a+x[1],0);
+const YEARS={2026:{Y:Y,CR:CR,Y1S:Y1S},2027:{Y:Y27,CR:CR27,Y1S:{수지고:Y1S27수지,용인홍천고:Y1S.용인홍천고,서원고:Y1S.서원고}}};
+const sumD=(D,s,k)=>D.Y1S[s][k].reduce((a,x)=>a+x[1],0);
 function viewTbl(G){
-  const S=SV();
+  const COLS=SELK();
   const chip=(n,c,fx)=>`<span class="chip ${fx?'fx':''} ${REC.has(norm(n))?'rc':''}">${esc(n)}${star(n)}<span class="cc">${c}</span></span>`;
-  const cell=(s,g,k)=>{
-    if(g===1){let a=Y1S[s][k];if(HIDE)a=a.filter(x=>isReq(x[0]));return `<div class="chips">${a.map(x=>chip(x[0],x[1],1)).join('')}</div>`}
-    const y=Y[s][g][k],c=CR[s][g][k];
+  const cell=(col,g,k)=>{const {s,D}=col;
+    if(g===1){let a=D.Y1S[s][k];if(HIDE)a=a.filter(x=>isReq(x[0]));return `<div class="chips">${a.map(x=>chip(x[0],x[1],1)).join('')}</div>`}
+    const y=D.Y[s][g][k],c=D.CR[s][g][k];
     let fx=y.fx.map((n,i)=>[n,c.f[i]]);if(HIDE)fx=fx.filter(x=>isReq(x[0]));
     let h=`<div class="chips">${fx.map(x=>chip(x[0],x[1],1)).join('')}</div>`;
     y.pk.forEach((p,i)=>{let it=p[1];if(HIDE)it=it.filter(isReq);if(!it.length)return;h+=`<div class="pick"><b>택${p[0]} · 과목당 ${c.p[i]}학점 (${p[0]*c.p[i]}학점) · ${HIDE?'수능 과목 '+it.length+'개만 표시(전체 '+p[1].length+'개 중)':p[1].length+'개 중'}</b><div class="chips">${it.map(n=>chip(n,c.p[i],0)).join('')}</div></div>`});
     return h};
-  let h='<div class="tw"><table class="m tbl"><tr><th></th>'+S.map(x=>`<th class="sc">${x}</th>`).join('')+'</tr>';
-  G.forEach(g=>['1','2'].forEach(k=>{h+=`<tr><td class="k">${g}학년 ${k}학기</td>`+S.map(x=>`<td>${cell(x,g,k)}<div class="tt">${g===1?sum1(x,k):semTot(x,g,k)}학점</div></td>`).join('')+'</tr>'}));
-  document.getElementById('view').innerHTML=h+'</table></div><p class="legend">파란 칸은 모두 이수하는 지정과목이고, 점선 상자는 그 안에서 택n 과목을 고르는 선택 묶음입니다. 숫자는 학점입니다. 수지고 1학년은 음악·미술을 1학기에 배우면 기술·가정을 2학기에 배우고, 반대로 배우는 학생도 있습니다. 대학을 선택하면 권장과목에 테두리가 생깁니다.</p>';
+  if(!COLS.length){document.getElementById('view').innerHTML='<p class="hint">체크한 학교에는 선택한 입학년도의 편제표가 없습니다. 2027학년도 입학생은 수지고·용인홍천고·서원고만 있습니다.</p>';return}
+  let h='<div class="tw"><table class="m tbl"><tr><th></th>'+COLS.map(x=>`<th class="sc" data-k="${x.s}|${x.yr}">${x.s}<span class="yl">${x.yr}학년도 입학생${x.yr===2027&&TENT27[x.s]?'(안)':''}</span></th>`).join('')+'</tr>';
+  G.forEach(g=>['1','2'].forEach(k=>{h+=`<tr><td class="k">${g}학년<br>${k}학기</td>`+COLS.map(x=>`<td>${cell(x,g,k)}<div class="tt">${g===1?sumD(x.D,x.s,k):semTotD(x.D,x.s,g,k)}학점</div></td>`).join('')+'</tr>'}));
+  document.getElementById('view').innerHTML=h+'</table></div><p class="legend">파란 칸은 모두 이수하는 지정과목이고, 점선 상자는 그 안에서 택n 과목을 고르는 선택 묶음입니다. 숫자는 학점입니다. 수지고 1학년은 음악·미술을 1학기에 배우면 기술·가정을 2학기에 배우고, 반대로 배우는 학생도 있습니다. 대학을 선택하면 권장과목에 테두리가 생깁니다. 2027학년도 입학생 편제표는 수지고·용인홍천고·서원고만 있습니다.</p>';
 }
 function view(){
   const G=[...GSET].sort();CURG=G[0];
@@ -340,7 +481,7 @@ function view(){
 }
 function viewCard(g,el){
   if(g===1){
-    let h='<div class="tw"><table class="m"><tr><th>교과</th>'+SV().map(s=>`<th class="sc">${s}</th>`).join('')+'</tr>';
+    let h='<div class="tw"><table class="m"><tr><th>교과</th>'+SV().map(s=>`<th class="sc" data-k="${s}|2026">${s}<span class="yl">2026학년도 입학생</span></th>`).join('')+'</tr>';
     Y1.rows.forEach((r,i)=>{
       const txt=SV().map(s=>Y1.d[s][i].map(x=>x.join(' ')).join('|'));
       const cnt={};txt.forEach(x=>cnt[x]=(cnt[x]||0)+1);const mx=Math.max(...Object.values(cnt));
@@ -352,15 +493,17 @@ function viewCard(g,el){
     el.innerHTML=h;return;
   }
   let h='<div class="cards">';
-  SV().forEach(s=>{
-    const d=Y[s][g];
-    h+=`<div class="card"><header><h3>${s}</h3><span>${g}학년</span></header>`;
-    if(Y[s].warn)h+=`<div class="note">${Y[s].warn}</div>`;
-    if(Y[s].vnote&&g===3)h+=`<div class="note">${Y[s].vnote}</div>`;
+  const CC=SELK();
+  if(!CC.length)h+='<p class="hint">체크한 학교에는 선택한 입학년도의 편제표가 없습니다.</p>';
+  CC.forEach(({s,yr,D})=>{
+    const d=D.Y[s][g];
+    h+=`<div class="card"><header><h3>${s}</h3><span>${g}학년 · ${yr}학년도 입학생${yr===2027&&TENT27[s]?'(안)':''}</span></header>`;
+    if(D.Y[s].warn)h+=`<div class="note">${D.Y[s].warn}</div>`;
+    if(D.Y[s].vnote&&g===3)h+=`<div class="note">${D.Y[s].vnote}</div>`;
     ['1','2'].forEach(k=>{
       const sm=d[k];
-      const c=CR[s][g][k];
-      h+=`<div class="sem"><h4>${k}학기<em>${semTot(s,g,k)}학점</em></h4><div class="chips">${chips(sm.fx,'fx',c.f)}</div>`;
+      const c=D.CR[s][g][k];
+      h+=`<div class="sem"><h4>${k}학기<em>${semTotD(D,s,g,k)}학점</em></h4><div class="chips">${chips(sm.fx,'fx',c.f)}</div>`;
       sm.pk.forEach((p,i)=>{const sh=HIDE?p[1].filter(isReq):p[1];if(!sh.length)return;const cc=c.p[i];h+=`<div class="pick"><b>${p[0]}과목 선택 · 과목당 ${cc}학점 (${p[0]*cc}학점) · ${HIDE?'수능 과목 '+sh.length+'개만 표시(전체 '+p[1].length+'개 중)':p[1].length+'개 중'}</b><div class="chips">${chips(p[1])}</div></div>`});
       h+='</div>';
     });
@@ -371,32 +514,36 @@ function viewCard(g,el){
 document.getElementById('mv1').onclick=()=>{MODE='tbl';document.getElementById('mv1').setAttribute('aria-pressed',true);document.getElementById('mv2').setAttribute('aria-pressed',false);view()};
 document.getElementById('mv2').onclick=()=>{MODE='card';document.getElementById('mv2').setAttribute('aria-pressed',true);document.getElementById('mv1').setAttribute('aria-pressed',false);view()};
 ['t1','t2','t3'].forEach((id,i)=>document.getElementById(id).onclick=()=>{const g=i+1;if(GSET.has(g)){if(GSET.size===1)return;GSET.delete(g)}else GSET.add(g);['t1','t2','t3'].forEach((x,j)=>document.getElementById(x).setAttribute('aria-pressed',GSET.has(j+1)));view()});
-document.querySelectorAll('.scb').forEach(cb=>cb.onchange=()=>{if(cb.checked)SSEL.add(cb.value);else if(SSEL.size>1)SSEL.delete(cb.value);else cb.checked=true;summary();view();pres();uniRender()});
+const KLAB=k=>{const [a,y]=k.split('|');return y.slice(2)+'년 '+a+(y==='2027'&&TENT27[a]?'(안)':'')};
+function buildBar(){const bar=document.getElementById('scbar');bar.innerHTML=KEYS.map(k=>`<label><input type="checkbox" class="scb" value="${k}" ${KSEL.has(k)?'checked':''}> ${KLAB(k)}</label>`).join(' ');
+  bar.querySelectorAll('.scb').forEach(cb=>cb.onchange=()=>{if(cb.checked)KSEL.add(cb.value);else if(KSEL.size>1)KSEL.delete(cb.value);else cb.checked=true;summary();view();pres();uniRender();chemRender()})}
+buildBar();
 
-// 학교 순서: 표 머리글·학교 체크박스를 마우스로 끌어 옮기기
+// 순서: 표 머리글·체크박스를 마우스로 끌어 옮기기
 (()=>{let drag=null;
-const nm=el=>{const t=el.closest&&el.closest('th.sc,#scbar label');if(!t)return null;const s=t.tagName==='TH'?t.firstChild.textContent.trim():t.querySelector('input').value;return SC.includes(s)?[t,s]:null};
-document.addEventListener('mouseover',e=>{const r=nm(e.target);if(r&&!r[0].draggable){r[0].draggable=true;r[0].style.cursor='grab';r[0].title='끌어서 학교 순서 바꾸기'}});
+const nm=el=>{const t=el.closest&&el.closest('th.sc,#scbar label');if(!t)return null;const k=t.tagName==='TH'?t.dataset.k:t.querySelector('input').value;return k&&KEYS.includes(k)?[t,k]:null};
+document.addEventListener('mouseover',e=>{const r=nm(e.target);if(r&&!r[0].draggable){r[0].draggable=true;r[0].style.cursor='grab';r[0].title='끌어서 순서 바꾸기'}});
 document.addEventListener('dragstart',e=>{const r=nm(e.target);if(!r)return;drag=r[1];e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',drag)});
 document.addEventListener('dragover',e=>{if(drag&&nm(e.target))e.preventDefault()});
 document.addEventListener('dragend',()=>{drag=null});
 document.addEventListener('drop',e=>{const r=nm(e.target);if(!drag||!r)return;e.preventDefault();
-  const from=drag,to=r[1],a=SC.indexOf(from),b=SC.indexOf(to);drag=null;if(a===b)return;
-  SC.splice(a,1);SC.splice(SC.indexOf(to)+(a<b?1:0),0,from);
-  const bar=document.getElementById('scbar');SC.forEach(s=>{const l=[...bar.querySelectorAll('label')].find(x=>x.querySelector('input').value===s);bar.appendChild(l)});
-  summary();view();pres();uniRender()});
+  const from=drag,to=r[1],a=KEYS.indexOf(from),b=KEYS.indexOf(to);drag=null;if(a===b)return;
+  KEYS.splice(a,1);KEYS.splice(KEYS.indexOf(to)+(a<b?1:0),0,from);
+  const o=[];KEYS.forEach(k=>{const x=k.split('|')[0];if(!o.includes(x))o.push(x)});o.forEach((x,i)=>SC[i]=x);
+  buildBar();summary();view();pres();uniRender();chemRender()});
 })();
 // presence
 let REC=new Set();let RECLAB='';
 const PG={2:{},3:{}};let PGS=new Set([2]);let ROWS=[];
-SC.forEach(s=>{[2,3].forEach(g=>{for(const k of ['1','2']){const sm=Y[s][g][k];[...sm.fx,...sm.pk.flatMap(p=>p[1])].forEach(n=>{const nk=norm(n);const e=PG[g][nk]||(PG[g][nk]={n:n,s:{}});(e.s[s]=e.s[s]||new Set()).add(k)})}})});
+KEYS.forEach(key=>{const [s,yr]=key.split('|'),D=YEARS[+yr];if(!D||!D.Y[s])return;[2,3].forEach(g=>{for(const k of ['1','2']){const sm=D.Y[s][g][k];[...sm.fx,...sm.pk.flatMap(p=>p[1])].forEach(n=>{const nk=norm(n);const e=PG[g][nk]||(PG[g][nk]={n:n,s:{}});(e.s[key]=e.s[key]||new Set()).add(k)})}})});
 function setRows(){const m={};[...PGS].sort().forEach(g=>Object.entries(PG[g]).forEach(([nk,e])=>{const r=m[nk]||(m[nk]={n:e.n,s:{}});for(const sc in e.s){const t=r.s[sc]||(r.s[sc]=new Set());e.s[sc].forEach(k=>t.add(g+'|'+k))}}));ROWS=Object.values(m).sort((a,b)=>CATS.indexOf(catOf(a.n))-CATS.indexOf(catOf(b.n))||a.n.localeCompare(b.n,'ko'))}setRows();
 const fmtSem=e=>{const by={};[...e].sort().forEach(x=>{const [g,k]=x.split('|');(by[g]=by[g]||[]).push(k)});return Object.keys(by).map(g=>(PGS.size>1?g+'학년 ':'')+by[g].join('·')+'학기').join('<br>')};
 function pres(){
   const q=norm(document.getElementById('q').value||''),od=document.getElementById('onlydiff').checked;
-  let h='<tr><th>교과(군)</th><th>과목</th>'+SV().map(s=>`<th class="c">${s}</th>`).join('')+'</tr>',n=0;
+  const CK=KEYS.filter(k=>KSEL.has(k)&&YEARS[+k.split('|')[1]].Y[k.split('|')[0]]);
+  let h='<tr><th>교과(군)</th><th>과목</th>'+CK.map(k=>{const [a,y]=k.split('|');return `<th class="c sc" data-k="${k}">${a}<span class="yl">${y}학년도 입학생</span></th>`}).join('')+'</tr>',n=0;
   ROWS.forEach(r=>{
-    const SS=SV(),all=SS.every(s=>r.s[s]);
+    const SS=CK,all=SS.every(s=>r.s[s]);
     if(od&&all&&SS.every(s=>[...r.s[s]].sort().join()===[...r.s[SS[0]]].sort().join()))return;
     if(!SS.some(s=>r.s[s]))return;
     if(q&&!norm(r.n).includes(q))return;
@@ -407,7 +554,7 @@ function pres(){
     n++;
     let nm=esc(r.n);
     if(q){const i=norm(r.n).indexOf(q);if(r.n===norm(r.n)||!/[\s·]/.test(r.n))nm=esc(r.n.slice(0,i))+'<mark>'+esc(r.n.slice(i,i+q.length))+'</mark>'+esc(r.n.slice(i+q.length))}
-    h+=`<tr class="${isr?'rec':''}"><td class="cat">${catOf(r.n)}</td><td>${nm}${star(r.n)}${isr?'<span class="rtag">권장</span>':''}</td>`+SV().map(s=>{const e=r.s[s];return `<td class="c">${e?`<span class="g">${fmtSem(e)}</span>`:'<span class="g no">–</span>'}</td>`}).join('')+'</tr>';
+    h+=`<tr class="${isr?'rec':''}"><td class="cat">${catOf(r.n)}</td><td>${nm}${star(r.n)}${isr?'<span class="rtag">권장</span>':''}</td>`+CK.map(s=>{const e=r.s[s];return `<td class="c">${e?`<span class="g">${fmtSem(e)}</span>`:'<span class="g no">–</span>'}</td>`}).join('')+'</tr>';
   });
   document.getElementById('pres').innerHTML=h;
   document.getElementById('cnt').textContent=n+'개 과목 표시 (전체 '+ROWS.length+'개)';
@@ -531,6 +678,52 @@ function setRec(c,u){
   pres();
   view();
 }
+function sciRender(){
+  const YP=new Set(YPOOL.map(norm));let h='<tr><th>대학 · 모집단위</th><th>권장 과학</th></tr>',n=0,no=0;
+  UNIV.forEach(u=>{
+    const gen=[],opt=[];let ypool=false;
+    u.r.forEach(it=>{
+      if(typeof it==='string'){if(catOf(it)==='과학')gen.push(it)}
+      else if(it.any){const ns=it.any;if(ns.length&&ns.every(x=>YP.has(norm(x))))ypool=true;else if(ns.every(x=>catOf(x)==='과학'))opt.push(it.l)}
+    });
+    const ownSci=u.c==='연세대'&&u.r.length&&!gen.length&&!opt.length&&!ypool?false:false;
+    if(!gen.length&&!opt.length&&!ypool){no++;return}
+    n++;
+    let c='';
+    if(opt.length)c+=opt.map(x=>`<div><b>일반선택</b> <span class="chip">${esc(x)}<span class="x28 x28s">대학 권장 과학</span></span></div>`).join('');
+    if(gen.length)c+=`<div>${gen.map(x=>`<span class="chip">${esc(x)}<span class="x28 x28s">대학 권장 과학</span></span>`).join(' ')}</div>`;
+    if(ypool)c+=`<div><b>진로선택 3과목 이상</b> `+YPOOL.map(x=>`<span class="chip">${esc(x)}</span>`).join(' ')+'</div>';
+    h+=`<tr><th scope="row">${esc(u.c)}<span class="xn">${esc(u.u)}</span></th><td>${c}<span class="xs">${esc(u.s)}</span></td></tr>`;
+  });
+  document.getElementById('scit').innerHTML=h;
+  document.getElementById('scin').textContent=n+'개 모집단위 묶음에서 과학을 권장합니다. 과학 권장이 없거나 지정하지 않은 묶음은 '+no+'개입니다.';
+}
+function mathRender(){
+  const M=new Set(['미적분Ⅱ','기하']);let h='<tr><th>대학 · 모집단위</th><th>권장 수학</th></tr>',n=0;
+  UNIV.forEach(u=>{
+    const g=[],o=[];
+    u.r.forEach(it=>{
+      if(typeof it==='string'){if(M.has(it))g.push(it)}
+      else if(it.any&&it.any.length&&it.any.every(x=>M.has(x)))o.push(it.l)
+    });
+    if(!g.length&&!o.length)return;n++;
+    const ch=x=>`<span class="chip">${esc(x)}<span class="x28 x28s">수능 밖</span></span>`;
+    h+=`<tr><th scope="row">${esc(u.c)}<span class="xn">${esc(u.u)}</span></th><td>${g.map(ch).join(' ')}${o.length?'<div>'+o.map(x=>'<b>택1</b> '+ch(x)).join(' ')+'</div>':''}<span class="xs">${esc(u.s)}</span></td></tr>`;
+  });
+  document.getElementById('matht').innerHTML=h;
+  document.getElementById('mathn').textContent=n+'개 모집단위 묶음에서 미적분Ⅱ 또는 기하를 권장합니다. 고려대·동국대·서울대·세종대·연세대(자연계열)가 해당하며, 간호·보건 전공별 안내도 들어 있습니다.';
+}
+function chemRender(){
+  const names=['미적분Ⅱ','기하','화학','물질과 에너지','화학 반응의 세계'],cols=SELK();
+  const st=(Y,nm)=>{const t=norm(nm),o=[],p=[];
+    for(const g of ['2','3'])for(const q of ['1','2']){const d=(Y[g]||{})[q];if(!d)continue;
+      if((d.fx||[]).some(x=>norm(x)===t))o.push(g+'-'+q);
+      if((d.pk||[]).some(a=>a[1].some(x=>norm(x)===t)))p.push(g+'-'+q)}
+    return (o.length?'○ '+o.join(', '):'')+(p.length?(o.length?'<br>':'')+'△ '+p.join(', '):'')||'−'};
+  let h='<tr><th>학교</th>'+names.map(n=>'<th class="c">'+esc(n)+'</th>').join('')+'</tr>';
+  cols.forEach(c=>{const Y=c.D.Y[c.s];h+='<tr><th scope="row">'+esc(KLAB(c.s+'|'+c.yr))+'</th>'+names.map(n=>'<td class="c">'+st(Y,n)+'</td>').join('')+'</tr>'});
+  document.getElementById('chemt').innerHTML=h;
+}
 function uniRender(){
   const c=document.getElementById('uc').value,i=+document.getElementById('uu').value;
   const list=UNIV.filter(x=>x.c===c),u=list[i];if(!u)return;
@@ -647,7 +840,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='1.14.1',VDATE='2026-10-23';
+const VERSION='2.20.1',VDATE='2026-10-26';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
@@ -660,5 +853,33 @@ document.getElementById('reload').onclick=()=>location.reload(true);
     }).catch(()=>{});
   }catch(e){}
 })();
-summary();view();pres();
+// ---- 학교별 연도별 비교 ----
+function locMap(D,s){const m={};const add=(n,t)=>{(m[norm(n)]=m[norm(n)]||{n,l:[]}).l.push(t)};
+  [2,3].forEach(g=>['1','2'].forEach(k=>{const y=D.Y[s][g][k],c=D.CR[s][g][k];
+    y.fx.forEach((n,i)=>add(n,`${g}학년 ${k}학기 지정 ${c.f[i]}학점`));
+    y.pk.forEach((p,i)=>p[1].forEach(n=>add(n,`${g}학년 ${k}학기 택${p[0]} ${c.p[i]}학점`)))}));return m}
+const grpTxt=(D,s,g,k)=>D.Y[s][g][k].pk.map((p,i)=>`택${p[0]}(${p[1].length}개, ${D.CR[s][g][k].p[i]}학점)`).join(' · ');
+function ycRender(){
+  const s=document.getElementById('ycs').value,el=document.getElementById('ycv'),od=document.getElementById('ycd').checked;
+  const A=YEARS[2026],B=YEARS[2027];
+  if(!B.Y[s]){el.innerHTML=`<div class="warn"><p><strong>${esc(s)}는 2027학년도 입학생 편제표가 아직 없습니다.</strong> 편제표를 올려 주시면 2026학년도와 비교해 드립니다. 지금은 수지고·용인홍천고·서원고만 비교할 수 있습니다.</p></div>`;return}
+  const ma=locMap(A,s),mb=locMap(B,s),keys=[...new Set([...Object.keys(ma),...Object.keys(mb)])];
+  const rows=keys.map(k=>{const a=ma[k],b=mb[k],ta=a?a.l.join(' / '):'',tb=b?b.l.join(' / '):'';
+    const st=!a?'add':!b?'del':ta===tb?'same':'chg';return {n:(a||b).n,ta,tb,st}});
+  const cnt=t=>rows.filter(r=>r.st===t).length;
+  const lab={add:'2027에서 추가',del:'2027에서 삭제',chg:'변경',same:'동일'};
+  rows.sort((x,y)=>(x.st==='same')-(y.st==='same')||CATS.indexOf(catOf(x.n))-CATS.indexOf(catOf(y.n))||x.n.localeCompare(y.n,'ko'));
+  let h=`<p class="recinfo">${esc(s)}: 추가 ${cnt('add')}개 · 삭제 ${cnt('del')}개 · 변경 ${cnt('chg')}개 · 동일 ${cnt('same')}개 (2·3학년 과목 기준)</p>`;
+  const g1=JSON.stringify(A.Y1S[s])===JSON.stringify(B.Y1S[s]);
+  h+=`<p class="hint">1학년 편성은 두 해가 ${g1?'같습니다':'다릅니다'}.</p>`;
+  let gr='';[2,3].forEach(g=>['1','2'].forEach(k=>{const x=grpTxt(A,s,g,k),y=grpTxt(B,s,g,k),ta=semTotD(A,s,g,k),tb=semTotD(B,s,g,k);
+    if(x!==y||ta!==tb)gr+=`<tr class="chg"><td class="k">${g}학년 ${k}학기</td><td>${x||'-'} <span class="sc-n">${ta}학점</span></td><td>${y||'-'} <span class="sc-n">${tb}학점</span></td></tr>`}));
+  if(gr)h+=`<div class="tw" style="margin-bottom:12px"><table class="m"><tr><th>선택 묶음이 달라진 학기</th><th>2026학년도 입학생</th><th>2027학년도 입학생</th></tr>${gr}</table></div>`;
+  h+='<div class="tw"><table class="m yc"><tr><th>교과(군)</th><th>과목</th><th>2026학년도 입학생</th><th>2027학년도 입학생</th><th>변화</th></tr>';
+  rows.forEach(r=>{if(od&&r.st==='same')return;h+=`<tr class="${r.st==='same'?'':'chg'}"><td class="cat">${catOf(r.n)}</td><td>${esc(r.n)}${star(r.n)}</td><td>${r.ta?esc(r.ta):'<span class="g no">–</span>'}</td><td>${r.tb?esc(r.tb):'<span class="g no">–</span>'}</td><td><b>${lab[r.st]}</b></td></tr>`});
+  el.innerHTML=h+'</table></div>';
+}
+document.getElementById('ycs').innerHTML=SC.map(x=>`<option${x==='용인홍천고'?' selected':''}>${x}</option>`).join('');
+document.getElementById('ycs').onchange=ycRender;document.getElementById('ycd').onchange=ycRender;
+summary();view();pres();ycRender();sciRender();mathRender();chemRender();
 </script>
