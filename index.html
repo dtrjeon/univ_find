@@ -542,7 +542,7 @@ function view(){
 }
 function viewCard(g,el){
   if(g===1){
-    let h='<div class="tw"><table class="m"><tr><th>교과</th>'+SV().map(s=>`<th class="sc" data-k="${s}|2026">${s}<span class="yl">2026학년도 입학생</span></th>`).join('')+'</tr>';
+    let h='<div class="tw"><table class="m"><tr><th>교과</th>'+SV().map(s=>{const ys=KEYS.filter(k=>KSEL.has(k)&&k.split('|')[0]===s).map(k=>k.split('|')[1]);return `<th class="sc" data-k="${s}|${ys[0]}">${s}<span class="yl">${ys.join('·')}학년도 입학생</span></th>`}).join('')+'</tr>';
     Y1.rows.forEach((r,i)=>{
       const txt=SV().map(s=>Y1.d[s][i].map(x=>x.join(' ')).join('|'));
       const cnt={};txt.forEach(x=>cnt[x]=(cnt[x]||0)+1);const mx=Math.max(...Object.values(cnt));
@@ -901,7 +901,7 @@ function findMajor(){
 document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat(['화학공학','컴퓨터공학','전기전자공학']))].map(t=>`<option value="${esc(t)}">`).join('');
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
-const VERSION='2.40.1',VDATE='2026-10-27';
+const VERSION='2.40.2',VDATE='2026-10-27';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
