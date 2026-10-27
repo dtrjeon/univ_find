@@ -263,7 +263,7 @@ tr.rec td{background:var(--accent-soft)}
   </section>
 
   <section id="chemsec">
-    <h2>화학공학과 진학 (수도권) — 수학·과학 정리</h2>
+    <details class="sec"><summary><h2>화학공학과 진학 (수도권) — 수학·과학 정리</h2></summary>
     <h3>A. 2027학년도 입시 기준 (2026년 수능을 보고 2027년에 입학)</h3>
     <p class="hint"><b>‘지정 없음’의 뜻</b>: 현행 수능(2027학년도까지)에서 수학은 공통과목(수학Ⅰ·수학Ⅱ) 외에 선택과목을 하나 골라 치릅니다. 선택과목은 확률과 통계, 미적분, 기하 중 하나입니다. 그래서 ‘지정 없음’이면 세 가지 중 무엇을 골라도 지원할 수 있다는 뜻입니다. (서울대는 미적분 또는 기하 지정, 인하·아주·홍익은 미적분·기하 선택 시 3% 가산) 개편 수능(2028학년도~)은 수학 선택과목이 없고 대수·미적분Ⅰ·확률과 통계를 모두 치릅니다.</p>
     <div class="tw"><table class="m xt">
@@ -298,6 +298,7 @@ tr.rec td{background:var(--accent-soft)}
     <div class="tw"><table class="m xt" id="chemt"></table></div>
     <p class="hint">○ 필수로 개설 · △ 선택과목으로 개설 · − 편제표에 없음 (숫자는 학년-학기). 화학 외 ‘물질과 에너지’·‘화학 반응의 세계’가 화학공학과 가장 가깝다는 것은 대학이 지정한 것이 아니라 정리한 사람의 판단입니다. 개편 수능은 통합과학만 출제하므로 이 과목들은 수능이 아니라 이수 권장입니다. 출처는 위 ‘대학 권장 수학·과학’ 표와 같습니다.</p>
     <p class="hint">A표 출처: 올려 주신 각 대학 2027학년도 수시·정시 모집요강(‘대학별 수시·정시’ 탭과 같은 자료), 이화여대는 종로학원 분석 보도(2026.4, 파이낸셜뉴스·대전일보)와 한국경제 ‘주요대 입시와 사탐런’(2026.4). 이화여대는 보도 기준이며 요강 원문과 대조하지 못했습니다.</p>
+    </details>
   </section>
 
   <section id="usec">
@@ -944,7 +945,7 @@ document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
 if('serviceWorker' in navigator&&location.protocol.startsWith('http')){try{navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(e){}}
-const VERSION='2.48.1',VDATE='2026-10-27';
+const VERSION='2.48.2',VDATE='2026-10-27';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
