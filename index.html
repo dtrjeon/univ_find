@@ -161,6 +161,25 @@ tr.rec td{background:var(--accent-soft)}
   .pres th:nth-child(2),.pres td:nth-child(2){position:sticky;left:42px;z-index:2;min-width:112px;background:var(--surface);box-shadow:1px 0 0 var(--line)}
   .pres tr.rec td:nth-child(1),.pres tr.rec td:nth-child(2){background:var(--accent-soft)}
   #t20 th[scope=row]{position:sticky;left:0;z-index:2;background:var(--surface);box-shadow:1px 0 0 var(--line)}
+  /* 모바일: 폭 넓은 표를 카드형으로 */
+  #t20{min-width:0 !important;table-layout:auto}
+  #t20 colgroup,#t20 tr:first-child{display:none}
+  #t20,#t20 tbody,#t20 tr,#t20 td,#t20 th{display:block;width:auto !important;box-sizing:border-box}
+  #t20 tr{border-bottom:8px solid var(--bg);padding:6px 0}
+  #t20 td,#t20 th{border:0;padding:4px 12px;text-align:left}
+  #t20 th[scope=row]{position:static;box-shadow:none;font-size:15px;color:var(--fg)}
+  #t20 td.rk{display:inline-block;float:right;padding:6px 12px;font-weight:700;color:var(--accent)}
+  #t20 td.rk::before{content:'순위 ';font-weight:400;color:var(--muted)}
+  #t20 td.gk{display:none}#t20 td.gk:has(.gdot){display:block;padding:4px 12px !important}
+  #t20 td[data-l]:not(.rk)::before{content:attr(data-l);display:block;font-size:11px;color:var(--muted);margin-bottom:1px}
+  #t20 td.gk .gdot{display:none}#t20 td.gk:has(.gdot)::after{content:attr(data-g);font-weight:700}
+  table.su{min-width:0 !important;table-layout:auto !important}
+  table.su colgroup,table.su tr:first-child{display:none}
+  table.su,table.su tbody,table.su tr,table.su td,table.su th{display:block;width:auto !important;box-sizing:border-box}
+  table.su tr{border-bottom:6px solid var(--bg);padding:4px 0}
+  table.su td,table.su th{border:0;padding:4px 12px;text-align:left}
+  table.su th[scope=row]{font-size:15px;color:var(--fg)}
+  table.su td[data-l]::before{content:attr(data-l);display:block;font-size:11px;color:var(--muted)}
   .ctl{gap:8px}
   .ctl input[type=search]{flex:1 1 100%}
 }
@@ -946,7 +965,7 @@ document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
 if('serviceWorker' in navigator&&location.protocol.startsWith('http')){try{navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(e){}}
-const VERSION='2.48.3',VDATE='2026-10-27';
+const VERSION='2.49.0',VDATE='2026-10-27';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
@@ -1327,9 +1346,9 @@ function admRender(){
   let h='';
   if(mode==='su'){
     const EL=U.su.some(r=>r[4]);
-    h='<table class="m xt"'+(EL?' style="table-layout:fixed;min-width:900px"':'')+'>'+(EL?'<colgroup><col style="width:12%"><col style="width:7%"><col style="width:38%"><col style="width:19%"><col style="width:24%"></colgroup>':'')+'<tr><th>전형</th><th class="c">모집인원</th>'+(EL?'<th>지원자격</th>':'')+'<th>선발 방법</th><th>수능최저학력기준</th></tr>'+
-      U.su.map(r=>`<tr><th scope="row">${esc(r[0])}</th><td class="c">${r[1]}</td>${EL?`<td>${esc(r[4]||'')}</td>`:''}<td>${esc(r[2])}</td><td>${esc(r[3])}</td></tr>`).join('')+
-      `<tr><th scope="row">합계</th><td class="c"><b>${U.su_tot}</b></td><td colspan="${EL?3:2}" class="nn">수시 정원내 모집인원</td></tr></table>`;
+    h='<table class="m xt su"'+(EL?' style="table-layout:fixed;min-width:900px"':'')+'>'+(EL?'<colgroup><col style="width:12%"><col style="width:7%"><col style="width:38%"><col style="width:19%"><col style="width:24%"></colgroup>':'')+'<tr><th>전형</th><th class="c">모집인원</th>'+(EL?'<th>지원자격</th>':'')+'<th>선발 방법</th><th>수능최저학력기준</th></tr>'+
+      U.su.map(r=>`<tr><th scope="row">${esc(r[0])}</th><td class="c" data-l="모집인원">${r[1]}</td>${EL?`<td data-l="지원자격">${esc(r[4]||'')}</td>`:''}<td data-l="선발 방법">${esc(r[2])}</td><td data-l="수능최저학력기준">${esc(r[3])}</td></tr>`).join('')+
+      `<tr><th scope="row">합계</th><td class="c" data-l="모집인원"><b>${U.su_tot}</b></td><td colspan="${EL?3:2}" class="nn">수시 정원내 모집인원</td></tr></table>`;
     document.getElementById('anote').textContent=U.note+(U.note2||'');
   }else if(mode==='ns'){
     const D=NSD[c];
@@ -1399,8 +1418,8 @@ function t20Render(){
   el.innerHTML='<colgroup><col style="width:4%"><col style="width:11%"><col style="width:24%"><col style="width:7%"><col style="width:24%"><col style="width:7%"><col style="width:3%"><col style="width:3%"><col style="width:3%"><col style="width:8%"><col style="width:6%"></colgroup><tr><th class="c">순위</th><th>대학 · 학과</th><th>수시</th><th class="c">수시 모집인원</th><th>정시</th><th class="c">정시 모집인원</th><th class="c gk">가군</th><th class="c gk">나군</th><th class="c gk">다군</th><th class="c">모집 방식</th><th class="c">상세</th></tr>'+T20.map(r=>{
     const has=!!r[5];
     let gn='';try{gn=has?ADM[r[5][0]].units[r[5][1]].jg.gun:''}catch(e){}
-    const gc=['가군','나군','다군'].map(g=>`<td class="c gk">${gn===g?'<span class="gdot" title="'+g+' 모집" aria-label="'+g+'">●</span>':(has?'':'<span class="nn">-</span>')}</td>`).join('');
-    return `<tr><td class="c">${r[0]}</td><th scope="row">${esc(r[1])}${NS[r[1]]&&NS[r[1]].f?'<b class="ast" title="논술 PDF 첨부">*</b>':''}<span class="xn">${esc(r[2])}</span></th><td>${mh(r[3])}</td><td class="c">${esc(r[6])}</td><td>${mh(r[4])}</td><td class="c">${esc(r[7])}</td>${gc}<td class="c">${r[8]==='계열'?'<span class="gy">계열 모집 → 2학년 학과 진입</span>':esc(r[8]==='확인 필요'?'확인 필요':r[8]+' 모집')}</td><td class="c">${has?`<button type="button" class="t20b" data-i="${r[0]}">보기</button>`:'<span class="nn">요강 필요</span>'}</td></tr>`}).join('');
+    const gc=['가군','나군','다군'].map(g=>`<td class="c gk" data-l="정시 모집군" data-g="${g}">${gn===g?'<span class="gdot" title="'+g+' 모집" aria-label="'+g+'">●</span>':(has?'':'<span class="nn">-</span>')}</td>`).join('');
+    return `<tr><td class="c rk" data-l="순위">${r[0]}</td><th scope="row">${esc(r[1])}${NS[r[1]]&&NS[r[1]].f?'<b class="ast" title="논술 PDF 첨부">*</b>':''}<span class="xn">${esc(r[2])}</span></th><td data-l="수시">${mh(r[3])}</td><td class="c" data-l="수시 모집인원">${esc(r[6])}</td><td data-l="정시">${mh(r[4])}</td><td class="c" data-l="정시 모집인원">${esc(r[7])}</td>${gc}<td class="c" data-l="모집 방식">${r[8]==='계열'?'<span class="gy">계열 모집 → 2학년 학과 진입</span>':esc(r[8]==='확인 필요'?'확인 필요':r[8]+' 모집')}</td><td class="c">${has?`<button type="button" class="t20b" data-i="${r[0]}">보기</button>`:'<span class="nn">요강 필요</span>'}</td></tr>`}).join('');
   el.querySelectorAll('.t20b').forEach(b=>b.onclick=()=>{
     const r=T20.find(x=>x[0]===+b.dataset.i),cs=document.getElementById('ac'),us=document.getElementById('au');
     cs.value=r[5][0];us.dataset.c='';admRender();us.value=r[5][1];admRender();
