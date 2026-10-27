@@ -179,7 +179,7 @@ tr.rec td{background:var(--accent-soft)}
   <div id="tabA">
   <div class="warn">
     <p><span class="star">*</span> 표시는 2028학년도 수능 필수 출제 과목이 아닌 과목입니다. 필수 과목은 국어(화법과 언어, 독서와 작문, 문학), 수학(대수, 미적분Ⅰ, 확률과 통계), 영어Ⅰ·Ⅱ, 한국사, 통합사회, 통합과학입니다. 공통국어·공통수학·공통영어는 모든 학생이 1학년에 이수하므로 *를 붙이지 않았습니다. 제2외국어·한문은 선택 응시라 *를 붙였습니다.</p>
-    <p><span class="x28">개편수능(필수)</span> 표시는 2028학년도부터 바뀐 개편 수능(2022 개정)의 필수 출제 과목입니다. 국어 화법과 언어·독서와 작문·문학, 수학 대수·미적분Ⅰ·확률과 통계, 영어Ⅰ·Ⅱ, 한국사, 통합사회, 통합과학이며, 선택과목은 제2외국어/한문(<span class="x28 x28s">개편수능(선택)</span>)뿐입니다. 미적분Ⅱ·기하와 물리학·화학·생명과학·지구과학은 수능 범위가 아니고, 대학이 권장하는 경우가 많아 <span class="x28 x28s">대학 권장 과학</span>(**)으로 따로 표시합니다.</p>
+    <p><span class="x28">개편수능(필수)</span> 표시는 2028학년도부터 바뀐 개편 수능(2022 개정)의 필수 출제 과목입니다. 국어 화법과 언어·독서와 작문·문학, 수학 대수·미적분Ⅰ·확률과 통계, 영어Ⅰ·Ⅱ, 한국사, 통합사회, 통합과학이며, 선택과목은 제2외국어/한문(<span class="x28 x28s">개편수능(선택)</span>)뿐입니다. 미적분Ⅱ·기하와 물리학·화학·생명과학·지구과학은 수능 범위가 아니고, 대학이 권장하는 경우가 많아 <span class="x28 x28s">이수 권장</span>(**)으로 따로 표시합니다.</p>
   </div>
 
   <section id="x28sec">
@@ -216,7 +216,7 @@ tr.rec td{background:var(--accent-soft)}
   </section>
 
   <section id="scisec">
-    <details class="sec"><summary><h2>대학 권장 과학 <span class="x28 x28s">대학 권장 과학</span></h2></summary>
+    <details class="sec"><summary><h2>이수 권장 과학 <span class="x28 x28s">이수 권장</span></h2></summary>
     <p class="hint">대학·모집단위별로 권장하는 과학 과목만 모았습니다. 개편 수능(2028학년도~)에는 과학 선택과목이 없어서 수능 범위는 아니지만, 대학이 이수를 권장하는 과목입니다. 입력된 대학 자료(12개 대학) 기준이며, 과학 권장이 없는 모집단위는 제외했습니다. 출처는 각 행 아래에 적었고(진학지도자료집, 연세대 2028 가이드라인), 최종 확인은 대학 입학처 공지로 하세요.</p>
     <div class="tw"><table class="m xt r13" id="scit"></table></div>
     <p class="hint" id="scin"></p>
@@ -224,7 +224,7 @@ tr.rec td{background:var(--accent-soft)}
   </section>
 
   <section id="mathsec">
-    <details class="sec"><summary><h2>대학 권장 수학 <span class="x28 x28s">이수 권장</span></h2></summary>
+    <details class="sec"><summary><h2>이수 권장 수학 <span class="x28 x28s">이수 권장</span></h2></summary>
     <p class="hint">개편 수능(2028학년도~)은 대수·미적분Ⅰ·확률과 통계만 출제해 <b>미적분Ⅱ와 기하가 빠집니다</b>. 그래도 아래 수도권 대학은 권장과목 또는 논술 출제범위로 이 두 과목을 요구하거나 시사합니다. 가산점이나 필수 조건이 아닐 수 있으니 최종 모집요강으로 확인하세요.</p>
     <h3>1. 모집단위별 이수 권장 (미적분Ⅱ·기하)</h3>
     <div class="tw"><table class="m xt r13" id="matht"></table></div>
@@ -330,8 +330,8 @@ tr.rec td{background:var(--accent-soft)}
       <button type="button" id="mv2" aria-pressed="false">학교별 카드</button>
     </div>
     <div class="ctl"><label><input type="checkbox" id="hs"> 수능과 상관없는 과목(*) 숨기기 <span class="sc-n">2·3학년</span></label></div>
-    <div class="ctl"><label><input type="checkbox" id="ss"> 과학 선택과목을 &lsquo;대학 권장 과학&rsquo;(**)으로 표시, 숨기기에서 제외 <span class="sc-n">물리학·화학·생명과학·지구과학과 이어지는 과목</span></label></div>
-    <p class="hint">※ 2학년 선택과목의 물리학·화학·생명과학·지구과학이나 3학년 선택과목은 통합과학과는 별개의 선택 과목입니다. 이 과목들은 수능 필수가 아니어서 <span class="star">*</span>가 붙습니다. 다만 의약학·공학 계열은 대학이 권장과목으로 지정하는 경우가 많습니다. 위 체크박스를 켜면 과학 선택과목은 <span class="star">**</span>(대학 권장 과학)으로 표시됩니다.</p>
+    <div class="ctl"><label><input type="checkbox" id="ss"> 과학 선택과목을 &lsquo;이수 권장 과학&rsquo;(**)으로 표시, 숨기기에서 제외 <span class="sc-n">물리학·화학·생명과학·지구과학과 이어지는 과목</span></label></div>
+    <p class="hint">※ 2학년 선택과목의 물리학·화학·생명과학·지구과학이나 3학년 선택과목은 통합과학과는 별개의 선택 과목입니다. 이 과목들은 수능 필수가 아니어서 <span class="star">*</span>가 붙습니다. 다만 의약학·공학 계열은 대학이 권장과목으로 지정하는 경우가 많습니다. 위 체크박스를 켜면 과학 선택과목은 <span class="star">**</span>(이수 권장 과학)으로 표시됩니다.</p>
     <div id="view"></div>
   </section>
 
@@ -354,7 +354,7 @@ tr.rec td{background:var(--accent-soft)}
       <select id="cat" aria-label="교과(군)"><option value="">전체 교과(군)</option><option>국어</option><option>수학</option><option>영어</option><option>사회</option><option>과학</option><option>체육</option><option>예술</option><option>기술·가정/정보</option><option>제2외국어/한문</option><option>교양</option></select>
       <label><input type="checkbox" id="onlydiff"> 학교마다 다른 과목만 보기</label>
       <label><input type="checkbox" id="hp"> 수능과 상관없는 과목(*) 숨기기</label>
-      <label><input type="checkbox" id="sp"> 과학 선택과목을 &lsquo;대학 권장 과학&rsquo;(**)으로 표시, 숨기기에서 제외</label>
+      <label><input type="checkbox" id="sp"> 과학 선택과목을 &lsquo;이수 권장 과학&rsquo;(**)으로 표시, 숨기기에서 제외</label>
       <label><input type="checkbox" id="onlyrec"> 선택한 대학의 권장과목만 보기</label>
     </div>
     <p class="recinfo" id="recinfo"></p>
@@ -542,9 +542,9 @@ let SELON=false;
 const isSel=n=>SELON&&SELX.has(norm(n));
 // 2028학년도 수능 필수 출제 과목(2022 개정): 국어 화법과 언어·독서와 작문·문학, 수학 대수·미적분Ⅰ·확률과 통계, 영어Ⅰ·Ⅱ, 한국사, 통합사회, 통합과학
 const X28=new Set(['화법과 언어','독서와 작문','문학','대수','미적분Ⅰ','확률과 통계','영어Ⅰ','영어Ⅱ','한국사1','한국사2','한국사1·2','통합사회1','통합사회2','통합사회1·2','통합과학1','통합과학2','통합과학1·2'].map(norm));
-const x28=n=>X28.has(norm(n))?'<span class="x28" title="개편 수능(2028학년도~) 필수 과목">개편수능(필수)</span>':isSel(n)?'<span class="x28 x28s" title="대학 권장 과학 선택과목(개편 수능 과목 아님)">대학 권장 과학</span>':'';
-const star=n=>REQ.has(norm(n))?x28(n):x28(n)+(isSel(n)?'<span class="star" title="대학 권장 과학 선택과목">**</span>':'<span class="star" title="수능 필수 과목 아님">*</span>');
-const star0=n=>REQ.has(norm(n))?'':isSel(n)?'<span class="star" title="대학 권장 과학 선택과목">**</span>':'<span class="star" title="수능 필수 과목 아님">*</span>';
+const x28=n=>X28.has(norm(n))?'<span class="x28" title="개편 수능(2028학년도~) 필수 과목">개편수능(필수)</span>':isSel(n)?'<span class="x28 x28s" title="이수 권장 과학 선택과목(개편 수능 과목 아님)">이수 권장</span>':'';
+const star=n=>REQ.has(norm(n))?x28(n):x28(n)+(isSel(n)?'<span class="star" title="이수 권장 과학 선택과목">**</span>':'<span class="star" title="수능 필수 과목 아님">*</span>');
+const star0=n=>REQ.has(norm(n))?'':isSel(n)?'<span class="star" title="이수 권장 과학 선택과목">**</span>':'<span class="star" title="수능 필수 과목 아님">*</span>';
 let HIDE=false,CURG=1;const GSET=new Set([1]);
 const isReq=n=>REQ.has(norm(n))||isSel(n);
 function chips(a,c,cr){const o=a.map((x,i)=>[x,cr?cr[i]:null]);return (HIDE?o.filter(x=>isReq(x[0])):o).map(x=>`<span class="chip ${c||''}">${esc(x[0])}${star(x[0])}${x[1]!=null?`<span class="cc">${x[1]}</span>`:''}</span>`).join('')}
@@ -792,8 +792,8 @@ function sciRender(){
     if(!gen.length&&!opt.length&&!ypool){no++;return}
     n++;
     let c='';
-    if(opt.length)c+=opt.map(x=>`<div><b>일반선택</b> <span class="chip">${esc(x)}<span class="x28 x28s">대학 권장 과학</span></span></div>`).join('');
-    if(gen.length)c+=`<div>${gen.map(x=>`<span class="chip">${esc(x)}<span class="x28 x28s">대학 권장 과학</span></span>`).join(' ')}</div>`;
+    if(opt.length)c+=opt.map(x=>`<div><b>일반선택</b> <span class="chip">${esc(x)}<span class="x28 x28s">이수 권장</span></span></div>`).join('');
+    if(gen.length)c+=`<div>${gen.map(x=>`<span class="chip">${esc(x)}<span class="x28 x28s">이수 권장</span></span>`).join(' ')}</div>`;
     if(ypool)c+=`<div><b>진로선택 3과목 이상</b> `+YPOOL.map(x=>`<span class="chip">${esc(x)}</span>`).join(' ')+'</div>';
     h+=`<tr><th scope="row">${esc(u.c)}<span class="xn">${esc(u.u)}</span></th><td>${c}<span class="xs">${esc(u.s)}</span></td></tr>`;
   });
@@ -944,7 +944,7 @@ document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
 if('serviceWorker' in navigator&&location.protocol.startsWith('http')){try{navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(e){}}
-const VERSION='2.48.0',VDATE='2026-10-27';
+const VERSION='2.48.1',VDATE='2026-10-27';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
