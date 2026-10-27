@@ -337,13 +337,14 @@ tr.rec td{background:var(--accent-soft)}
   </section>
 
   <section>
-    <h2>학교별 연도별 비교</h2>
+    <details class="sec"><summary><h2>학교별 연도별 비교</h2></summary>
     <p class="hint">같은 학교의 2026학년도 입학생과 2027학년도 입학생 편제표를 과목마다 비교합니다. 지금은 수지고·용인홍천고·성복고·서원고만 두 해 자료가 있습니다.</p>
     <div class="uf">
       <label>학교<select id="ycs"></select></label>
       <label class="ctl" style="margin:0;align-self:end"><input type="checkbox" id="ycd" checked> 달라진 과목만 보기</label>
     </div>
     <div id="ycv"></div>
+    </details>
   </section>
 
   <section>
@@ -945,7 +946,7 @@ document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
 if('serviceWorker' in navigator&&location.protocol.startsWith('http')){try{navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(e){}}
-const VERSION='2.48.2',VDATE='2026-10-27';
+const VERSION='2.48.3',VDATE='2026-10-27';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
