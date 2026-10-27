@@ -330,7 +330,7 @@ tr.rec td{background:var(--accent-soft)}
   <section>
     <h2>과목별 개설 비교</h2>
     <div class="seg" role="group" aria-label="학년(둘 다 선택 가능)"><button type="button" id="p2" aria-pressed="true">2학년</button><button type="button" id="p3" aria-pressed="false">3학년</button></div>
-    <p class="hint">칸에는 그 과목이 편성된 학기가 표시됩니다. 지정 과목과 선택 과목을 모두 포함하며, 선택 과목은 묶음 안에서 학생이 고릅니다.</p>
+    <p class="hint">각 칸에는 그 과목이 편성된 학기가 표시됩니다. 지정 과목과 선택 과목을 모두 포함하며, 선택 과목은 묶음 안에서 학생이 고릅니다.</p>
     <div class="ctl">
       <input type="search" id="q" placeholder="과목명 검색 (예: 기하, 물리)" aria-label="과목명 검색">
       <select id="cat" aria-label="교과(군)"><option value="">전체 교과(군)</option><option>국어</option><option>수학</option><option>영어</option><option>사회</option><option>과학</option><option>체육</option><option>예술</option><option>기술·가정/정보</option><option>제2외국어/한문</option><option>교양</option></select>
@@ -926,7 +926,7 @@ document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
 if('serviceWorker' in navigator&&location.protocol.startsWith('http')){try{navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(e){}}
-const VERSION='2.47.2',VDATE='2026-10-27';
+const VERSION='2.47.3',VDATE='2026-10-27';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
