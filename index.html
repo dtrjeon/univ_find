@@ -1,5 +1,6 @@
 <meta charset="utf-8">
 <title>수지구 교과 비교 27년</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1d5d8a">
@@ -146,6 +147,23 @@ tr.rec td{background:var(--accent-soft)}
 .gy{display:inline-block;padding:2px 8px;border-radius:4px;border:1px solid var(--ok);color:var(--ok);font-size:12.5px;font-weight:700}
 #t20{table-layout:fixed;width:100%;min-width:960px}#t20 .gk{padding-left:2px;padding-right:2px}#t20 .gdot{color:#000;font-size:1.05em}[data-theme=dark] #t20 .gdot{color:#fff}@media (prefers-color-scheme:dark){:root:not([data-theme=light]) #t20 .gdot{color:#fff}}#t20 th[scope=row]{white-space:normal;word-break:keep-all}#t20 th{white-space:normal}#t20 td,#t20 th{word-break:keep-all;overflow-wrap:anywhere}
 .t20b{font:inherit;font-size:13px;padding:3px 10px;border:1px solid var(--line,#ccc);border-radius:6px;background:var(--chip);color:inherit;cursor:pointer}
+/* mobile */
+@media (max-width:600px){
+  body{font-size:15px}
+  th,td{padding:7px 8px}
+  .xt.r13{min-width:0}
+  .pres{font-size:13px}
+  .pres th.c,.pres td.c{width:76px;min-width:76px}
+  .pres th.c{white-space:normal;word-break:keep-all;font-size:11.5px}
+  .pres .yl{display:block;font-size:10px}
+  .pres .g{min-width:0;padding:1px 6px;font-size:12px}
+  .pres th:nth-child(1),.pres td:nth-child(1){position:sticky;left:0;z-index:2;width:42px;min-width:42px;max-width:42px;white-space:normal;font-size:12px;background:var(--surface)}
+  .pres th:nth-child(2),.pres td:nth-child(2){position:sticky;left:42px;z-index:2;min-width:112px;background:var(--surface);box-shadow:1px 0 0 var(--line)}
+  .pres tr.rec td:nth-child(1),.pres tr.rec td:nth-child(2){background:var(--accent-soft)}
+  #t20 th[scope=row]{position:sticky;left:0;z-index:2;background:var(--surface);box-shadow:1px 0 0 var(--line)}
+  .ctl{gap:8px}
+  .ctl input[type=search]{flex:1 1 100%}
+}
 </style>
 
 <datalist id="mdl"></datalist>
@@ -926,7 +944,7 @@ document.getElementById('mdl').innerHTML=[...new Set(UNIV.flatMap(u=>u.m).concat
 document.getElementById('mq').oninput=findMajor;
 // 버전 표시와 새 버전 확인 (GitHub Pages의 version.json과 비교)
 if('serviceWorker' in navigator&&location.protocol.startsWith('http')){try{navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(e){}}
-const VERSION='2.47.3',VDATE='2026-10-27';
+const VERSION='2.48.0',VDATE='2026-10-27';
 document.getElementById('ver').textContent='버전 '+VERSION+' · '+VDATE;
 document.getElementById('reload').onclick=()=>location.reload(true);
 (function(){
